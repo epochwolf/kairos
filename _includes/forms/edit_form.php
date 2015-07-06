@@ -13,14 +13,16 @@ class EditForm extends BaseForm{
   }
 
   public function validate(){
+    $age = age_from_birthdate(@$this->params["birthdate"]);
+    $minor = $age && $age < 18;
+
     $this->error_if_empty("legal_name");
     $this->error_if_empty("birthdate");
     if(!$this->error_on("birthdate")){
       $this->error_if_invalid_date("birthdate");
     }
 
-    $age = age_from_birthdate(@$this->params["birthdate"]);
-    if($age && $age < 18){
+    if($minor){
       $this->error_if_empty("adult_legal_name");
       $this->error_if_empty("adult_badge_name");
     }
@@ -48,9 +50,9 @@ class EditForm extends BaseForm{
     $this->error_if_empty("badge_type");
     if(!$this->error_on("badge_type")){
 
-      if(@$this->params["badge_type"] != "minor" && $this->attendee->minor()){
+      if(@$this->params["badge_type"] != "minor" && $minor){
         $this->add_error("badge_type", "Attendee is a minor.");
-      }elseif(@$this->params["badge_type"] == "minor" && !$this->attendee->minor()){
+      }elseif(@$this->params["badge_type"] == "minor" && !$minor){
         $this->add_error("badge_type", "Attendee is not a minor.");
       }
     }
