@@ -2,6 +2,9 @@
 
 Kairos is an offline registration system and an attendee database written for Ringtail Cafe Productions. It is used at Fur Reality in Cincinnati, OH and the International Steampunk Symposium, also in Cincinnati. 
 
+
+![Sign Up Form](/epochwolf/kairos/master/screenshots/signup-form.png?raw=true "Sign Up Form")
+
 ## Features
 
 * At Door Registration Form
@@ -64,5 +67,4 @@ For tablets: Most android/iOS tablets. (This requires a secure wifi system.)
 6. Load blacklist.sql into mysql using phpmyadmin. (If provided)
 7. Swap out the Code of Conduct in index.php for your convention's Code of Conduct. 
 8. Edit the various configuration values in _includes/config.php as needed. 
-
 
