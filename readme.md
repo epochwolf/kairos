@@ -7,6 +7,7 @@ Kairos is an offline registration system and an attendee database written for Ri
 * At Door Registration Form
 * Pre-Registration Check In 
 * Searchable Attendee Database
+* Automatic banlist flagging.
 * Live Numbers
 
 Kairos works best if you import all of your pre-registered attendees into the database.
