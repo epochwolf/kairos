@@ -91,13 +91,13 @@ Here are most of the error messages that will appear if someone doesn't fill out
 
 ## Admin Screenshots
 
-![admin-attendees-tab](/screenshots/admin-attendees-tab?raw=true "admin-attendees-tab")
-![admin-search](/screenshots/admin-search?raw=true "admin-search")
-![admin-numbers](/screenshots/admin-numbers?raw=true "admin-numbers")
-![admin-at-door-checkin](/screenshots/admin-at-door-checkin?raw=true "admin-at-door-checkin")
-![admin-normal-pay](/screenshots/admin-normal-pay?raw=true "admin-normal-pay")
-![admin-normal-checkin](/screenshots/admin-normal-checkin?raw=true "admin-normal-checkin")
-![admin-banned-pay](/screenshots/admin-banned-pay?raw=true "admin-banned-pay")
-![admin-minor-under13-checkin](/screenshots/admin-minor-under13-checkin?raw=true "admin-minor-under13-checkin")
-![admin-warn-checkin](/screenshots/admin-warn-checkin?raw=true "admin-warn-checkin")
-![admin-edit](/screenshots/admin-edit?raw=true "admin-edit")
+![admin-attendees-tab](/screenshots/admin-attendees-tab.png?raw=true "admin-attendees-tab")
+![admin-search](/screenshots/admin-search.png?raw=true "admin-search")
+![admin-numbers](/screenshots/admin-numbers.png?raw=true "admin-numbers")
+![admin-at-door-checkin](/screenshots/admin-at-door-checkin.png?raw=true "admin-at-door-checkin")
+![admin-normal-pay](/screenshots/admin-normal-pay.png?raw=true "admin-normal-pay")
+![admin-normal-checkin](/screenshots/admin-normal-checkin.png?raw=true "admin-normal-checkin")
+![admin-banned-pay](/screenshots/admin-banned-pay.png?raw=true "admin-banned-pay")
+![admin-minor-under13-checkin](/screenshots/admin-minor-under13-checkin.png?raw=true "admin-minor-under13-checkin")
+![admin-warn-checkin](/screenshots/admin-warn-checkin.png?raw=true "admin-warn-checkin")
+![admin-edit](/screenshots/admin-edit.png?raw=true "admin-edit")
