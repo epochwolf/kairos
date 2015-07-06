@@ -68,3 +68,36 @@ For tablets: Most android/iOS tablets. (This requires a secure wifi system.)
 7. Swap out the Code of Conduct in index.php for your convention's Code of Conduct. 
 8. Edit the various configuration values in _includes/config.php as needed. 
 
+## Sign Up Screenshots
+
+### Sign Up Code of Conduct
+
+This is the first page someone sees when they go to sign up at the door. 
+
+![Sign Up Code of Conduct](/screenshots/signup-codeofconduct.png?raw=true "Sign Up Code of Conduct")
+
+### Sign Up Form
+
+After agreeing to the Code of Conduct, this is the form they need to fill out. 
+
+![Sign Up Form](/screenshots/signup-form.png?raw=true "Sign Up Form")
+
+### Sign Up Form with Errors
+
+Here are most of the error messages that will appear if someone doesn't fill out a required field.
+
+![Sign Up Form Errors](/screenshots/signup-form.png?raw=true "Sign Up Form Errors")
+
+
+## Admin Screenshots
+
+![admin-attendees-tab](/screenshots/admin-attendees-tab?raw=true "admin-attendees-tab")
+![admin-search](/screenshots/admin-search?raw=true "admin-search")
+![admin-numbers](/screenshots/admin-numbers?raw=true "admin-numbers")
+![admin-at-door-checkin](/screenshots/admin-at-door-checkin?raw=true "admin-at-door-checkin")
+![admin-normal-pay](/screenshots/admin-normal-pay?raw=true "admin-normal-pay")
+![admin-normal-checkin](/screenshots/admin-normal-checkin?raw=true "admin-normal-checkin")
+![admin-banned-pay](/screenshots/admin-banned-pay?raw=true "admin-banned-pay")
+![admin-minor-under13-checkin](/screenshots/admin-minor-under13-checkin?raw=true "admin-minor-under13-checkin")
+![admin-warn-checkin](/screenshots/admin-warn-checkin?raw=true "admin-warn-checkin")
+![admin-edit](/screenshots/admin-edit?raw=true "admin-edit")
