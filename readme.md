@@ -3,7 +3,7 @@
 Kairos is an offline registration system and an attendee database written for Ringtail Cafe Productions. It is used at Fur Reality in Cincinnati, OH and the International Steampunk Symposium, also in Cincinnati. 
 
 
-![Sign Up Form](/epochwolf/kairos/master/screenshots/signup-form.png?raw=true "Sign Up Form")
+![Sign Up Form](/screenshots/signup-form.png?raw=true "Sign Up Form")
 
 ## Features
 
