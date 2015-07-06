@@ -86,7 +86,7 @@ After agreeing to the Code of Conduct, this is the form they need to fill out.
 
 Here are most of the error messages that will appear if someone doesn't fill out a required field.
 
-![Sign Up Form Errors](/screenshots/signup-form.png?raw=true "Sign Up Form Errors")
+![Sign Up Form Errors](/screenshots/signup-form-errors.png?raw=true "Sign Up Form Errors")
 
 
 ## Admin Screenshots
