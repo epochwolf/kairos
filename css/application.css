@@ -1,0 +1,9 @@
+body{
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.has-error .form-control {
+  color: #a94442;
+  background-color: #f2dede;
+}

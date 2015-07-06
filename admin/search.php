@@ -1,0 +1,62 @@
+<?php
+include_once '../_includes/framework.php'; 
+$page_title = "Admin";
+include "_partials/admin-header.php"; 
+
+$search_string = trim(@$_GET['q'] ?: "");
+
+if($search_string == ""){
+  header("Location: /admin/index.php");
+  exit();
+}
+?>
+
+<div class="container">
+  <div class="col-md-12">
+    <h1>
+      Search: <?=$search_string ?>
+      <small><a href="/admin/index.php">Clear</a></small>
+    </h1>
+
+    <table class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Badge Name</th>
+          <th>Legal Name</th>
+          <th>Birthdate</th>
+          <th>Phone Number</th>
+          <th>Admission Level</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <? foreach(Attendee::search($search_string) as $attendee){ ?>
+          <tr class="<?=row_highlight($attendee) ?>">
+            <td><?=hilight_search($search_string, $attendee->badge_number) ?></td>
+            <td><?=hilight_search($search_string, $attendee->badge_name) ?></td>
+            <td><?=hilight_search($search_string, $attendee->legal_name) ?></td>
+            <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
+            <td><?=hilight_search($search_string, $attendee->phone_number) ?></td>
+            <td><?=admission_display($attendee) ?></td>
+            <td>
+              <div class="btn-group" role="group">
+                <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+                <?=upgrade_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+                <?=pay_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+                <?=check_in_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+              </div>
+            </td>
+          </tr>
+        <? } ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+<?php
+include "_partials/check-in-modal.php";
+include "_partials/edit-modal.php";
+include "_partials/upgrade-modal.php";
+include "_partials/pay-modal.php";
+include "_partials/admin-footer.php";  
+?>

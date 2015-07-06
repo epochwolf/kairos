@@ -1,0 +1,32 @@
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+footer.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+footer.footer p.text-muted.pull-left{
+  margin: 20px 0;
+}
+
+footer.footer p.text-muted.pull-right{
+  margin: 10px 0;
+}
+
+
+.table.table-auto-width {
+   width: auto;
+}
