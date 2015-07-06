@@ -11,6 +11,7 @@ Kairos is an offline registration system and an attendee database written for Ri
 * Pre-Registration Check In 
 * Searchable Attendee Database
 * Automatic blacklist flagging.
+* Automatic minor flagging.
 * Live Numbers
 
 Kairos works best if you import all of your pre-registered attendees into the database.
@@ -63,8 +64,8 @@ For tablets: Most android/iOS tablets. (This requires a secure wifi system.)
 3. Copy XAMPP's htdocs folder to a safe place.
 4. Replace the contents of XAMPP's htdocs folder with this application.
 5. Replace .htpasswd file with a more secure username and password. (The default is admin/Password1.)
-5. Load database.sql into mysql using phpmyadmin.
-6. Load blacklist.sql into mysql using phpmyadmin. (If provided)
+5. Load sql/database.sql into mysql using phpmyadmin.
+6. Load sql/blacklist.sql into mysql using phpmyadmin. (If provided)
 7. Swap out the Code of Conduct in index.php for your convention's Code of Conduct. 
 8. Edit the various configuration values in _includes/config.php as needed. 
 
@@ -124,7 +125,28 @@ Payment and check in are separate so you can have one person collecting payment 
 
 ### Automatic blacklist flagging
 
+Blacklist works by detecting badge names and legal names matching a predetermined blacklist. 
+
+There are two levels: warn and ban. 
+
+**Ban example:** Holly Potts has been banned for putting bubble bath solution in the hotel pool. The hotel has probably permanently barred her from their property. 
+
 ![admin-banned-pay](/screenshots/admin-banned-pay.png?raw=true "admin-banned-pay")
-![admin-minor-under13-checkin](/screenshots/admin-minor-under13-checkin.png?raw=true "admin-minor-under13-checkin")
+
+**Warn example:** Kim Abbott hasn't been barred from the hotel, but she was involved in the above incident, so convention security wants to keep an eye on her if she shows up. 
+
 ![admin-warn-checkin](/screenshots/admin-warn-checkin.png?raw=true "admin-warn-checkin")
+
+Just in case the blacklist automatically flags the wrong person, checking the "This is a mistake" checkbox will clear the message.
+
+### Minor Check In
+
+When checking in a minor, the system adds a notice to the check in box. 
+
+![admin-minor-under13-checkin](/screenshots/admin-minor-under13-checkin.png?raw=true "admin-minor-under13-checkin")
+
+### Editing an Attendee
+
+Did someone mistype their name? Did someone accidentally clear the blacklist warning? Easy enough to fix. 
+
 ![admin-edit](/screenshots/admin-edit.png?raw=true "admin-edit")
