@@ -61,5 +61,7 @@ For tablets: Most android/iOS tablets. (This requires a secure wifi system.)
 5. Replace .htpasswd file with a more secure username and password. (The default is admin/Password1.)
 5. Load database.sql into mysql using phpmyadmin.
 6. Load blacklist.sql into mysql using phpmyadmin. (If provided)
+7. Swap out the Code of Conduct in index.php for your convention's Code of Conduct. 
+8. Edit the various configuration values in _includes/config.php as needed. 
 
 
