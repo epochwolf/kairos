@@ -10,7 +10,7 @@ Kairos is an offline registration system and an attendee database written for Ri
 * At Door Registration Form
 * Pre-Registration Check In 
 * Searchable Attendee Database
-* Automatic banlist flagging.
+* Automatic blacklist flagging.
 * Live Numbers
 
 Kairos works best if you import all of your pre-registered attendees into the database.
@@ -91,12 +91,39 @@ Here are most of the error messages that will appear if someone doesn't fill out
 
 ## Admin Screenshots
 
+### Attendees Tab
+
+See all people who have pre-registered or registered at the door. 
+
 ![admin-attendees-tab](/screenshots/admin-attendees-tab.png?raw=true "admin-attendees-tab")
+
+### Search 
+
+Search the database by badge number, badge name, legal name, phone number, email, adult's badge name, or adult's legal name. 
+
 ![admin-search](/screenshots/admin-search.png?raw=true "admin-search")
+
+### Numbers
+
+See how many pre-registrations have checked in and are remaining. 
+
 ![admin-numbers](/screenshots/admin-numbers.png?raw=true "admin-numbers")
+
+### At Door Check In Tab
+
+Check in people who just filled out the at door registration form. 
+
 ![admin-at-door-checkin](/screenshots/admin-at-door-checkin.png?raw=true "admin-at-door-checkin")
+
+### Adult Payment and Check In
+
+Payment and check in are separate so you can have one person collecting payment and another person handing out badges. 
+
 ![admin-normal-pay](/screenshots/admin-normal-pay.png?raw=true "admin-normal-pay")
 ![admin-normal-checkin](/screenshots/admin-normal-checkin.png?raw=true "admin-normal-checkin")
+
+### Automatic blacklist flagging
+
 ![admin-banned-pay](/screenshots/admin-banned-pay.png?raw=true "admin-banned-pay")
 ![admin-minor-under13-checkin](/screenshots/admin-minor-under13-checkin.png?raw=true "admin-minor-under13-checkin")
 ![admin-warn-checkin](/screenshots/admin-warn-checkin.png?raw=true "admin-warn-checkin")
