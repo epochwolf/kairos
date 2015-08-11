@@ -24,12 +24,12 @@ if(!isset($form)){
       <p>To register you must have a government issued photo ID.</p>
       <div class="row">
         <div class="form-group col-md-8 <?=$form->error_on("legal_name") ? "has-error" : "" ?>">
-          <?=label_tag("legal_name", "Legal Name") ?>
+          <?=label_tag("legal_name", "Legal Name *") ?>
           <?=input_tag($form, "legal_name", ["placeholder" => "John Doe"]) ?>
           <?=error_display($form, "legal_name") ?>
         </div>
         <div class="form-group col-md-4 <?=$form->error_on("birthdate") ? "has-error" : "" ?>">
-          <?=label_tag("birthdate", "Date of Birth") ?>
+          <?=label_tag("birthdate", "Date of Birth *") ?>
           <?=input_tag($form, "birthdate", ["placeholder" => "MM/DD/YYYY"]) ?>
           <?=error_display($form, "birthdate") ?>
           <? if(@$form->params["birthdate"] && !$form->error_on("birthdate")){ ?>
@@ -41,7 +41,7 @@ if(!isset($form)){
       <h3>Address</h3>
       <div class="row">
         <div class="form-group col-md-7 <?=$form->error_on("address1") ? "has-error" : "" ?>">
-          <?=label_tag("address1", "Address 1") ?>
+          <?=label_tag("address1", "Address 1 *") ?>
           <?=input_tag($form, "address1", ["placeholder" => "123 Fake St"]) ?>
           <?=error_display($form, "address1") ?>
         </div>
@@ -53,17 +53,17 @@ if(!isset($form)){
       </div>
       <div class="row">
         <div class="form-group col-md-4 <?=$form->error_on("city") ? "has-error" : "" ?>">
-          <?=label_tag("city", "City") ?>
+          <?=label_tag("city", "City *") ?>
           <?=input_tag($form, "city", ["placeholder" => "Cincinnati"]) ?>
           <?=error_display($form, "city") ?>
         </div>
         <div class="form-group col-md-4 col-sm-6 <?=$form->error_on("state_prov") ? "has-error" : "" ?>">
-          <?=label_tag("state_prov", "State/Providence") ?>
+          <?=label_tag("state_prov", "State/Providence *") ?>
           <?=input_tag($form, "state_prov", ["placeholder" => "Ohio"]) ?>
           <?=error_display($form, "state_prov") ?>
         </div>
         <div class="form-group col-md-4 col-sm-6 <?=$form->error_on("postal_code") ? "has-error" : "" ?>">
-          <?=label_tag("postal_code", "Postal Code") ?>
+          <?=label_tag("postal_code", "Postal Code *") ?>
           <?=input_tag($form, "postal_code", ["placeholder" => "45231"]) ?>
           <?=error_display($form, "postal_code") ?>
         </div>
@@ -72,7 +72,7 @@ if(!isset($form)){
       <h3>Contact Information</h3>
       <div class="row">
         <div class="form-group col-md-6 <?=$form->error_on("phone_number") ? "has-error" : "" ?>">
-          <?=label_tag("phone_number", "Phone Number") ?>
+          <?=label_tag("phone_number", "Phone Number *") ?>
           <?=input_tag($form, "phone_number", ["placeholder" => "555-555-5555"]) ?>
           <?=error_display($form, "phone_number") ?>
         </div>
@@ -96,7 +96,7 @@ if(!isset($form)){
     <div class="col-sm-6">
       <h3>Badge Information</h3>
       <div class="form-group <?=$form->error_on("badge_name") ? "has-error" : "" ?>">
-        <?=label_tag("badge_name", "Name on Badge") ?>
+        <?=label_tag("badge_name", "Name on Badge *") ?>
         <?=input_tag($form, "badge_name", ["placeholder" => "J Fuzzy Fox"]) ?>
         <?=error_display($form, "badge_name") ?>
       </div>
@@ -157,9 +157,17 @@ if(!isset($form)){
           </div>
         </div>
       </div>
+
+      <div>
+        <h3> Privacy Notice </h3>
+        <p>Information collected on this form is only used for identification.</p>
+      </div>
     </div>
     <div class="col-sm-12 text-center">
       <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+    </div>
+    <div class="col-sm-12 text-left">
+      <p>* Required Field.</p>
     </div>
   </form>
 </div>
