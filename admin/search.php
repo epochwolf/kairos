@@ -25,8 +25,8 @@ if($search_string == ""){
           <th>Badge Name</th>
           <th>Legal Name</th>
           <th>Birthdate</th>
-          <th>Phone Number</th>
           <th>Admission Level</th>
+          <th>Adult</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -37,8 +37,13 @@ if($search_string == ""){
             <td><?=hilight_search($search_string, $attendee->badge_name) ?></td>
             <td><?=hilight_search($search_string, $attendee->legal_name) ?></td>
             <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
-            <td><?=hilight_search($search_string, $attendee->phone_number) ?></td>
             <td><?=admission_display($attendee) ?></td>
+            <td>
+              <? if($attendee->minor()){ ?>
+                <?=hilight_search($search_string, $attendee->adult_badge_name) ?> / 
+                <?=hilight_search($search_string, $attendee->adult_legal_name) ?>
+              <? } ?>
+            </td>
             <td>
               <div class="btn-group" role="group">
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
