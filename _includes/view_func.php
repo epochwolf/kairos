@@ -128,7 +128,7 @@ function badge_type($badge_type){
 
 function badge_label($badge_type){
   global $BADGE_LABELS;
-  
+
   if($label = @$BADGE_LABELS[$badge_type]){
     return '<span class="label ' . $label . '">' . badge_type($badge_type) . '</span>';
   }else{
@@ -168,7 +168,11 @@ function format_address($address1, $address2, $city, $state, $zip){
 
 function reg_level_with_price($reg_level, $override_price=null){
   $title = reg_level($reg_level);
-  $price = currency(is_null($override_price) ? reg_price($reg_level) : $override_price);
+  if(!is_null($override_price) && strval($override_price) == "0"){
+    $price = "comped";
+  }else{
+    $price = currency(is_null($override_price) ? reg_price($reg_level) : $override_price);
+  }
   return "$title ($price)";
 }
 
