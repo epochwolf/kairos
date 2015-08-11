@@ -1,6 +1,7 @@
 <?php
 include_once '../../_includes/framework.php';
 include_once "../../_includes/forms/upgrade_form.php";
+require_login();
 
 if(!isset($form)){
   $id = @$_GET['id'];

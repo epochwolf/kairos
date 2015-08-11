@@ -38,7 +38,9 @@
         <?= nav_link("At Door Check In", "/admin/at-door.php") ?>
         <?= nav_link("Prices", "/admin/prices.php") ?>
         <?= nav_link("Numbers", "/admin/numbers.php") ?>
-        <?= nav_link("Blacklist", "/admin/blacklist.php") ?>
+        <? if(current_user()->admin){ ?>
+          <?= nav_link("Blacklist", "/admin/blacklist.php") ?>
+        <? } ?>
       </ul>
       <form class="navbar-form navbar-right" role="search" action="/admin/search.php" method="get">
         <div class="form-group">

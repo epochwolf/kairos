@@ -1,4 +1,16 @@
-<?php 
+<?php
+
+function current_user(){
+  return new User(["username" => "admin", "admin" => 0]);
+}
+
+function require_login(){
+  return true;
+}
+
+function require_admin(){
+  return true;
+}
 
 function age_from_birthdate($birthdate){
   try{

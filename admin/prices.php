@@ -1,5 +1,7 @@
 <?php
 include_once '../_includes/framework.php'; 
+require_login();
+
 $page_title = "Registration Levels";
 include "_partials/admin-header.php"; 
 ?>

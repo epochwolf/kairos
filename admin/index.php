@@ -1,5 +1,7 @@
 <?php
 include_once '../_includes/framework.php'; 
+require_login();
+
 $page_title = "Admin";
 include "_partials/admin-header.php"; 
 
@@ -36,9 +38,8 @@ switch($tab){
           <th>Badge Name</th>
           <th>Legal Name</th>
           <th>Birthdate</th>
-          <th>Phone Number</th>
           <th>Admission Level</th>
-          <th>Adult Badge Name</th>
+          <th>Adult</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -49,9 +50,13 @@ switch($tab){
             <td><?=$attendee->badge_name ?></td>
             <td><?=$attendee->legal_name ?></td>
             <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
-            <td><?=$attendee->phone_number ?></td>
             <td><?=admission_display($attendee) ?></td>
-            <td><?=$attendee->adult_badge_name ?></td>
+            <td>
+              <? if($attendee->minor()){ ?>
+                <?=$attendee->adult_badge_name ?> / 
+                <?=$attendee->adult_legal_name ?>
+              <? } ?>
+            </td>
             <td>
               <div class="btn-group" role="group">
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>

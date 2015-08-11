@@ -1,6 +1,7 @@
 <?php
 include_once '../../_includes/framework.php';
 include_once "../../_includes/forms/pay_form.php";
+require_login();
 
 $id = @$_POST['id'];
 $id or die("<p>Error, no attendee id.</p>");

@@ -1,5 +1,7 @@
 <?php
 include_once '../_includes/framework.php'; 
+require_admin();
+
 $page_title = "Admin";
 include "_partials/admin-header.php"; 
 
