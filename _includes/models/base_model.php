@@ -107,11 +107,22 @@ class BaseModel{
   public $id;
 
 
+  protected function after_save(){ return true; }
+  protected function after_create(){ return true; }
+  protected function after_update(){ return true; }
+
   public function save(){
+
     if($this->id){
-      return $this->update();
+      $result = $this->update();
+      $this->after_update();
+      $this->after_save();
+      return true;
     }else{
-      return $this->create();
+      $result = $this->create();
+      $this->after_create();
+      $this->after_save();
+      return ;
     }
   }
 
@@ -126,6 +137,7 @@ class BaseModel{
     global $db;
     $stmt = $db->prepare($sql);
     $stmt->execute($values);
+    $this->id = $db->lastInsertId();
     return true;
   }
 

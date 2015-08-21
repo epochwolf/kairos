@@ -92,6 +92,7 @@ class Attendee extends BaseModel {
     "email",
     "newsletter",
     "badge_type",
+    "badge_reprints",
     "original_admission_level",
     "admission_level",
     "tshirt_size",
@@ -181,4 +182,19 @@ class Attendee extends BaseModel {
       return floatval($override_price);
     }
   }
+
+  function after_create(){
+    $this->write_to_log("created");
+    return true;
+  }
+
+  function after_update(){
+    $this->write_to_log("updated");
+    return true;
+  }
+
+  protected function write_to_log($operation){
+    AttendeeLog::log($operation, $this);
+  }
+
 }

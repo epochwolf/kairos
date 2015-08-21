@@ -12,11 +12,12 @@ class NewAttendeeForm extends BaseForm{
     $this->params["notes"] = null;
     $this->params["paid"] = false;
     $this->params["checked_in"] = false;
+    $this->params["badge_reprints"] = 0;
     $d = new DateTime();
     $this->params["created_at"] = $d->format("Y-m-d H:i:s");
     $this->select_badge_type();
     $this->check_against_blacklist();
-    }
+  }
 
   public function validate(){
     $this->error_if_empty("legal_name");

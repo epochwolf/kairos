@@ -47,7 +47,10 @@ if(!isset($form)){
 
 <div class="form-group <?=$form->error_on("override_price") ? "has-error" : "" ?>">
   <?=label_tag("override_price", "Override Price") ?>
-  <?=input_tag($form, "override_price") ?>
+  <div class="input-group">
+    <div class="input-group-addon">$</div>
+    <?=input_tag($form, "override_price") ?>
+  </div>
   <?=error_display($form, "override_price") ?>
 </div> 
 

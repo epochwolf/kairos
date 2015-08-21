@@ -50,6 +50,7 @@ if($search_string == ""){
               <div class="btn-group" role="group">
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
                 <?=upgrade_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+                <?=reprint_button_for($attendee, ["class" => ["btn-sm"]]) ?>
                 <?=pay_button_for($attendee, ["class" => ["btn-sm"]]) ?>
                 <?=check_in_button_for($attendee, ["class" => ["btn-sm"]]) ?>
               </div>
@@ -64,6 +65,7 @@ if($search_string == ""){
 include "_partials/check-in-modal.php";
 include "_partials/edit-modal.php";
 include "_partials/upgrade-modal.php";
+include "_partials/reprint-modal.php";
 include "_partials/pay-modal.php";
 include "_partials/admin-footer.php";  
 ?>

@@ -68,6 +68,21 @@ function pay_button_for($attendee, $html_options=[]){
   return "<button $attributes>Pay</button>";
 }
 
+function reprint_button_for($attendee, $html_options=[]){
+  if(!$attendee->paid){ return ""; }
+  if(!$attendee->checked_in){ return ""; }
+  $attributes = build_html_attributes([
+    "class"        => ["btn", "btn-default"],
+    "data-toggle"  => "modal",
+    "data-target"  => "#reprint-modal",
+    "data-id"      => $attendee->id,
+    "type"         => "button",
+  ], $html_options);
+
+  return "<button $attributes>Reprint</button>";
+
+}
+
 ## FORM HELPERS
 
 function label_tag($field_name, $text){

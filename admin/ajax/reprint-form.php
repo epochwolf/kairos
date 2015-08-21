@@ -1,13 +1,13 @@
 <?php
 include_once '../../_includes/framework.php';
-include_once "../../_includes/forms/check_in_form.php";
+include_once "../../_includes/forms/reprint_form.php";
 require_login();
 
 if(!isset($form)){
   $id = @$_GET['id'];
   $id or die("<p>Error, no attendee id.</p>");
 
-  $form = new CheckInForm(["id" => $id]);
+  $form = new ReprintForm(["id" => $id]);
 }
 ?>
 <input type="hidden" name="id" value="<?=$id ?>">
@@ -18,7 +18,15 @@ if(!isset($form)){
 <? include "../../_partials/blacklist-alert.php" ?>
 <? include "../../_partials/minor-alert.php" ?>
 
-
+<div class="form-group">
+  <label>Badge Reprints</label>
+  <p class="form-control-static lead">
+    <?=$form->attendee->badge_reprints ?>
+    <? if($form->attendee->badge_reprints > 1){ ?> 
+      <span class="label label-danger">This person has already had their badge reprinted.</span>
+    <? } ?>
+  </p>
+</div>
 
 <div class="form-group <?=$form->error_on("badge_number") ? "has-error" : "" ?>">
   <?=label_tag("badge_number", "Badge Number") ?>
@@ -40,4 +48,9 @@ if(!isset($form)){
   <?=label_tag("badge_name", "Badge Name") ?>
   <?=input_tag($form, "badge_name") ?>
   <?=error_display($form, "badge_name") ?>
+</div>
+
+<h3>Notes on Attendee</h3>
+<div class="form-group">
+  <textarea class="form-control" name="notes" id="notes"><?=htmlentities(@$form->params["note"]) ?></textarea>
 </div>

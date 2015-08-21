@@ -7,6 +7,7 @@ include 'view_func.php';
 include 'models/base_model.php';
 include 'models/blacklist.php';
 include 'models/attendee.php';
+include 'models/attendee_log.php';
 include 'models/user.php';
 
 

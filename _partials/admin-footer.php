@@ -1,7 +1,7 @@
 <? isset($CONFIG) or die("Fatal: _includes/framework.php wasn't included."); ?>
 <footer class="footer">
   <div class="container">
-    <p class="text-muted pull-left">Kairos v1.1</p>
+    <p class="text-muted pull-left">Kairos v<?=file_get_contents("../VERSION") ?></p>
     <p class="text-muted pull-right">Copyright © 2015 epochwolf<br>Licensed for use by Ringtail Cafe Productions LLC</p>
   </div>
 </footer>

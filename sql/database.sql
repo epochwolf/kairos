@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.24)
 # Database: kairos
-# Generation Time: 2015-07-06 13:29:27 +0000
+# Generation Time: 2015-08-21 15:32:41 +0000
 # ************************************************************
 
 
@@ -40,6 +40,7 @@ CREATE TABLE `attendees` (
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `newsletter` tinyint(1) NOT NULL DEFAULT '0',
   `badge_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'attendee',
+  `badge_reprints` int(10) unsigned NOT NULL DEFAULT '0',
   `original_admission_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'standard',
   `admission_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'standard',
   `tshirt_size` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -75,8 +76,8 @@ CREATE TABLE `blacklist` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `badge_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `legal_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `trigger_legal_names` text COLLATE utf8_unicode_ci,
   `trigger_badge_names` text COLLATE utf8_unicode_ci,
+  `trigger_legal_names` text COLLATE utf8_unicode_ci,
   `reason` text COLLATE utf8_unicode_ci,
   `banned` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)

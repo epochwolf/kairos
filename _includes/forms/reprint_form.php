@@ -1,7 +1,7 @@
 <?php 
 include_once("base_form.php");
 
-class CheckInForm extends BaseForm{
+class ReprintForm extends BaseForm{
 
   public $attendee;
 
@@ -10,6 +10,7 @@ class CheckInForm extends BaseForm{
     $this->params["badge_name"] = $this->attendee->badge_name;
     $this->params["badge_number"] = $this->attendee->badge_number;
     $this->params["badge_type"] = $this->attendee->badge_type;
+    $this->params["notes"] = $this->attendee->notes;
     parent::__construct($params);
   }
 
@@ -21,7 +22,7 @@ class CheckInForm extends BaseForm{
       }
     }
 
-    $this->error_if_empty("badge_number");
+    $this->error_if_empty("badge_number");  
     if(!$this->error_on("badge_number")){
       if(!Attendee::is_unique_badge_number(@$this->params["badge_number"], $this->attendee)){
         $this->add_error("badge_number", "Number is already assigned.");
@@ -41,8 +42,11 @@ class CheckInForm extends BaseForm{
 
   function save(){
     if($this->valid()){
+      $this->attendee->badge_reprints = $this->attendee->badge_reprints + 1;
+      $this->attendee->badge_name = $this->params["badge_name"];
       $this->attendee->badge_number = $this->params["badge_number"];
       $this->attendee->badge_type = $this->params["badge_type"];
+      $this->attendee->notes = $this->params["notes"];
       if(array_key_exists("blacklisted", $this->params)){
         $this->attendee->blacklisted = $this->params["blacklisted"];
       }
