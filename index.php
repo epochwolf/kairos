@@ -11,7 +11,7 @@ include "_partials/header.php";
 
 <div class="row">
 <div class="col-md-8 col-md-offset-2">
-<? include "_partials/code-of-conduct.php"; ?>
+<?=file_get_contents("_partials/code-of-conduct.html", true); ?>
 </div>
 </div>
 <div class="row" style="margin-top: 30px;">
