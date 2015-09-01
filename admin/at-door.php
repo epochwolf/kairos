@@ -96,8 +96,8 @@ REGISTRATION_UPGRADE_PRICING
 </div>
 
 <?php
-include "_partials/pay-modal.php";
-include "_partials/check-in-modal.php";
-include "_partials/edit-modal.php";
+include "_partials/modals/pay-modal.php";
+include "_partials/modals/check-in-modal.php";
+include "_partials/modals/edit-modal.php";
 include "_partials/admin-footer.php";  
 ?>

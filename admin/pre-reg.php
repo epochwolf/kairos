@@ -24,7 +24,7 @@ $count = count($query);
           <th>Address</th>
           <th>Level</th>
           <th>TShirt</th>
-          <th>Actions</th>
+          <th class="hidden-print">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -37,7 +37,7 @@ $count = count($query);
             <td><?=$attendee->formatted_address() ?></td>
             <td><?=admission_display($attendee) ?></td>
             <td><?=$attendee->tshirt_size ?></td>
-            <td>
+            <td class="hidden-print">
               <div class="btn-group" role="group">
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
                 <?=upgrade_button_for($attendee, ["class" => ["btn-sm"]]) ?>
@@ -52,9 +52,9 @@ $count = count($query);
 </div>
 
 <?php
-include "_partials/check-in-modal.php";
-include "_partials/edit-modal.php";
-include "_partials/upgrade-modal.php";
-include "_partials/pay-modal.php";
+include "_partials/modals/check-in-modal.php";
+include "_partials/modals/edit-modal.php";
+include "_partials/modals/upgrade-modal.php";
+include "_partials/modals/pay-modal.php";
 include "_partials/admin-footer.php";  
 ?>
