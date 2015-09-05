@@ -1,6 +1,6 @@
 <?php
-include_once '../../_includes/framework.php';
-include_once "../../_includes/forms/pay_form.php";
+include_once '../../../_includes/framework.php';
+include_once "_includes/forms/pay_form.php";
 require_login();
 
 if(!isset($form)){
@@ -9,6 +9,10 @@ if(!isset($form)){
 
   $form = new PayForm(["id" => $id]);
 }
+
+$reg_levels = RegistrationLevel::at_door();
+$payment_types = PaymentType::at_door();
+$badge_types = BadgeType::all();
 ?>
 <input type="hidden" name="id" value="<?=$id ?>">
 
@@ -16,32 +20,28 @@ if(!isset($form)){
 <h2><?=$form->attendee->badge_name ?> / <?=$form->attendee->legal_name ?></h2>
 </div>
 
-<? include "../../_partials/blacklist-alert.php" ?>
-<? include "../../_partials/minor-alert.php" ?>
+<? include "_partials/blacklist-alert.php" ?>
+<? include "_partials/minor-alert.php" ?>
 
 <div class="form-group <?=$form->error_on("admission_level") ? "has-error" : "" ?>">
   <?=label_tag("admission_level", "Admission Level") ?>
   <select class="form-control" id="admission_level" name="admission_level">
-    <? foreach($AT_DOOR_REGISTRATION as $level){ ?>
-      <option value="<?=$level ?>" <?if(@$form->params["admission_level"] == $level){?>selected="selected"<? } ?>><?=reg_level_with_price($level) ?></option>
+    <? foreach($reg_levels as $level){ ?>
+      <?=option_tag(reg_level_with_price($level), @$form->params["admission_level"], $level->db_name, ["data-includes-tshirt" => $level->includes_tshirt]) ?>
     <? } ?>
   </select>
   <?=error_display($form, "admission_level") ?>
 </div>
 
 <div class="form-group <?=$form->error_on("payment_method") ? "has-error" : "" ?>">
-  <div class="radio-inline">
-    <label>
-      <input type="radio" name="payment_method" id="payment_method_cash" value="cash" <?if(@$form->params["payment_method"] == "cash"){?>checked="checked"<? } ?>>
-      Cash
-    </label>
-  </div>
-  <div class="radio-inline">
-    <label>
-      <input type="radio" name="payment_method" id="payment_method_credit" value="credit" <?if(@$form->params["payment_method"] == "credit"){?>checked="checked"<? } ?>>
-      Credit/Debit
-    </label>
-  </div>
+  <? foreach($payment_types as $type){ ?>
+    <div class="radio-inline">
+      <label>
+        <input type="radio" name="payment_method" id="payment_method_<?=$type->db_name?>" value="<?=$type->db_name?>" <?if(@$form->params["payment_method"] == $type->db_name){?>checked="checked"<? } ?>>
+        <?=$type->name?>
+      </label>
+    </div>
+  <? } ?>
   <?=error_display($form, "payment_method") ?>
 </div>
 
@@ -57,8 +57,8 @@ if(!isset($form)){
 <div class="form-group  <?=$form->error_on("badge_type") ? "has-error" : "" ?>">
   <?=label_tag("badge_type", "Badge Type") ?>
   <select class="form-control" id="badge_type" name="badge_type">
-    <? foreach($BADGE_TYPES as $key => $value){ ?>
-      <option value="<?=$key ?>" <?if(@$form->params["badge_type"] == $key){?>selected="selected"<? } ?>><?=$value ?></option>
+    <? foreach($badge_types as $type){ ?>
+      <?=option_tag($type->name, @$form->params["badge_type"], $type->db_name) ?>
     <? } ?>
   </select>
   <?=error_display($form, "badge_type") ?>

@@ -5,6 +5,7 @@ include "_partials/header.php";
 <div class="container">
 
 <div class="col-md-12 text-center">
+<a href="/login.php" class="btn btn-default pull-right">Admin</a>
 <h1>Register At The Door</h1>
 <p class="lead">Before registering, you must agree to the Code of Conduct.</p>
 </div>

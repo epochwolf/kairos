@@ -8,7 +8,7 @@ $('.attendee-modal').on('show.bs.modal', function (event) {
   body.html("Loading...");
 
   $.ajax({
-    url: "/admin/ajax/"+file+"?id="+attendee_id
+    url: "/admin/ajax/forms/"+file+"?id="+attendee_id
   }).done(function( html ) {
     body.html(html);
     setTimeout(function(){ modal.find("input[type=text]:visible,select:visible").first().focus(); }, 400);

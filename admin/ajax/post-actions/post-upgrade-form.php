@@ -1,6 +1,6 @@
 <?php
-include_once '../../_includes/framework.php';
-include_once "../../_includes/forms/upgrade_form.php";
+include_once '../../../_includes/framework.php';
+include_once "_includes/forms/upgrade_form.php";
 require_login();
 
 $id = @$_POST['id'];
@@ -22,6 +22,6 @@ if($form->valid()){
 </script>
 <?php
 }else{
-  include "upgrade-form.php";
+  include "../forms/upgrade-form.php";
 }
 ?>

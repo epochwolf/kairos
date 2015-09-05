@@ -1,4 +1,0 @@
-Authtype Basic
-AuthName "Kairos Login"
-AuthUserFile htdocs/admin/.htpasswd
-Require valid-user

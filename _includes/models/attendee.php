@@ -151,9 +151,14 @@ class Attendee extends BaseModel {
     return $this->age() < 18;
   }
 
+  // function upgradeable(){
+  //   global $REGISTRATION_UPGRADE_PRICING;
+  //   return array_key_exists($this->admission_level, $REGISTRATION_UPGRADE_PRICING);
+  // }
+
   function upgradeable(){
-    global $REGISTRATION_UPGRADE_PRICING;
-    return array_key_exists($this->admission_level, $REGISTRATION_UPGRADE_PRICING);
+    $upgrade = RegistrationUpgrade::cached_available_for($this->admission_level);
+    return $upgrade ? true : false;
   }
 
   function blacklist(){

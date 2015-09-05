@@ -4,13 +4,12 @@ require_login();
 
 $page_title = "Registration Levels";
 include "_partials/admin-header.php"; 
+
+$pre_reg_reg_levels = RegistrationLevel::pre_reg();
+$at_door_reg_levels = RegistrationLevel::at_door();
+$upgrades = RegistrationUpgrade::all_with_prices();
 ?>
 
-<!--  
-AT_DOOR_REGISTRATION
-PRE_REGISTRATION
-REGISTRATION_UPGRADE_PRICING
--->
 <div class="container">
   <div class="col-md-12">
     <h1>Registration Levels</h1>
@@ -26,10 +25,10 @@ REGISTRATION_UPGRADE_PRICING
         </tr>
       </thead>
       <tbody>
-        <? foreach($PRE_REGISTRATION as $level){ ?>
+        <? foreach($pre_reg_reg_levels as $level){ ?>
           <tr>
-            <td><?=reg_level($level) ?></td>
-            <td class="text-right"><?=currency(reg_price($level)) ?></td>
+            <td><?=$level->name ?></td>
+            <td class="text-right"><?=currency($level->price) ?></td>
           </tr>
         <? } ?>
       </tbody>
@@ -45,10 +44,10 @@ REGISTRATION_UPGRADE_PRICING
         </tr>
       </thead>
       <tbody>
-        <? foreach($AT_DOOR_REGISTRATION as $level){ ?>
+        <? foreach($at_door_reg_levels as $level){ ?>
           <tr>
-            <td><?=reg_level($level) ?></td>
-            <td class="text-right"><?=currency(reg_price($level)) ?></td>
+            <td><?=$level->name ?></td>
+            <td class="text-right"><?=currency($level->price) ?></td>
           </tr>
         <? } ?>
       </tbody>
@@ -65,14 +64,12 @@ REGISTRATION_UPGRADE_PRICING
         </tr>
       </thead>
       <tbody>
-        <? foreach($REGISTRATION_UPGRADE_PRICING as $old_level => $new_levels){ ?>
-          <? foreach($new_levels as $new_level => $price){ ?>
-            <tr>
-              <td><?=reg_level($old_level) ?></td>
-              <td><?=reg_level($new_level) ?></td>
-              <td class="text-right"><?=currency($price) ?></td>
-            </tr>
-          <? } ?>
+        <? foreach($upgrades as $upgrade){ ?>
+          <tr>
+            <td><?=$upgrade->from_name ?></td>
+            <td><?=$upgrade->to_name ?></td>
+            <td class="text-right"><?=currency($upgrade->override_price ?: $upgrade->price) ?></td>
+          </tr>
         <? } ?>
         <tr>
           <td></td>

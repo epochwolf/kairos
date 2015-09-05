@@ -1,17 +1,5 @@
 <?php
 
-function current_user(){
-  return new User(["username" => "admin", "admin" => 0]);
-}
-
-function require_login(){
-  return true;
-}
-
-function require_admin(){
-  return true;
-}
-
 function age_from_birthdate($birthdate){
   try{
     if($birthdate){
@@ -32,7 +20,14 @@ function build_html_attributes($defaults, $html_options=[]){
 
   $attributes = "";
   foreach($html_options as $k => $v){
-    if(is_array($v)){ $v = implode(" ", $v); }
+    if(is_null($v)){ continue; }
+    if(is_array($v)){ 
+      if($k == "class"){
+        $v = implode(" ", $v);
+      }else{
+        $v = end($v);
+      } 
+    }
     $v = htmlspecialchars(strval($v));
     $attributes .= " $k='$v'";
   }

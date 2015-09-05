@@ -1,6 +1,6 @@
 <?php
-include_once '../../_includes/framework.php';
-include_once "../../_includes/forms/check_in_form.php";
+include_once '../../../_includes/framework.php';
+include_once "_includes/forms/pay_form.php";
 require_login();
 
 $id = @$_POST['id'];
@@ -12,7 +12,7 @@ $attendee or die("<p>No attendee with (ID=$id)");
 $return_url = @$_POST['return_url'] ?: "/admin/index.php";
 
 
-$form = new CheckInForm($_POST);
+$form = new PayForm($_POST);
 if($form->valid()){
   $form->save();
   # Kind of a bad hack but it works. 
@@ -22,6 +22,6 @@ if($form->valid()){
 </script>
 <?php
 }else{
-  include "check-in-form.php";
+  include "../forms/pay-form.php";
 }
 ?>

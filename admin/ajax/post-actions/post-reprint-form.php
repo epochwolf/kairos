@@ -1,6 +1,6 @@
 <?php
-include_once '../../_includes/framework.php';
-include_once "../../_includes/forms/pay_form.php";
+include_once '../../../_includes/framework.php';
+include_once "_includes/forms/reprint_form.php";
 require_login();
 
 $id = @$_POST['id'];
@@ -12,7 +12,7 @@ $attendee or die("<p>No attendee with (ID=$id)");
 $return_url = @$_POST['return_url'] ?: "/admin/index.php";
 
 
-$form = new PayForm($_POST);
+$form = new ReprintForm($_POST);
 if($form->valid()){
   $form->save();
   # Kind of a bad hack but it works. 
@@ -22,6 +22,6 @@ if($form->valid()){
 </script>
 <?php
 }else{
-  include "pay-form.php";
+  include "../forms/reprint-form.php";
 }
 ?>

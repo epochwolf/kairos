@@ -9,11 +9,6 @@ $query = Attendee::at_door_pending();
 $count = count($query);
 ?>
 
-<!--  
-AT_DOOR_REGISTRATION
-PRE_REGISTRATION
-REGISTRATION_UPGRADE_PRICING
--->
 <div class="container">
   <div class="col-md-12">
     <h1>At Door Check In (<?=$count ?>)</h1>

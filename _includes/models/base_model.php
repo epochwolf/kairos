@@ -1,14 +1,19 @@
 <?php 
 
 class BaseModel{
+
   # These need to be overridden
   const TABLE_NAME = "blacklist";
   const FIELDS = [];
+  const JOIN_FIELDS = [];
   const PROTECTED_FIELDS = [];
 
   function __construct($row){
     $klass = get_called_class();
     foreach($klass::FIELDS as $field){
+      $this->{$field} = @$row[$field];
+    }
+    foreach($klass::JOIN_FIELDS as $field){
       $this->{$field} = @$row[$field];
     }
   }
@@ -31,11 +36,28 @@ class BaseModel{
     return $array;
   }
 
+  # CACHE
+  protected static $_cache = [];
+
+  protected static function get_cache(){
+    $klass = get_called_class();
+    if(empty($klass::$_cache)){
+      $klass::$_cache = $klass::all();
+    }
+    return $klass::$_cache;
+  }
+
   # QUERIES
 
   static function all(){
     $klass = get_called_class();
     return self::query("SELECT * FROM " . $klass::TABLE_NAME);
+  }
+
+  static function count(){
+    $klass = get_called_class();
+    $results = db_query("SELECT count(*) as row_count FROM " . $klass::TABLE_NAME);
+    return @$results[0]["row_count"];
   }
 
   static function find($id){

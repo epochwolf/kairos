@@ -20,10 +20,11 @@ class PayForm extends BaseForm{
     $this->error_if_empty("badge_type");
 
     if(!$this->error_on("badge_type")){
+      $badge_type = BadgeType::first_by_db_name(@$this->params["badge_type"]);
 
-      if(@$this->params["badge_type"] != "minor" && $this->attendee->minor()){
+      if(!$badge_type->minor && $this->attendee->minor()){
         $this->add_error("badge_type", "Attendee is a minor.");
-      }elseif(@$this->params["badge_type"] == "minor" && !$this->attendee->minor()){
+      }elseif($badge_type->minor && !$this->attendee->minor()){
         $this->add_error("badge_type", "Attendee is not a minor.");
       }
     }

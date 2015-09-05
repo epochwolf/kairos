@@ -1,6 +1,6 @@
 <div class="modal attendee-modal fade" id="pay-modal" data-body="pay-form.php">
   <div class="modal-dialog">
-    <form action="/admin/ajax/post-pay-form.php" method="post">
+    <form action="/admin/ajax/post-actions/post-pay-form.php" method="post">
       <input type="hidden" name="return_url" value="<?=$_SERVER['REQUEST_URI'] ?>">
       <div class="modal-content">
         <div class="modal-header">

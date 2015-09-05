@@ -1,3 +1,10 @@
+# Kairos 1.3 (Sep 1, 2015)
+
+Improved printing of pre-registration page. 
+
+* The pre-registration tab can be printed on paper as a backup. 
+* Code of Conduct is now an html file. 
+
 # Kairos 1.2 (Aug 21, 2015)
 
 Adding badge reprinting and audit logging. 

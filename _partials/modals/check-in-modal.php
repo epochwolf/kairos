@@ -1,6 +1,6 @@
 <div class="modal attendee-modal fade" id="check-in-modal" data-body="check-in-form.php">
   <div class="modal-dialog">
-    <form action="/admin/ajax/post-check-in-form.php" method="post">
+    <form action="/admin/ajax/post-actions/post-check-in-form.php" method="post">
       <input type="hidden" name="return_url" value="<?=$_SERVER['REQUEST_URI'] ?>">
       <div class="modal-content">
         <div class="modal-header">

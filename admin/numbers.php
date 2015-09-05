@@ -20,38 +20,43 @@ SQL
 
 $by_badges = db_query(<<<SQL
 select 
-  badge_type, 
+  badge_types.name as badge_type, 
   count(badge_type) as badge_count,
   sum(at_door) as at_door_in,
   sum(IF(at_door=0 AND checked_in=1, 1, 0)) as pre_reg_in,
   sum(IF(at_door=0 AND checked_in=0, 1, 0)) as pre_reg_not_in
 from attendees 
-group by badge_type
+join badge_types on badge_types.db_name = attendees.badge_type
+group by attendees.badge_type
+order by badge_types.sort_order ASC
 SQL
 );
 
 $by_level = db_query(<<<SQL
 select 
-  admission_level, 
+  rl.name as admission_level, 
   count(admission_level) as level_count,
   sum(at_door) as at_door_in,
   sum(IF(at_door=0 AND checked_in=1, 1, 0)) as pre_reg_in,
   sum(IF(at_door=0 AND checked_in=0, 1, 0)) as pre_reg_not_in
 from attendees 
-group by admission_level 
-order by admission_level
+join registration_levels rl on rl.db_name = admission_level
+group by rl.name 
+order by rl.sort_order ASC
 SQL
 );
 
 $upgrades = db_query(<<<SQL
 select 
-  original_admission_level, 
-  admission_level, 
+  old_rl.name as original_admission_level, 
+  rl.name as admission_level, 
   count(admission_level) as level_count 
 from attendees
+join registration_levels rl on rl.db_name = admission_level
+join registration_levels old_rl on old_rl.db_name = original_admission_level
 where original_admission_level != admission_level
-group by original_admission_level, admission_level
-order by original_admission_level, admission_level
+group by rl.name, old_rl.name
+order by rl.sort_order, old_rl.sort_order
 SQL
 );
 
@@ -86,7 +91,7 @@ SQL
           </tr>
           <? foreach($by_level as $row){?>
             <tr>
-              <td><?=reg_level($row["admission_level"]) ?></td>
+              <td><?=$row["admission_level"] ?></td>
               <td class="text-right"><?=$row["level_count"] ?></td>
               <td class="text-right"><?=$row["at_door_in"] ?></td>
               <td class="text-right"><?=$row["pre_reg_in"] ?></td>
@@ -103,7 +108,7 @@ SQL
           </tr>
           <? foreach($by_badges as $row){?>
             <tr>
-              <td><?=badge_type($row["badge_type"]) ?></td>
+              <td><?=$row["badge_type"] ?></td>
               <td class="text-right"><?=$row["badge_count"] ?></td>
               <td class="text-right"><?=$row["at_door_in"] ?></td>
               <td class="text-right"><?=$row["pre_reg_in"] ?></td>
@@ -122,8 +127,8 @@ SQL
           </tr>
           <? foreach($upgrades as $row){?>
             <tr>
-              <td><?=reg_level($row["original_admission_level"]) ?></td>
-              <td><?=reg_level($row["admission_level"]) ?></td>
+              <td><?=$row["original_admission_level"] ?></td>
+              <td><?=$row["admission_level"] ?></td>
               <td class="text-right"><?=$row["level_count"] ?></td>
             </tr>
           <? } ?>
@@ -134,15 +139,15 @@ SQL
         <table class="table table-bordered lead">
           <tr>
             <td>Comped Badges</td>
-            <td><?=$totals["attendees_reprinted"] ?></td>
+            <td><?=$totals["comped_badges"] ?></td>
           </tr>
           <tr>
             <td>Attendees Needing Badge Reprinted</td>
-            <td><?=$totals["total_reprints"] ?></td>
+            <td><?=$totals["attendees_reprinted"] ?></td>
           </tr>
           <tr>
             <td>Total Badge Reprints</td>
-            <td><?=$totals["comped_badges"] ?></td>
+            <td><?=$totals["total_reprints"] ?></td>
           </tr>
         </table>
       </div>
