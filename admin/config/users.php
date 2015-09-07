@@ -15,20 +15,23 @@ $users = User::all();
     <table class="table">
       <tr>
         <th>Username</th>
-        <th>Password</th>
         <th>Admin</th>
+        <th>Actions</th>
       </tr>
       <? foreach($users as $user){ ?>
         <tr>
           <td><?= $user->username ?></td>
-          <td><?= $user->password ?></td>
           <td><?= $user->admin ? "Yes" : "No" ?></td>
+          <td>
+            <?=user_button_for($user, ["class" => ["btn-sm"]]) ?> 
+            <?=delete_user_button_for($user, ["class" => ["btn-sm"]]) ?>
+          </td>
         </tr>
       <? } ?>
     </table>
+    <?=user_button_for() ?>
   </div>
 </div>
 <?php
-$count = User::count();
 include "_partials/admin-footer.php";  
 ?>

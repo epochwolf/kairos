@@ -52,9 +52,5 @@ $count = count($query);
 </div>
 
 <?php
-include "_partials/modals/check-in-modal.php";
-include "_partials/modals/edit-modal.php";
-include "_partials/modals/upgrade-modal.php";
-include "_partials/modals/pay-modal.php";
 include "_partials/admin-footer.php";  
 ?>

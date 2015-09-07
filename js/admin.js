@@ -1,21 +1,35 @@
-$('.attendee-modal').on('show.bs.modal', function (event) {
+$('.standard-modal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget); // Button that triggered the modal
-  var attendee_id = button.data('id'); // Extract info from data-* attributes
   var modal = $(this);
-  var file = modal.data("body");
-  var body = modal.find('.modal-body');
+  var modal_form_tag      = modal.find('form');
+  var modal_title_tag     = modal.find('.modal-title');
+  var modal_body_tag      = modal.find('.modal-body');
+  var modal_submit_button = modal.find('.modal-submit-button');
 
-  body.html("Loading...");
+  // Parameters from button.
+  var primary_key  = button.data('id');
+  var form_url     = button.data("form");
+  var post_url     = button.data("post-form");
+  var title        = button.data("title");
+  var button_label = button.data("submit-label");
 
+  // Set up modal.
+  modal_title_tag.html(title);
+  modal_form_tag.attr("action", post_url);
+  modal_body_tag.html("Loading...");
+  modal_submit_button.html(button_label);
+
+  // Load the form.
   $.ajax({
-    url: "/admin/ajax/forms/"+file+"?id="+attendee_id
+    url: form_url+"?id="+primary_key
   }).done(function( html ) {
-    body.html(html);
+    modal_body_tag.html(html);
+    // Focus on the first text field after the form is loaded. 
     setTimeout(function(){ modal.find("input[type=text]:visible,select:visible").first().focus(); }, 400);
   });
 });
 
-$('.attendee-modal').on('submit', "form", function(event){
+$('.standard-modal').on('submit', "form", function(event){
   event.preventDefault();
   var form = $(this);
   var body = form.find('.modal-body');

@@ -3,10 +3,18 @@
 class Blacklist extends BaseModel{
   const TABLE_NAME = "blacklist";
 
+  const TYPES = [
+    "ban", 
+    "restriction", 
+    "watch"
+  ];
+
+
+
   ## QUERIES
   # @return [Blacklist, "badge_name" or "legal_name", String] or null
   static function match($badge_name, $legal_name){
-    $rows = self::all();
+    $rows = self::cached_all();
     foreach($rows as $row){
       if(!empty($badge_name)){
         if($trigger_badge_name = $row->matches_badge_name($badge_name)){
@@ -22,9 +30,12 @@ class Blacklist extends BaseModel{
     return null;
   }
 
+  # CACHED METHODS, these load the entire table in memory before returning data. 
+  protected static $_cache = [];
 
-  static function map_row($row){
-    return new Blacklist($row);
+  static function cached_all(){
+    $klass = get_called_class();
+    return $klass::get_cache();
   }
 
   # INSTANCE METHODS
@@ -36,7 +47,7 @@ class Blacklist extends BaseModel{
     "trigger_legal_names",
     "trigger_badge_names",
     "reason",
-    "banned",
+    "type"
   ];
 
   private $attendees_records;
@@ -47,7 +58,6 @@ class Blacklist extends BaseModel{
     $this->attendees_records = Attendee::by_blacklist_id($this->id);
     return $this->attendees_records;
   }
-
 
   function matches_badge_name($value){
     return $this->matches_triggers($this->trigger_badge_names, $value);
@@ -60,20 +70,25 @@ class Blacklist extends BaseModel{
   private function matches_triggers($triggers, $value){
     if(empty($triggers)){ return false; }
     if(empty($value)){ return false; }
-    $value = strtolower($value);
+    $value = trim(strtolower($value));
 
     foreach(explode("\n", $triggers) as $trigger){
-      $trigger = strtolower(trim($trigger));
+      $regex = $this->trigger_to_regex($trigger);
 
-      if(!empty($trigger) && strstr($value, $trigger)){
+      if($regex && preg_match($regex, $value)){
         return trim($trigger);
       }
     }
     return null;
   }
 
-  # Saving isn't supported for this class. 
-  function save(){
-    return false;
+  private function trigger_to_regex($trigger){
+    $parts = explode("*", $trigger);
+    $parts = array_filter($parts);
+    if(!empty($parts)){
+      $parts = array_map(function($v){ return preg_quote($v, "/"); }, $parts);
+      $regex = implode(".+", $parts);
+      return "/$regex/i";
+    }
   }
 }

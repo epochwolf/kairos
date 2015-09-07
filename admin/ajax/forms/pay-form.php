@@ -1,6 +1,5 @@
 <?php
 include_once '../../../_includes/framework.php';
-include_once "_includes/forms/pay_form.php";
 require_login();
 
 if(!isset($form)){

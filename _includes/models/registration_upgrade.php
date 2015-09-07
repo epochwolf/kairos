@@ -65,9 +65,22 @@ class RegistrationUpgrade extends BaseModel {
     parent::__construct($row);
   }
 
+  function price(){
+    return is_null($this->override_price) ? $this->price : $this->override_price;
+  }
+
   function export_to_db(){
     $array = parent::export_to_db();
+    $array["override_price"] = self::override_price_to_db($this->override_price);
     return $array;
   }
 
+  static function override_price_to_db($override_price){
+    $override_price = preg_replace("/[^\d]*/", "", $override_price);
+    if(trim($override_price) === ""){
+      return null;
+    }else{
+      return floatval($override_price);
+    }
+  }
 }

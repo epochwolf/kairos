@@ -1,5 +1,3 @@
-<? isset($CONFIG) or die("Fatal: _includes/framework.php wasn't included."); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +7,7 @@
   <? // Disable zooming on mobile devices ?>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><?=isset($page_title) ? $page_title : $CONFIG["default_page_title"] ?></title>
+  <title><?=isset($page_title) ? $page_title : "Kairos" ?></title>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/admin.css" rel="stylesheet">
@@ -27,7 +25,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><?= $CONFIG["admin_header"] ?></a>
+      <a class="navbar-brand" href="/admin/">Kairos</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,7 +42,13 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Config <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <?= nav_link("Overview", "/admin/config/index.php") ?>
-              <?= nav_link("Blacklist", "/admin/blacklist.php") ?>
+              <?= nav_link("Blacklist", "/admin/config/blacklist.php") ?>
+              <?= nav_link("Code of Conduct", "/admin/config/code-of-conduct/index.php") ?>
+              <?= nav_link("Registration Levels", "/admin/config/registration-levels.php") ?>
+              <?= nav_link("Registration Upgrades", "/admin/config/registration-upgrades.php") ?>
+              <?= nav_link("Badge Types", "/admin/config/badge-types.php") ?>
+              <?= nav_link("Payment Types", "/admin/config/payment-types.php") ?>
+              <?= nav_link("TShirt Sizes", "/admin/config/tshirt-sizes.php") ?>
               <?= nav_link("Users", "/admin/config/users.php") ?>
             </ul>
           </li>

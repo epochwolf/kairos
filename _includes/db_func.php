@@ -20,12 +20,17 @@ function db_query($query, $params=null){
 
 function db_prepared_insert_sql($table, $fields){
   $values = array_map(function($field){ return "?"; }, $fields);
+  $fields = array_map(function($field) use ($table){ return "`$table`.`$field`"; });
 
   return sprintf("INSERT INTO $table (%s) VALUES (%s)", implode(",", $fields), implode(",", $values));
 }
 
 function db_prepared_update_sql($table, $fields, $where){
-  $values = array_map(function($field){ return "$field = ?"; }, $fields);
+  $values = array_map(function($field) use ($table){ return "`$table`.`$field` = ?"; }, $fields);
 
   return sprintf("UPDATE $table SET %s WHERE $where", implode(", ", $values));
+}
+
+function db_prepared_delete_sql($table, $where){
+  return "DELETE FROM $table WHERE $where";
 }

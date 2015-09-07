@@ -1,5 +1,4 @@
 <?php 
-include_once("base_form.php");
 
 class NewAttendeeForm extends BaseForm{
 
@@ -16,7 +15,6 @@ class NewAttendeeForm extends BaseForm{
     $d = new DateTime();
     $this->params["created_at"] = $d->format("Y-m-d H:i:s");
     $this->select_badge_type();
-    $this->check_against_blacklist();
   }
 
   public function validate(){
@@ -71,6 +69,7 @@ class NewAttendeeForm extends BaseForm{
   function save(){
     if($this->valid()){
       $attendee = new Attendee($this->params);
+      $attendee->apply_blacklist();
       return $attendee->save();
     }else{
       return false;
@@ -85,22 +84,5 @@ class NewAttendeeForm extends BaseForm{
       $badge_type = BadgeType::default_adult();
     }
     $this->params["badge_type"] = $badge_type->db_name;
-  }
-
-  private function check_against_blacklist(){
-    if(!array_key_exists("badge_name", $this->params) && !array_key_exists("legal_name", $this->params)){
-      return;
-    }
-    list($blacklist, $field, $trigger) = Blacklist::match(@$this->params["badge_name"], @$this->params["legal_name"]);
-    if($blacklist){
-      $this->params["blacklisted"] = true;
-      $this->params["blacklist_id"] = $blacklist->id;
-      $this->params["blacklist_trigger"] = "$field:$trigger";
-      $this->params["banned"] = $blacklist->banned;
-    }else{
-      $this->params["blacklisted"] = false;
-      $this->params["blacklist_id"] = null;
-      $this->params["banned"] = 0;
-    }
   }
 }

@@ -30,6 +30,11 @@ class Attendee extends BaseModel {
     return self::query($sql, [':at_door' => 1]);
   }
 
+  static function blacklisted(){
+    $sql = "SELECT * FROM attendees WHERE blacklisted = 1 OR blacklist_id IS NOT NULL";
+    return self::query($sql);
+  }
+
   static function search($name){
     $sql = "SELECT * FROM attendees " .
     "WHERE (badge_number != '0' AND badge_number = :name_exact) " .
@@ -101,8 +106,9 @@ class Attendee extends BaseModel {
     "at_door",
     "blacklisted",
     "blacklist_id",
+    "blacklist_type",
+    "blacklist_message",
     "blacklist_trigger",
-    "banned",
     "adult_legal_name",
     "adult_badge_name",
     "checked_in",
@@ -125,21 +131,22 @@ class Attendee extends BaseModel {
 
   function export_to_db(){
     $array = parent::export_to_db();
-    $array["badge_number"]    = self::nullable_string_to_db($this->badge_number);
-    $array["birthdate"]       = self::date_to_db($this->birthdate);
-    $array["phone_number"]    = self::phone_to_db($this->phone_number);
-    $array["newsletter"]      = self::bool_to_db($this->newsletter);
-    $array["tshirt_size"]     = self::nullable_string_to_db($this->tshirt_size);
-    $array["override_price"]  = self::override_price_to_db($this->override_price);
-    $array["at_door"]         = self::bool_to_db($this->at_door);
-    $array["blacklisted"]     = self::bool_to_db($this->blacklisted);
-    $array["banned"]          = self::bool_to_db($this->banned);
-    $array["adult_legal_name"]= self::nullable_string_to_db($this->adult_legal_name);
-    $array["adult_badge_name"]= self::nullable_string_to_db($this->adult_badge_name);
-    $array["checked_in"]      = self::bool_to_db($this->checked_in);
-    $array["paid"]            = self::bool_to_db($this->paid);
-    $array["created_at"]      = $this->created_at;
-    $array["notes"]           = self::nullable_string_to_db($this->notes);
+    $array["badge_number"]       = self::nullable_string_to_db($this->badge_number);
+    $array["birthdate"]          = self::date_to_db($this->birthdate);
+    $array["phone_number"]       = self::phone_to_db($this->phone_number);
+    $array["newsletter"]         = self::bool_to_db($this->newsletter);
+    $array["tshirt_size"]        = self::nullable_string_to_db($this->tshirt_size);
+    $array["override_price"]     = self::override_price_to_db($this->override_price);
+    $array["at_door"]            = self::bool_to_db($this->at_door);
+    $array["blacklisted"]        = self::bool_to_db($this->blacklisted);
+    $array["blacklist_type"]     = self::nullable_string_to_db($this->blacklist_type);
+    $array["blacklist_message"]  = self::nullable_string_to_db($this->blacklist_message);
+    $array["adult_legal_name"]   = self::nullable_string_to_db($this->adult_legal_name);
+    $array["adult_badge_name"]   = self::nullable_string_to_db($this->adult_badge_name);
+    $array["checked_in"]         = self::bool_to_db($this->checked_in);
+    $array["paid"]               = self::bool_to_db($this->paid);
+    $array["created_at"]         = $this->created_at;
+    $array["notes"]              = self::nullable_string_to_db($this->notes);
     return $array;
   }
 
@@ -171,10 +178,6 @@ class Attendee extends BaseModel {
     }
   }
 
-  function blacklisted(){
-    return $this->blacklisted && $this->blacklist_id;
-  }
-
   function formatted_address(){
     return format_address($this->address1, $this->address2, $this->city, $this->state_prov, $this->postal_code);
   }
@@ -202,4 +205,26 @@ class Attendee extends BaseModel {
     AttendeeLog::log($operation, $this);
   }
 
+  function apply_blacklist(){
+    if(empty($this->badge_name) && empty($this->legal_name)){ return; }
+
+    list($blacklist, $field, $trigger) = Blacklist::match($this->badge_name, $this->legal_name);
+    if($blacklist){
+      $this->blacklisted = true;
+      $this->blacklist_id = $blacklist->id;
+      $this->blacklist_trigger = "$field:$trigger";
+      $this->blacklist_type = $blacklist->type;
+      $this->blacklist_message = $blacklist->reason;
+    }else{
+      if($this->blacklisted && !$this->blacklist_id){
+        // Manual blacklists shouldn't be reset. 
+        return;
+      }
+      $this->blacklisted = false;
+      $this->blacklist_id = null;
+      $this->blacklist_trigger = null;
+      $this->blacklist_type = null;
+      $this->blacklist_message = null;
+    }
+  }
 }

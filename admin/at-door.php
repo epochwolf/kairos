@@ -37,7 +37,7 @@ $count = count($query);
 
                 <dl>
                   <dt>Birthdate</dt>
-                  <dd><?=$attendee->birthdate ?></dd>
+                  <dd><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</dd>
                 </dl>
                 
                 <dl>
@@ -91,8 +91,5 @@ $count = count($query);
 </div>
 
 <?php
-include "_partials/modals/pay-modal.php";
-include "_partials/modals/check-in-modal.php";
-include "_partials/modals/edit-modal.php";
 include "_partials/admin-footer.php";  
 ?>

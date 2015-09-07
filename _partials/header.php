@@ -1,4 +1,3 @@
-<? isset($CONFIG) or die("Fatal: _includes/framework.php wasn't included."); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   <? // Disable zooming on mobile devices ?>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><?=isset($page_title) ? $page_title : $CONFIG["default_page_title"] ?></title>
+  <title><?=isset($page_title) ? $page_title : "Register" ?></title>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/application.css" rel="stylesheet">

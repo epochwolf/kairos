@@ -1,5 +1,4 @@
 <?php 
-include_once("base_form.php");
 
 class PayForm extends BaseForm{
 

@@ -1,5 +1,4 @@
 <?
-include_once("base_form.php");
 
 class EditForm extends BaseForm{
   public $attendee;
@@ -55,6 +54,12 @@ class EditForm extends BaseForm{
       }elseif($badge_type->minor && !$minor){
         $this->add_error("badge_type", "Attendee is not a minor.");
       }
+    }
+
+
+    if(@$this->params["blacklisted"]){
+      $this->error_if_empty("blacklist_type", "Blacklisted, type required.");
+      $this->error_if_empty("blacklist_message", "Blacklisted, message required.");
     }
   }
 

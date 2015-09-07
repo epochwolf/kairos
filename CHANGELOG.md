@@ -1,3 +1,14 @@
+
+# Kairos 2.0 (Sep 5, 2015)
+
+Moving all configuration to the database and adding real users instead of relying on basic aut via htaccess files.  
+
+* All configuration has been moved into the database.
+* All configuration except database can be changed in the UI.
+* Database configuration is now in _includes/config.json
+* User login added instead of using basic auth in an htaccess file. 
+* Blacklist now supports wildcard character * in triggers. 
+
 # Kairos 1.3 (Sep 1, 2015)
 
 Improved printing of pre-registration page. 

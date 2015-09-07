@@ -133,18 +133,40 @@ class BaseModel{
   protected function after_create(){ return true; }
   protected function after_update(){ return true; }
 
-  public function save(){
+  public function is_new_record(){
+    return $this->id ? false : true;
+  }
 
-    if($this->id){
-      $result = $this->update();
-      $this->after_update();
-      $this->after_save();
-      return true;
-    }else{
-      $result = $this->create();
+  public function save(){
+    $result = $this->save_without_callbacks();
+    if($this->is_new_record()){
       $this->after_create();
-      $this->after_save();
-      return ;
+    }else{
+      $this->after_update();
+    }
+    $this->after_save();
+    return $result;
+  }
+
+  public function save_without_callbacks(){
+    if($this->is_new_record()){
+      $result = $this->create();
+    }else{
+      $result = $this->update();
+    }
+    return $result;
+  }
+
+  public function delete(){
+    $klass = get_called_class();
+
+    if(!$this->is_new_record()){
+      $sql = db_prepared_delete_sql($klass::TABLE_NAME, "id = ?");
+
+      global $db;
+      $stmt = $db->prepare($sql);
+      $stmt->execute([$this->id]);
+      return true;
     }
   }
 
@@ -164,7 +186,6 @@ class BaseModel{
   }
 
   private function update(){
-    global $db;
     $klass = get_called_class();
     $attributes = $this->export_to_db();
 

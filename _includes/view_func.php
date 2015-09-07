@@ -1,6 +1,4 @@
 <?php
-isset($CONFIG) or die("Fatal: _includes/config.php wasn't included.");
-
 
 ## LINK HELPERS
 
@@ -16,72 +14,6 @@ function nav_link($title, $file, $active=NULL){
   }
 }
 
-function edit_button_for($attendee, $html_options=[]){
-  $attributes = build_html_attributes([
-    "class"        => ["btn", "btn-default"],
-    "data-toggle"  => "modal",
-    "data-target"  => "#edit-modal",
-    "data-id"      => $attendee->id,
-    "type"         => "button",
-  ], $html_options);
-
-  return "<button $attributes>Edit</button>";
-}
-
-function upgrade_button_for($attendee, $html_options=[]){
-  if(!$attendee->paid){ return ""; }
-  if(!$attendee->upgradeable()){ return ""; }
-  $attributes = build_html_attributes([
-    "class"        => ["btn", "btn-default"],
-    "data-toggle"  => "modal",
-    "data-target"  => "#upgrade-modal",
-    "data-id"      => $attendee->id,
-    "type"         => "button",
-  ], $html_options);
-
-  return "<button $attributes>Upgrade</button>";
-}
-
-function check_in_button_for($attendee, $html_options=[]){
-  if($attendee->checked_in){ return ""; }
-  $attributes = build_html_attributes([
-    "class"        => ["btn", "btn-default"],
-    "data-toggle"  => "modal",
-    "data-target"  => "#check-in-modal",
-    "data-id"      => $attendee->id,
-    "type"         => "button",
-  ], $html_options);
-
-  return "<button $attributes>Check In</button>";
-}
-
-function pay_button_for($attendee, $html_options=[]){
-  if($attendee->paid){ return ""; }
-  $attributes = build_html_attributes([
-    "class"        => ["btn", "btn-default"],
-    "data-toggle"  => "modal",
-    "data-target"  => "#pay-modal",
-    "data-id"      => $attendee->id,
-    "type"         => "button",
-  ], $html_options);
-
-  return "<button $attributes>Pay</button>";
-}
-
-function reprint_button_for($attendee, $html_options=[]){
-  if(!$attendee->paid){ return ""; }
-  if(!$attendee->checked_in){ return ""; }
-  $attributes = build_html_attributes([
-    "class"        => ["btn", "btn-default"],
-    "data-toggle"  => "modal",
-    "data-target"  => "#reprint-modal",
-    "data-id"      => $attendee->id,
-    "type"         => "button",
-  ], $html_options);
-
-  return "<button $attributes>Reprint</button>";
-
-}
 
 ## FORM HELPERS
 
@@ -127,8 +59,9 @@ function currency($number){
 
 function row_highlight($attendee, $prefix=""){
   $age = $attendee->age() ?: 0;
-  if($attendee->blacklisted()){
-    $class = $attendee->banned ? "danger" : "warning";
+  if($attendee->blacklisted){
+    $type = BlacklistType::find_by_db_name($attendee->blacklist_type);
+    $class = $type->alert_color;
     return $prefix ? "$prefix-$class" : "$class";
   }else{
     return "";

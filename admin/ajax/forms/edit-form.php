@@ -1,6 +1,5 @@
 <?php
 include_once '../../../_includes/framework.php';
-include_once "_includes/forms/edit_form.php";
 require_login();
 
 if(!isset($form)){
@@ -209,9 +208,33 @@ $payment_types = PaymentType::all();
     <div>
       <div class="checkbox-inline">
         <input type="hidden" name="blacklisted"  value="0">
-        <label class="<? if(is_null(@$form->attendee->blacklist_id)){ ?>text-muted<?}?>">
-          <input type="checkbox" name="blacklisted" value="1" <? if(@$form->params["blacklisted"]){ ?>checked="checked"<?}?> <? if(is_null(@$form->attendee->blacklist_id)){ ?>disabled="disabled"<?}?>> Blacklisted
+        <label>
+          <input type="checkbox" name="blacklisted" value="1" <? if(@$form->params["blacklisted"]){ ?>checked="checked"<?}?>> Blacklisted
         </label>
       </div>
     </div>
   </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group <?=$form->error_on("blacklist_type") ? "has-error" : "" ?>">
+      <?=label_tag("blacklist_type", "Blacklist Type") ?>
+      <select class="form-control" id="blacklist_type" name="blacklist_type">
+        <option></option>
+        <? foreach(BlacklistType::all() as $type){ ?>
+          <?=option_tag($type->name, @$form->params["blacklist_type"], $type->db_name) ?>
+        <? } ?>
+      </select>
+      <?=error_display($form, "blacklist_type") ?>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group <?=$form->error_on("blacklist_message") ? "has-error" : "" ?>">
+      <?=label_tag("blacklist_message", "Blacklist Message") ?>
+      <textarea class="form-control" rows="2" name="blacklist_message" id="blacklist_message"><?=htmlentities(@$form->params["blacklist_message"]) ?></textarea>
+      <?=error_display($form, "blacklist_message") ?>
+    </div>
+  </div>
+</div>
+

@@ -1,5 +1,4 @@
-<?php 
-include_once("base_form.php");
+<?php
 
 class CheckInForm extends BaseForm{
 
