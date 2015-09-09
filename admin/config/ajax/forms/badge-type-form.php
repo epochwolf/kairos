@@ -7,13 +7,13 @@ if(!isset($form)){
 }
 
 ?>
-<input type="hidden" name="id" value="<?=$form->badge_type->id ?>">
+<input type="hidden" name="id" value="<?=$form->id() ?>">
 
 <div class="text-center">
-<? if($form->badge_type->is_new_record()){ ?>
+<? if($form->is_new_record()){ ?>
   <h2>New Badge Type</h2>
 <? }else{ ?>
-  <h2>Edit Badge Type: <?= $form->badge_type->name ?></h2>
+  <h2>Edit Badge Type: <?= $form->model->name ?></h2>
 <? } ?> 
 </div>
 
