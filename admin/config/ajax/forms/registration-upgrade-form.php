@@ -9,15 +9,7 @@ if(!isset($form)){
 $reg_levels = RegistrationLevel::all();
 
 ?>
-<input type="hidden" name="id" value="<?=$form->registration_upgrade->id ?>">
-
-<div class="text-center">
-<? if($form->registration_upgrade->is_new_record()){ ?>
-  <h2>New Registration Upgrade</h2>
-<? }else{ ?>
-  <h2>Edit Registration Upgrade: <?= $form->registration_upgrade->from ?> -> <?= $form->registration_upgrade->to ?></h2>
-<? } ?> 
-</div>
+<input type="hidden" name="id" value="<?=$form->id() ?>">
 
 <div class="form-group <?=$form->error_on("from") ? "has-error" : "" ?>">
   <?=label_tag("from", "From") ?>

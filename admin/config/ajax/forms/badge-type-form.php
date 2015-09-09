@@ -9,14 +9,6 @@ if(!isset($form)){
 ?>
 <input type="hidden" name="id" value="<?=$form->id() ?>">
 
-<div class="text-center">
-<? if($form->is_new_record()){ ?>
-  <h2>New Badge Type</h2>
-<? }else{ ?>
-  <h2>Edit Badge Type: <?= $form->model->name ?></h2>
-<? } ?> 
-</div>
-
 <div class="form-group <?=$form->error_on("db_name") ? "has-error" : "" ?>">
   <?=label_tag("db_name", "DB Name") ?>
   <?=input_tag($form, "db_name") ?>

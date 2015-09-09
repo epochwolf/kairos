@@ -9,15 +9,7 @@ if(!isset($form)){
 $types = BlacklistType::all();
 
 ?>
-<input type="hidden" name="id" value="<?=$form->blacklist->id ?>">
-
-<div class="text-center">
-<? if($form->blacklist->is_new_record()){ ?>
-  <h2>New Blacklist</h2>
-<? }else{ ?>
-  <h2>Edit Blacklist: <?= $form->blacklist->badge_name ?></h2>
-<? } ?> 
-</div>
+<input type="hidden" name="id" value="<?=$form->id() ?>">
 
 <div class="form-group <?=$form->error_on("badge_name") ? "has-error" : "" ?>">
   <?=label_tag("badge_name", "Badge Name") ?>

@@ -7,15 +7,7 @@ if(!isset($form)){
 }
 
 ?>
-<input type="hidden" name="id" value="<?=$form->registration_level->id ?>">
-
-<div class="text-center">
-<? if($form->registration_level->is_new_record()){ ?>
-  <h2>New Registration Level</h2>
-<? }else{ ?>
-  <h2>Edit Registration Level: <?= $form->registration_level->name?></h2>
-<? } ?> 
-</div>
+<input type="hidden" name="id" value="<?=$form->id() ?>">
 
 
 <div class="form-group <?=$form->error_on("db_name") ? "has-error" : "" ?>">

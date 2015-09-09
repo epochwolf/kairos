@@ -9,14 +9,6 @@ if(!isset($form)){
 ?>
 <input type="hidden" name="id" value="<?=$form->user->id ?>">
 
-<div class="text-center">
-<? if($form->user->is_new_record()){ ?>
-  <h2>New User</h2>
-<? }else{ ?>
-  <h2>Edit User: <?= $form->user->username ?></h2>
-<? } ?> 
-</div>
-
 <div class="form-group <?=$form->error_on("username") ? "has-error" : "" ?>">
   <?=label_tag("username", "Username") ?>
   <?=input_tag($form, "username") ?>

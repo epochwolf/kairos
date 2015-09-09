@@ -7,15 +7,7 @@ if(!isset($form)){
 }
 
 ?>
-<input type="hidden" name="id" value="<?=$form->payment_type->id ?>">
-
-<div class="text-center">
-<? if($form->payment_type->is_new_record()){ ?>
-  <h2>New Payment Type</h2>
-<? }else{ ?>
-  <h2>Edit Payment Type: <?= $form->payment_type->name ?></h2>
-<? } ?> 
-</div>
+<input type="hidden" name="id" value="<?=$form->id() ?>">
 
 <div class="form-group <?=$form->error_on("db_name") ? "has-error" : "" ?>">
   <?=label_tag("db_name", "DB Name") ?>
