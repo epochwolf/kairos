@@ -55,7 +55,7 @@ class NewAttendeeForm extends BaseForm{
     $this->error_if_empty("admission_level");
 
     if(!$this->error_on("admission_level")){
-      $lvl = RegistrationLevel::first_by_db_name(@$this->params["admission_level"]);
+      $lvl = RegistrationLevel::find_by_db_name(@$this->params["admission_level"]);
       if($lvl && $lvl->includes_tshirt){
         $this->error_if_empty("tshirt_size", "{$lvl->name} includes a T-Shirt.");
       }else{

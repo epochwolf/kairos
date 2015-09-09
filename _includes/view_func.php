@@ -69,14 +69,14 @@ function row_highlight($attendee, $prefix=""){
 }
 
 function admission_display($row){
-  $lvl = RegistrationLevel::cached_first_by_db_name($row->admission_level);
+  $lvl = RegistrationLevel::cached_find_by_db_name($row->admission_level);
   $level = reg_level_with_price($lvl, $row->override_price);
   $badge = badge_label($row->badge_type);
   return "$level $badge";
 }
 
 function badge_label($badge_type){
-  $type = BadgeType::cached_first_by_db_name($badge_type);
+  $type = BadgeType::cached_find_by_db_name($badge_type);
 
   if($type){
     if($type->label_color){

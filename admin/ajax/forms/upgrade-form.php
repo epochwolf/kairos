@@ -9,7 +9,7 @@ if(!isset($form)){
   $form = new UpgradeForm(["id" => $id]);
 }
 
-$current_level = RegistrationLevel::first_by_db_name($form->attendee->admission_level);
+$current_level = RegistrationLevel::find_by_db_name($form->attendee->admission_level);
 $upgrades = RegistrationUpgrade::from_with_prices($form->attendee->admission_level);
 ?>
 <input type="hidden" name="id" value="<?=$id ?>">

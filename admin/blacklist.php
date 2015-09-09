@@ -23,7 +23,7 @@ $blacklists = Blacklist::all();
         <th>Actions</th>
       </tr>
       <? foreach($blacklists as $blacklist){ ?>
-        <? $type = BlacklistType::cached_first_by_db_name($blacklist->type) ?>
+        <? $type = BlacklistType::cached_find_by_db_name($blacklist->type) ?>
         <tr class="<?=$type->alert_color ?>">
           <td><?=$blacklist->badge_name ?: "<i>none</i>" ?></td>
           <td><?=$blacklist->legal_name ?: "<i>none</i>" ?></td>

@@ -16,11 +16,11 @@ class RegistrationLevel extends BaseModel {
     return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE available_pre_reg = 1 ORDER BY sort_order ASC");
   }
 
-  static function first_by_db_name($db_name){
+  static function find_by_db_name($db_name){
     return self::query_first("SELECT * FROM " . static::TABLE_NAME . " WHERE db_name = ?  ORDER BY sort_order ASC LIMIT 1", [$db_name]);
   }
 
-  static function cached_first_by_db_name($db_name){
+  static function cached_find_by_db_name($db_name){
     $arr = array_filter(static::get_cache(), function($lvl) use ($db_name){ 
       return $lvl->db_name == $db_name;
     });
