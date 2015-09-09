@@ -1,6 +1,5 @@
 <?php
 include_once '../../../_includes/framework.php';
-include_once "_includes/forms/edit_form.php";
 require_login();
 
 $id = @$_POST['id'];

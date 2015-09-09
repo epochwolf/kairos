@@ -143,7 +143,6 @@ class BaseModel{
 
   public $id;
 
-
   protected function after_save(){ return true; }
   protected function after_create(){ return true; }
   protected function after_update(){ return true; }
@@ -206,8 +205,8 @@ class BaseModel{
     $fields = array_keys($attributes);
     $values = array_values($attributes);
 
-    $sql = db_prepared_update_sql(static::TABLE_NAME, $fields, "id=".$this->id);
-    
+    $sql = db_prepared_update_sql(static::TABLE_NAME, $fields, "id={$this->id}");
+
     global $db;
     $stmt = $db->prepare($sql);
     $stmt->execute($values);
