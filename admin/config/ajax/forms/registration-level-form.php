@@ -11,9 +11,9 @@ if(!isset($form)){
 
 <div class="text-center">
 <? if($form->registration_level->is_new_record()){ ?>
-  <h2>New Registration Upgrade</h2>
+  <h2>New Registration Level</h2>
 <? }else{ ?>
-  <h2>Edit Registration Upgrade: <?= $form->registration_level->name?></h2>
+  <h2>Edit Registration Level: <?= $form->registration_level->name?></h2>
 <? } ?> 
 </div>
 
