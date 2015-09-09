@@ -20,7 +20,7 @@ function db_query($query, $params=null){
 
 function db_prepared_insert_sql($table, $fields){
   $values = array_map(function($field){ return "?"; }, $fields);
-  $fields = array_map(function($field) use ($table){ return "`$table`.`$field`"; });
+  $fields = array_map(function($field) use ($table){ return "`$table`.`$field`"; }, $fields);
 
   return sprintf("INSERT INTO $table (%s) VALUES (%s)", implode(",", $fields), implode(",", $values));
 }
