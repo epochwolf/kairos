@@ -31,13 +31,13 @@ $levels = RegistrationLevel::all();
           <td><?= $level->available_at_door ? "Yes" : "No" ?></td>
           <td><?= $level->sort_order ?></td>
           <td>
-            <?=registration_level_button_for($level, ["class" => "btn-sm"]) ?>
-            <?=delete_registration_level_button_for($level, ["class" => "btn-sm"]) ?>
+            <?=edit_config_button_for($level, ["class" => "btn-sm"]) ?>
+            <?=delete_config_button_for($level, ["class" => "btn-sm"]) ?>
           </td>
         </tr>
       <? } ?>
     </table>
-    <?=registration_level_button_for() ?>
+    <?=new_config_button_for("RegistrationLevel") ?>
   </div>
 </div>
 <?php

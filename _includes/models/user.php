@@ -2,6 +2,7 @@
 
 class User extends BaseModel {
   const TABLE_NAME = "users";
+  const DISPLAY_NAME = "User";
 
   static function count_admins(){
     $results = db_query("SELECT count(*) as row_count FROM " . static::TABLE_NAME . " WHERE admin=1");
@@ -27,9 +28,13 @@ class User extends BaseModel {
 
   public $password;
 
-  function __construct($row){
+  function __construct($row=[]){
     $this->password = null;
     parent::__construct($row);
+  }
+
+  function display_name(){
+    return $this->username;
   }
 
   function export_to_db(){

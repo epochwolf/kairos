@@ -2,6 +2,7 @@
 
 class BadgeType extends BaseModel {
   const TABLE_NAME = "badge_types";
+  const DISPLAY_NAME = "Badge Type";
 
   static function all(){
     return self::query("SELECT * FROM " . static::TABLE_NAME . " ORDER BY sort_order ASC");

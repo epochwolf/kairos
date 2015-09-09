@@ -2,6 +2,7 @@
 
 class Blacklist extends BaseModel{
   const TABLE_NAME = "blacklist";
+  const DISPLAY_NAME = "Blacklist";
 
   ## QUERIES
   # @return [Blacklist, "badge_name" or "legal_name", String] or null
@@ -35,6 +36,10 @@ class Blacklist extends BaseModel{
   ];
 
   private $attendees_records;
+
+  function display_name(){
+    return $this->badge_name;
+  }
 
   function attendees(){
     if(isset($this->attendees_records)){ return $this->attendees_records;}

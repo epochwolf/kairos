@@ -2,6 +2,7 @@
 
 class PaymentType extends BaseModel {
   const TABLE_NAME = "payment_types";
+  const DISPLAY_NAME = "Payment Type";
 
   static function all(){
     return self::query("SELECT * FROM " . static::TABLE_NAME . " ORDER BY sort_order ASC");

@@ -9,6 +9,8 @@ if(!isset($form)){
 $reg_levels = RegistrationLevel::all();
 
 ?>
+<input type="hidden" name="_form_class" value="<?=get_class($form) ?>">
+<input type="hidden" name="_form_file" value="<?=basename(__FILE__) ?>">
 <input type="hidden" name="id" value="<?=$form->id() ?>">
 
 <div class="form-group <?=$form->error_on("from") ? "has-error" : "" ?>">

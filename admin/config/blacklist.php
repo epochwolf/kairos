@@ -33,14 +33,14 @@ $blacklists = Blacklist::all();
           <td><?=$type->name ?></td>
           <td>
             <div class="btn-group" role="group">
-              <?= blacklist_button_for($blacklist, ["class" => ["btn-sm"]]) ?>
-              <?= delete_blacklist_button_for($blacklist, ["class" => ["btn-sm"]]) ?>
+              <?= edit_config_button_for($blacklist, ["class" => ["btn-sm"]]) ?>
+              <?= delete_config_button_for($blacklist, ["class" => ["btn-sm"]]) ?>
             </div>
           </td>
         </tr>
       <? }?>
     </table>
-    <?= blacklist_button_for() ?>
+    <?=new_config_button_for("Blacklist") ?>
 
 
     <h1>

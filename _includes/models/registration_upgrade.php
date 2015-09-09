@@ -1,8 +1,8 @@
 <?php
 
 class RegistrationUpgrade extends BaseModel {
-
   const TABLE_NAME = "registration_upgrades";
+  const DISPLAY_NAME = "Registration Upgrade";
 
   static function all(){
     return self::query("SELECT * FROM " . static::TABLE_NAME . " ORDER BY sort_order ASC");
@@ -56,10 +56,10 @@ class RegistrationUpgrade extends BaseModel {
     "id",
   ];
 
-  function __construct($row){
-    parent::__construct($row);
+  function display_name(){
+    return "{$this->from} -> {$this->to}";
   }
-
+  
   function price(){
     return is_null($this->override_price) ? $this->price : $this->override_price;
   }

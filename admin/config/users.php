@@ -23,13 +23,13 @@ $users = User::all();
           <td><?= $user->username ?></td>
           <td><?= $user->admin ? "Yes" : "No" ?></td>
           <td>
-            <?=user_button_for($user, ["class" => ["btn-sm"]]) ?> 
-            <?=delete_user_button_for($user, ["class" => ["btn-sm"]]) ?>
+            <?=edit_config_button_for($user, ["class" => ["btn-sm"]]) ?> 
+            <?=delete_config_button_for($user, ["class" => ["btn-sm"]]) ?>
           </td>
         </tr>
       <? } ?>
     </table>
-    <?=user_button_for() ?>
+    <?=new_config_button_for("User") ?>
   </div>
 </div>
 <?php

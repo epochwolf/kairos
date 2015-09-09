@@ -2,6 +2,7 @@
 
 class Attendee extends BaseModel {
   const TABLE_NAME = "attendees";
+  const DISPLAY_NAME = "Attendee";
 
   ## QUERY METHODS
   static function by_badge_number($number){
@@ -123,7 +124,7 @@ class Attendee extends BaseModel {
 
   private $blacklist_record;
 
-  function __construct($row){
+  function __construct($row=[]){
     parent::__construct($row);
     $this->phone_number  = self::phone_to_ui(@$row["phone_number"]);
     $this->birthdate     = self::date_to_ui(@$row["birthdate"]);
@@ -148,6 +149,10 @@ class Attendee extends BaseModel {
     $array["created_at"]         = $this->created_at;
     $array["notes"]              = self::nullable_string_to_db($this->notes);
     return $array;
+  }
+
+  function display_name(){
+    return $this->badge_name;
   }
 
   function age(){

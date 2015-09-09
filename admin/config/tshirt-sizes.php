@@ -23,13 +23,13 @@ $tshirt_sizes = TShirtSize::all();
           <td><?= $tshirt_size->name ?></td>
           <td><?= $tshirt_size->sort_order ?></td>
           <td>
-            <?=tshirt_size_button_for($tshirt_size, ["class" => "btn-sm"]) ?>
-            <?=delete_tshirt_size_button_for($tshirt_size, ["class" => "btn-sm"]) ?>
+            <?=edit_config_button_for($tshirt_size, ["class" => "btn-sm"]) ?>
+            <?=delete_config_button_for($tshirt_size, ["class" => "btn-sm"]) ?>
           </td>
         </tr>
       <? } ?>
     </table>
-    <?=tshirt_size_button_for() ?>
+    <?=new_config_button_for("TShirtSize") ?>
   </div>
 </div>
 <?php

@@ -31,13 +31,13 @@ $upgrades = RegistrationUpgrade::all_with_prices();
           <td><?=!is_null($upgrade->override_price) ? currency($upgrade->override_price) : "" ?></td>
           <td><?= $upgrade->sort_order ?></td>
           <td>
-            <?=registration_upgrade_button_for($upgrade, ["class" => "btn-sm"]) ?>
-            <?=delete_registration_upgrade_button_for($upgrade, ["class" => "btn-sm"]) ?>
+            <?=edit_config_button_for($upgrade, ["class" => "btn-sm"]) ?>
+            <?=delete_config_button_for($upgrade, ["class" => "btn-sm"]) ?>
           </td>
         </tr>
       <? } ?>
     </table>
-    <?=registration_upgrade_button_for() ?>
+    <?=new_config_button_for("RegistrationUpgrade") ?>
   </div>
 </div>
 <?php

@@ -1,8 +1,8 @@
 <?php
 
 class RegistrationLevel extends BaseModel {
-
   const TABLE_NAME = "registration_levels";
+  const DISPLAY_NAME = "Registration Level";
 
   static function all(){
     return self::query("SELECT * FROM " . static::TABLE_NAME . " ORDER BY sort_order ASC");
@@ -40,10 +40,6 @@ class RegistrationLevel extends BaseModel {
   const PROTECTED_FIELDS = [
     "id",
   ];
-
-  function __construct($row){
-    parent::__construct($row);
-  }
 
   function export_to_db(){
     $array = parent::export_to_db();

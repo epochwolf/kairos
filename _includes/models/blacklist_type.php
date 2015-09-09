@@ -2,6 +2,8 @@
 
 // Acts like a database model but isn't backed by a database. 
 class BlacklistType extends BaseModel{
+  const TABLE_NAME = null;
+  const DISPLAY_NAME = "Badge Type";
 
   const TYPES = [
     // 'dbname' =>   ["Name",         "Alert Title", "alert-color"]
@@ -56,7 +58,6 @@ class BlacklistType extends BaseModel{
     "alert_title",
     "alert_color",
   ];
-
 
   function is_new_record(){ return false; }
   function save(){ return false;}

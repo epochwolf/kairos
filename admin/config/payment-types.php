@@ -25,13 +25,13 @@ $payment_types = PaymentType::all();
           <td><?= $payment_type->at_door ? "Yes" : "No" ?></td>
           <td><?= $payment_type->sort_order ?></td>
           <td>
-            <?=payment_type_button_for($payment_type, ["class" => "btn-sm"]) ?>
-            <?=delete_payment_type_button_for($payment_type, ["class" => "btn-sm"]) ?>
+            <?=edit_config_button_for($payment_type, ["class" => "btn-sm"]) ?>
+            <?=delete_config_button_for($payment_type, ["class" => "btn-sm"]) ?>
           </td>
         </tr>
       <? } ?>
     </table>
-    <?=payment_type_button_for() ?>
+    <?=new_config_button_for("PaymentType") ?>
   </div>
 </div>
 <?php

@@ -7,6 +7,8 @@ if(!isset($form)){
 }
 
 ?>
+<input type="hidden" name="_form_class" value="<?=get_class($form) ?>">
+<input type="hidden" name="_form_file" value="<?=basename(__FILE__) ?>">
 <input type="hidden" name="id" value="<?=$form->user->id ?>">
 
 <div class="form-group <?=$form->error_on("username") ? "has-error" : "" ?>">

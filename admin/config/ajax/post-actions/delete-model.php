@@ -5,12 +5,15 @@ require_admin();
 $return_url = @$_POST['return_url'] ?: "/admin/index.php";
 
 $id = @$_POST['id'];
-$id or die("<p>Error, no user id.</p>");
+$id or die("<p>Error, no id.</p>");
 
-$payment_type = PaymentType::find($id);
-$payment_type or die("<p>No Payment Type with (ID=$id)");
+$model = @$_POST['model'];
+$model or die('<p>Error, no modal.</p>');
 
-$payment_type->delete();
+$user = $model::find($id);
+$user or die("<p>No $model with (ID=$id)");
+
+$user->delete();
 
 ?>
 <script>

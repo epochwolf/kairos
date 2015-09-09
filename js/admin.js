@@ -7,7 +7,6 @@ $('.standard-modal').on('show.bs.modal', function (event) {
   var modal_submit_button = modal.find('.modal-submit-button');
 
   // Parameters from button.
-  var primary_key  = button.data('id');
   var form_url     = button.data("form");
   var post_url     = button.data("post-form");
   var title        = button.data("title");
@@ -21,7 +20,7 @@ $('.standard-modal').on('show.bs.modal', function (event) {
 
   // Load the form.
   $.ajax({
-    url: form_url+"?id="+primary_key
+    url: form_url
   }).done(function( html ) {
     modal_body_tag.html(html);
     // Focus on the first text field after the form is loaded. 

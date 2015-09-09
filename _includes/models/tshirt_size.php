@@ -2,6 +2,7 @@
 
 class TShirtSize extends BaseModel {
   const TABLE_NAME = "tshirt_sizes";
+  const DISPLAY_NAME = "TShirt Size";
 
   static function all(){
     return self::query("SELECT * FROM " . static::TABLE_NAME . " ORDER BY sort_order ASC");

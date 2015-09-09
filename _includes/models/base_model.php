@@ -1,19 +1,27 @@
 <?php 
 
 class BaseModel{
-
   # These need to be overridden
   const TABLE_NAME = "blacklist";
+  const DISPLAY_NAME = "Base Model";
   const FIELDS = [];
   const JOIN_FIELDS = [];
   const PROTECTED_FIELDS = [];
 
-  function __construct($row){
+  function __construct($row=[]){
     foreach(static::FIELDS as $field){
       $this->{$field} = @$row[$field];
     }
     foreach(static::JOIN_FIELDS as $field){
       $this->{$field} = @$row[$field];
+    }
+  }
+
+  function display_name(){
+    if(in_array("name", static::FIELDS)){
+      return $this->name;
+    }else{
+      return get_called_class()."(ID={$this->id})";
     }
   }
 

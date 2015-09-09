@@ -2,6 +2,7 @@
 
 class AttendeeLog extends BaseModel {
   const TABLE_NAME = "attendee_logs";
+  const DISPLAY_NAME = "Attendee Log";
 
 
   static function by_attendee_id($number){
@@ -35,7 +36,7 @@ class AttendeeLog extends BaseModel {
     "created_at",
   ];
 
-  function __construct($row){
+  function __construct($row=[]){
     parent::__construct($row);
     $this->attributes = json_decode($row["attributes"]);
   }

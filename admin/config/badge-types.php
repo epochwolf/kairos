@@ -27,13 +27,13 @@ $badge_types = BadgeType::all();
           <td><?= $badge_type->minor ? "Yes" : "No" ?></td>
           <td><?= $badge_type->sort_order ?></td>
           <td>
-            <?=badge_type_button_for($badge_type, ["class" => "btn-sm"]) ?>
-            <?=delete_badge_type_button_for($badge_type, ["class" => "btn-sm"]) ?>
+            <?=edit_config_button_for($badge_type, ["class" => "btn-sm"]) ?>
+            <?=delete_config_button_for($badge_type, ["class" => "btn-sm"]) ?>
           </td>
         </tr>
       <? } ?>
     </table>
-    <?=badge_type_button_for() ?>
+    <?=new_config_button_for("BadgeType") ?>
   </div>
 </div>
 <?php

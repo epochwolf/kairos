@@ -7,6 +7,8 @@ if(!isset($form)){
 }
 
 ?>
+<input type="hidden" name="_form_class" value="<?=get_class($form) ?>">
+<input type="hidden" name="_form_file" value="<?=basename(__FILE__) ?>">
 <input type="hidden" name="id" value="<?=$form->id() ?>">
 
 <div class="form-group <?=$form->error_on("db_name") ? "has-error" : "" ?>">
@@ -37,7 +39,7 @@ if(!isset($form)){
       </div>
     <? } ?>
     <?=error_display($form, "label_color") ?>
-    <span class="help-block">Label appears after the attendee's registeration level.</span>
+    <span class="help-block">Label appears after the attendee's registration level.</span>
   </div>
 
   <div class="form-group col-sm-6 <?=$form->error_on("minor") ? "has-error" : "" ?>">
