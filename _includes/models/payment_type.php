@@ -4,13 +4,11 @@ class PaymentType extends BaseModel {
   const TABLE_NAME = "payment_types";
 
   static function all(){
-    $klass = get_called_class();
-    return self::query("SELECT * FROM " . $klass::TABLE_NAME . " ORDER BY sort_order ASC");
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " ORDER BY sort_order ASC");
   }
 
   static function at_door(){
-    $klass = get_called_class();
-    return self::query("SELECT * FROM " . $klass::TABLE_NAME . " WHERE at_door = 1 ORDER BY sort_order ASC");
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE at_door = 1 ORDER BY sort_order ASC");
   }
 
   const FIELDS = [

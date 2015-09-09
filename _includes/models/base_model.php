@@ -9,65 +9,80 @@ class BaseModel{
   const PROTECTED_FIELDS = [];
 
   function __construct($row){
-    $klass = get_called_class();
-    foreach($klass::FIELDS as $field){
+    foreach(static::FIELDS as $field){
       $this->{$field} = @$row[$field];
     }
-    foreach($klass::JOIN_FIELDS as $field){
+    foreach(static::JOIN_FIELDS as $field){
       $this->{$field} = @$row[$field];
     }
   }
 
   function attributes(){
-    $klass = get_called_class();
     $array = [];
-    foreach($klass::FIELDS as $field){
+    foreach(static::FIELDS as $field){
       $array[$field] = $this->{$field};
     }
     return $array;
   }
 
   function export_to_db(){
-    $klass = get_called_class();
     $array = [];
-    foreach($klass::FIELDS as $field){
+    foreach(static::FIELDS as $field){
       $array[$field] = $this->{$field};
     }
     return $array;
   }
 
-  # CACHE
-  protected static $_cache = [];
+  # CACHED METHODS
+  # These are used to work with an entire table in memory. 
+  # It's a simple way to avoid the n+1 query problem. 
+  protected static $_cache = false;
+
+  # Loads the entire table into memory. 
+  static function cached_all(){
+    return static::get_cache();
+  }
 
   protected static function get_cache(){
-    $klass = get_called_class();
-    if(empty($klass::$_cache)){
-      $klass::$_cache = $klass::all();
+    static::init_cache();
+
+    if(empty(static::$_cache)){
+      static::$_cache = static::all();
     }
-    return $klass::$_cache;
+    return static::$_cache;
+  }
+
+  protected static function clear_cache(){
+    static::$_cache = [];
+  }
+
+  # Workaround to define a separate static property for each child class. 
+  protected static function init_cache(){
+    if(static::$_cache === false){ 
+      $tmp = [];
+      static::$_cache =& $tmp;
+      unset($tmp);
+    }
   }
 
   # QUERIES
 
   static function all(){
-    $klass = get_called_class();
-    return self::query("SELECT * FROM " . $klass::TABLE_NAME);
+    return self::query("SELECT * FROM " . static::TABLE_NAME);
   }
 
   static function count(){
-    $klass = get_called_class();
-    $results = db_query("SELECT count(*) as row_count FROM " . $klass::TABLE_NAME);
+    $results = db_query("SELECT count(*) as row_count FROM " . static::TABLE_NAME);
     return @$results[0]["row_count"];
   }
 
   static function find($id){
-    $klass = get_called_class();
-    return self::query_first("SELECT * FROM " . $klass::TABLE_NAME . " WHERE id = ? LIMIT 1", [$id]);
+    return self::query_first("SELECT * FROM " . static::TABLE_NAME . " WHERE id = ? LIMIT 1", [$id]);
   }
 
   static function query($query, $params=null){
     global $db;
-    $map_func = function($row){ $klass = get_called_class(); return new $klass($row); };
+    $map_func = function($row){ return new static($row); };
 
     $result = db_query($query, $params);
     return array_map($map_func, $result);
@@ -158,10 +173,9 @@ class BaseModel{
   }
 
   public function delete(){
-    $klass = get_called_class();
 
     if(!$this->is_new_record()){
-      $sql = db_prepared_delete_sql($klass::TABLE_NAME, "id = ?");
+      $sql = db_prepared_delete_sql(static::TABLE_NAME, "id = ?");
 
       global $db;
       $stmt = $db->prepare($sql);
@@ -171,12 +185,11 @@ class BaseModel{
   }
 
   private function create(){
-    $klass = get_called_class();
     $attributes = $this->export_to_db();
     $fields = array_keys($attributes);
     $values = array_values($attributes);
 
-    $sql = db_prepared_insert_sql($klass::TABLE_NAME, $fields);
+    $sql = db_prepared_insert_sql(static::TABLE_NAME, $fields);
 
     global $db;
     $stmt = $db->prepare($sql);
@@ -186,15 +199,14 @@ class BaseModel{
   }
 
   private function update(){
-    $klass = get_called_class();
     $attributes = $this->export_to_db();
 
-    $attributes = array_diff_key($attributes, array_flip($klass::PROTECTED_FIELDS));
+    $attributes = array_diff_key($attributes, array_flip(static::PROTECTED_FIELDS));
 
     $fields = array_keys($attributes);
     $values = array_values($attributes);
 
-    $sql = db_prepared_update_sql($klass::TABLE_NAME, $fields, "id=".$this->id);
+    $sql = db_prepared_update_sql(static::TABLE_NAME, $fields, "id=".$this->id);
     
     global $db;
     $stmt = $db->prepare($sql);

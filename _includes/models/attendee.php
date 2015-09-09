@@ -5,38 +5,38 @@ class Attendee extends BaseModel {
 
   ## QUERY METHODS
   static function by_badge_number($number){
-    return self::query("SELECT * FROM attendees WHERE badge_number = ?", [$number]);
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_number = ?", [$number]);
   }
 
   static function by_badge_name($name){
-    return self::query("SELECT * FROM attendees WHERE badge_name = ?", [$name]);
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_name = ?", [$name]);
   }
 
   static function by_blacklist_id($id){
-    return self::query("SELECT * FROM attendees WHERE blacklist_id = ?", [$id]);
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE blacklist_id = ?", [$id]);
   }
 
   static function by_badge_type($type){
-    return self::query("SELECT * FROM attendees WHERE badge_type = ?", [$type]);
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_type = ?", [$type]);
   }
 
   static function pre_reg_pending(){
-    $sql = "SELECT * FROM attendees WHERE at_door = 0 AND checked_in = 0 order by legal_name asc";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE at_door = 0 AND checked_in = 0 order by legal_name asc";
     return self::query($sql, [':at_door' => 0]);
   }
 
   static function at_door_pending(){
-    $sql = "SELECT * FROM attendees WHERE at_door = 1 AND (checked_in = 0 || paid = 0) order by created_at asc";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE at_door = 1 AND (checked_in = 0 || paid = 0) order by created_at asc";
     return self::query($sql, [':at_door' => 1]);
   }
 
   static function blacklisted(){
-    $sql = "SELECT * FROM attendees WHERE blacklisted = 1 OR blacklist_id IS NOT NULL";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE blacklisted = 1 OR blacklist_id IS NOT NULL";
     return self::query($sql);
   }
 
   static function search($name){
-    $sql = "SELECT * FROM attendees " .
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " " .
     "WHERE (badge_number != '0' AND badge_number = :name_exact) " .
     "OR badge_name LIKE :name_like " .
     "OR legal_name LIKE :name_like " .

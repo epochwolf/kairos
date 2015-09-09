@@ -32,16 +32,8 @@ class BlacklistType extends BaseModel{
     }
   }
   
-  static function cached_all(){
-    $klass = get_called_class();
-    return $klass::get_cache();
-  }
-
   static function cached_first_by_db_name($db_name){
-    $klass = get_called_class();
-    $cache = $klass::get_cache();
-
-    $arr = array_filter($cache, function($lvl) use ($db_name){ return $lvl->db_name == $db_name; });
+    $arr = array_filter(static::get_cache(), function($lvl) use ($db_name){ return $lvl->db_name == $db_name; });
     return reset($arr); // Return the first value of the array...
   }
 

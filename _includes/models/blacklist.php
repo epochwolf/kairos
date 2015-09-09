@@ -3,14 +3,6 @@
 class Blacklist extends BaseModel{
   const TABLE_NAME = "blacklist";
 
-  const TYPES = [
-    "ban", 
-    "restriction", 
-    "watch"
-  ];
-
-
-
   ## QUERIES
   # @return [Blacklist, "badge_name" or "legal_name", String] or null
   static function match($badge_name, $legal_name){
@@ -28,14 +20,6 @@ class Blacklist extends BaseModel{
       }
     }
     return null;
-  }
-
-  # CACHED METHODS, these load the entire table in memory before returning data. 
-  protected static $_cache = [];
-
-  static function cached_all(){
-    $klass = get_called_class();
-    return $klass::get_cache();
   }
 
   # INSTANCE METHODS
