@@ -180,61 +180,66 @@ $payment_types = PaymentType::all();
   <div class="col-md-6">
     <h3>Notes</h3>
     <div class="form-group">
-      <textarea class="form-control" name="notes" id="notes"><?=htmlentities(@$form->params["note"]) ?></textarea>
+      <textarea class="form-control" rows="3" name="notes" id="notes"><?=htmlentities(@$form->params["note"]) ?></textarea>
     </div>
   </div>
   <div class="col-md-6">
     <h3>Flags</h3>
-    <div>
-      <div class="checkbox-inline">
-        <input type="hidden" name="at_door"  value="0">
-        <label>
-          <input type="checkbox" name="at_door" value="1" <? if(@$form->params["at_door"]){ ?>checked="checked"<?}?>> At Door
-        </label>
+    <div class="form-group">
+      <div>
+        <div class="checkbox-inline">
+          <input type="hidden" name="at_door"  value="0">
+          <label>
+            <input type="checkbox" name="at_door" value="1" <? if(@$form->params["at_door"]){ ?>checked="checked"<?}?>> At Door
+          </label>
+        </div>
+        <div class="checkbox-inline">
+          <input type="hidden" name="paid"  value="0">
+          <label>
+            <input type="checkbox" name="paid" value="1" <? if(@$form->params["paid"]){ ?>checked="checked"<?}?>> Paid
+          </label>
+        </div>
+        <div class="checkbox-inline">
+          <input type="hidden" name="checked_in"  value="0">
+          <label>
+            <input type="checkbox" name="checked_in" value="1" <? if(@$form->params["checked_in"]){ ?>checked="checked"<?}?>> Checked In
+          </label>
+        </div>
       </div>
-      <div class="checkbox-inline">
-        <input type="hidden" name="paid"  value="0">
-        <label>
-          <input type="checkbox" name="paid" value="1" <? if(@$form->params["paid"]){ ?>checked="checked"<?}?>> Paid
-        </label>
-      </div>
-      <div class="checkbox-inline">
-        <input type="hidden" name="checked_in"  value="0">
-        <label>
-          <input type="checkbox" name="checked_in" value="1" <? if(@$form->params["checked_in"]){ ?>checked="checked"<?}?>> Checked In
-        </label>
+      <div>
+        <div class="checkbox-inline">
+          <input type="hidden" name="blacklisted"  value="0">
+          <label>
+            <input type="checkbox" name="blacklisted" value="1" <? if(@$form->params["blacklisted"]){ ?>checked="checked"<?}?>> Blacklisted
+          </label>
+        </div>
       </div>
     </div>
-    <div>
-      <div class="checkbox-inline">
-        <input type="hidden" name="blacklisted"  value="0">
-        <label>
-          <input type="checkbox" name="blacklisted" value="1" <? if(@$form->params["blacklisted"]){ ?>checked="checked"<?}?>> Blacklisted
-        </label>
-      </div>
-    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group col-sm-6 <?=$form->error_on("blacklist_type") ? "has-error" : "" ?>">
+    <?=label_tag("blacklist_type", "Blacklist Type") ?>
+    <select class="form-control" id="blacklist_type" name="blacklist_type">
+      <option></option>
+      <? foreach(BlacklistType::all() as $type){ ?>
+        <?=option_tag($type->name, @$form->params["blacklist_type"], $type->db_name) ?>
+      <? } ?>
+    </select>
+    <?=error_display($form, "blacklist_type") ?>
+  </div>
+
+  <div class="form-group col-sm-6 <?=$form->error_on("blacklist_message") ? "has-error" : "" ?>">
+    <?=label_tag("blacklist_message", "Blacklist Message") ?>
+    <textarea class="form-control" rows="2" name="blacklist_message" id="blacklist_message"><?=htmlentities(@$form->params["blacklist_message"]) ?></textarea>
+    <?=error_display($form, "blacklist_message") ?>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-6">
-    <div class="form-group <?=$form->error_on("blacklist_type") ? "has-error" : "" ?>">
-      <?=label_tag("blacklist_type", "Blacklist Type") ?>
-      <select class="form-control" id="blacklist_type" name="blacklist_type">
-        <option></option>
-        <? foreach(BlacklistType::all() as $type){ ?>
-          <?=option_tag($type->name, @$form->params["blacklist_type"], $type->db_name) ?>
-        <? } ?>
-      </select>
-      <?=error_display($form, "blacklist_type") ?>
-    </div>
   </div>
   <div class="col-md-6">
-    <div class="form-group <?=$form->error_on("blacklist_message") ? "has-error" : "" ?>">
-      <?=label_tag("blacklist_message", "Blacklist Message") ?>
-      <textarea class="form-control" rows="2" name="blacklist_message" id="blacklist_message"><?=htmlentities(@$form->params["blacklist_message"]) ?></textarea>
-      <?=error_display($form, "blacklist_message") ?>
-    </div>
   </div>
 </div>
 
