@@ -11,6 +11,9 @@ class BaseConfigForm extends BaseForm{
       $this->model = $class::find($params["id"]);
     }else{
       $this->model = new $class([]);
+      if(in_array("sort_order", $class::FIELDS) && !@$params["sort_order"]){
+        $params["sort_order"] = $class::max("sort_order") + 1;
+      }
     }
     $this->params = $this->model->attributes();
 

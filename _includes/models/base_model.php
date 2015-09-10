@@ -84,6 +84,11 @@ class BaseModel{
     return @$results[0]["row_count"];
   }
 
+  static function max($field){
+    $results = db_query("SELECT max($field) as row_max FROM " . static::TABLE_NAME);
+    return @$results[0]["row_max"] ?: 0;
+  }
+
   static function find($id){
     return self::query_first("SELECT * FROM " . static::TABLE_NAME . " WHERE id = ? LIMIT 1", [$id]);
   }

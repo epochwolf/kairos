@@ -50,6 +50,8 @@
               <?= nav_link("Payment Types", "/admin/config/payment-types.php") ?>
               <?= nav_link("TShirt Sizes", "/admin/config/tshirt-sizes.php") ?>
               <?= nav_link("Users", "/admin/config/users.php") ?>
+              <li class="divider"></li>
+              <?= nav_link("Import Attendees", "/admin/config/import/import-attendees.php") ?>
             </ul>
           </li>
         <? } ?>

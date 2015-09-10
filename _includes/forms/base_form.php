@@ -57,6 +57,12 @@ abstract class BaseForm{
     }
   }
 
+  protected function error_unless_in_list($field, $list, $message="Not a valid value."){
+    if(!in_array(@$this->params[$field], $list)){
+      $this->add_error($field, $message);
+    }
+  }
+
   protected function add_error($field, $message){
     $this->errors[$field] = $message;
   }

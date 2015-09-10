@@ -5,7 +5,7 @@ class NewAttendeeForm extends BaseForm{
   function __construct($params=[]){
     parent::__construct($params);
     $this->params["original_admission_level"] = @$this->params["admission_level"];
-    $this->params["payment_method"] = "cash";
+    $this->params["payment_method"] = @$this->params["payment_method"] ?: "cash";
     $this->params["override_price"] = null;
     $this->params["at_door"] = true;
     $this->params["notes"] = null;
