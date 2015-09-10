@@ -38,7 +38,15 @@ class Blacklist extends BaseModel{
   private $attendees_records;
 
   function display_name(){
-    return $this->badge_name;
+    if($this->badge_name && $this->legal_name){
+      return "{$this->badge_name} / {$this->legal_name}";
+    }elseif($this->badge_name){
+      return $this->badge_name;
+    }elseif($this->legal_name){
+      return $this->legal_name;
+    }else{
+      return "";
+    }
   }
 
   function attendees(){

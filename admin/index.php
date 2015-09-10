@@ -53,8 +53,7 @@ switch($tab){
             <td><?=admission_display($attendee) ?></td>
             <td>
               <? if($attendee->minor()){ ?>
-                <?=$attendee->adult_badge_name ?> / 
-                <?=$attendee->adult_legal_name ?>
+                <?=$attendee->adult_display_name() ?>
               <? } ?>
             </td>
             <td>

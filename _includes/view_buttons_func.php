@@ -118,6 +118,7 @@ function new_config_button_for($class, $html_options=[]){
     "data-title"        => "New {$class_display_name}",
     "data-submit-label" => "Create",
     "type"              => "button",
+    "accesskey"         => "n"
   ], $html_options);
 
   return "<button $attributes>New {$class_display_name}</button>";

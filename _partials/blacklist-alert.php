@@ -3,24 +3,29 @@
   $blacklist = $form->attendee->blacklist();
 ?>
 <div class="alert <?=$blacklist_type->alert_color ? "alert-{$blacklist_type->alert_color}" : "" ?>" role="alert">
-  <h4>
-    <?=$blacklist_type->alert_title ?>: 
-    <? if($blacklist){ ?>
-      <?=$blacklist->badge_name ?> <? if($blacklist->legal_name){ ?> / <?=$blacklist->legal_name ?> <? } ?>
+
+  <p class="lead">
+    <strong><?=$blacklist_type->alert_title ?>:</strong> 
+    <?=nl2br($form->attendee->blacklist_message) ?>
+  </p>
+
+  <? if($blacklist){ ?>
+    <p> 
+      Automatic match:
+      <code><?=$blacklist->display_name() ?></code>
       <? if($form->attendee->blacklist_trigger){ ?>
-        <small class="pull-right"><?=implode(" ≈ ", explode(":", $form->attendee->blacklist_trigger)) ?></small>
+        on <?=implode(" ≈ ", explode(":", $form->attendee->blacklist_trigger)) ?>
       <? } ?> 
-    <? }else{ ?>
-      MANUAL
+    </p>  
+    <? if(!array_key_exists("blacklisted", $form->params)){ ?>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="blacklisted" value="0"> <small>This is a mistake.</small>
+        </label>
+      </div>
     <? } ?>
-  </h4>
-  <p><?=nl2br($form->attendee->blacklist_message) ?></p>
-  <? if(!array_key_exists("blacklisted", $form->params)){ ?>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="blacklisted" value="0"> This is a mistake.
-      </label>
-    </div>
+  <? }else{ ?>
+    <p>Added by administrator.</p>
   <? } ?>
 </div>
 <? } ?>

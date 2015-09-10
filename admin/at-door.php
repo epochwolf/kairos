@@ -16,9 +16,16 @@ $count = count($query);
       <div class="col-md-6">      
         <div class="panel panel-default <?=row_highlight($attendee, "panel") ?>" id="attendee-<?=$attendee->id ?>">
           <div class="panel-heading" style="overflow: hidden;">
-            <h3 class="panel-title pull-left">
-              <?=$attendee->legal_name ?> / <?=$attendee->badge_name ?>
-            </h3>
+            <div class="pull-left">
+              <h3 class="panel-title">
+                <?=$attendee->display_name() ?>
+              </h3>
+              <div>
+                <? if($attendee->minor()){ ?>
+                  <small>Adult: <?=$attendee->adult_display_name() ?></small>
+                <? } ?>
+              </div>
+            </div>
 
             <div class="btn-group pull-right" role="group">
               <?=edit_button_for($attendee) ?>

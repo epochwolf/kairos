@@ -15,7 +15,7 @@ $upgrades = RegistrationUpgrade::from_with_prices($form->attendee->admission_lev
 <input type="hidden" name="id" value="<?=$id ?>">
 
 <div class="text-center">
-<h2><?=$form->attendee->badge_name ?> / <?=$form->attendee->legal_name ?></h2>
+<h2><?=$form->attendee->display_name() ?></h2>
 </div>
 
 <div class="form-group <?=$form->error_on("admission_level") ? "has-error" : "" ?>">

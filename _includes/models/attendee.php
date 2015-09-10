@@ -152,7 +152,15 @@ class Attendee extends BaseModel {
   }
 
   function display_name(){
-    return $this->badge_name;
+    return "{$this->badge_name} / {$this->legal_name}";
+  }
+
+  function adult_display_name(){
+    if($this->minor()){
+      return "{$this->adult_badge_name} / {$this->adult_legal_name}";
+    }else{
+      return "";
+    }
   }
 
   function age(){

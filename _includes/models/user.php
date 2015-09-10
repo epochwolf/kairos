@@ -29,8 +29,9 @@ class User extends BaseModel {
   public $password;
 
   function __construct($row=[]){
-    $this->password = null;
+     null;
     parent::__construct($row);
+    $this->password = @$row["password"];
   }
 
   function display_name(){
@@ -43,7 +44,6 @@ class User extends BaseModel {
       $array["encrypted_password"] = password_hash($this->password, PASSWORD_BCRYPT);
     }
     $array["admin"] = self::bool_to_db($this->admin);
-    
     return $array;
   }
 

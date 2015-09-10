@@ -13,7 +13,7 @@ $badge_types = BadgeType::all();
 ?>
 <input type="hidden" name="id" value="<?=$id ?>">
 <div class="text-center">
-<h2><?=$form->attendee->badge_name ?> / <?=$form->attendee->legal_name ?></h2>
+<h2><?=$form->attendee->display_name() ?></h2>
 </div>
 
 <? include "_partials/blacklist-alert.php" ?>
