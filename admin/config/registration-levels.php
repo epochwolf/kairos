@@ -26,9 +26,9 @@ $levels = RegistrationLevel::all();
           <td><?= $level->db_name ?></td>
           <td><?= $level->name ?></td>
           <td><?=currency($level->price) ?></td>
-          <td><?= $level->includes_tshirt ? "Yes" : "No" ?></td>
-          <td><?= $level->available_pre_reg ? "Yes" : "No" ?></td>
-          <td><?= $level->available_at_door ? "Yes" : "No" ?></td>
+          <td><?= $level->includes_tshirt ? "&check;" : "" ?></td>
+          <td><?= $level->available_pre_reg ? "&check;" : "" ?></td>
+          <td><?= $level->available_at_door ? "&check;" : "" ?></td>
           <td><?= $level->sort_order ?></td>
           <td>
             <?=edit_config_button_for($level, ["class" => "btn-sm"]) ?>

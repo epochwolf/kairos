@@ -67,7 +67,7 @@ $blacklists = Blacklist::all();
             <td><?=$attendee->badge_name ?></td>
             <td><?=$attendee->legal_name ?></td>
             <td><?=admission_display($attendee) ?></td>
-            <td><?=$attendee->blacklisted ? "Yes" : "No" ?></td>
+            <td><?=$attendee->blacklisted ? "&check;" : "" ?></td>
             <td><?=$attendee->blacklist_trigger ?: "Manual" ?></td>
             <td><?=$attendee->blacklist_message ?></td>
             <td>

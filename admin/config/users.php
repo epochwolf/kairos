@@ -21,7 +21,7 @@ $users = User::all();
       <? foreach($users as $user){ ?>
         <tr>
           <td><?= $user->username ?></td>
-          <td><?= $user->admin ? "Yes" : "No" ?></td>
+          <td><?= $user->admin ? "&check;" : "" ?></td>
           <td>
             <?=edit_config_button_for($user, ["class" => ["btn-sm"]]) ?> 
             <?=delete_config_button_for($user, ["class" => ["btn-sm"]]) ?>

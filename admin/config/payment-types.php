@@ -22,7 +22,7 @@ $payment_types = PaymentType::all();
         <tr>
           <td><?= $payment_type->db_name ?></td>
           <td><?= $payment_type->name ?></td>
-          <td><?= $payment_type->at_door ? "Yes" : "No" ?></td>
+          <td><?= $payment_type->at_door ? "&check;" : "" ?></td>
           <td><?= $payment_type->sort_order ?></td>
           <td>
             <?=edit_config_button_for($payment_type, ["class" => "btn-sm"]) ?>
