@@ -33,6 +33,18 @@ function input_tag($form, $field, $html_options=[]){
   return "<input $attributes>";
 }
 
+function radio_tag($form, $field, $value, $html_options=[]){
+  $attributes = build_html_attributes([
+    "id"    => $field."_".$value,
+    "name"  => $field,
+    "value" => $value,
+    "type"  => "radio",
+    "checked" => @$form->params[$field] == $value ? "checked" : null,
+  ], $html_options);
+
+  return "<input $attributes>";
+}
+
 function option_tag($label, $current_value=null, $value=null, $html_options=[]){
   $value = $value ?: $label;
   $attributes = build_html_attributes([

@@ -30,7 +30,7 @@ if(!isset($form)){
       <? foreach(["", "default", "primary", "success", "info", "warning", "danger"] as $type){ ?>
         <div class="radio-inline">
           <label>
-            <input type="radio" name="label_color" id="payment_method_<?=$type ?>" value="<?=$type ?>" <?if(@$form->params["label_color"] == $type){?>checked="checked"<? } ?>>
+            <?=radio_tag($form, "label_color", $type) ?>
             <? if($type){ ?>
               <span class="label label-<?=$type ?>"><?=$type ?></span>
             <? }else{ ?>
@@ -49,13 +49,13 @@ if(!isset($form)){
     <div>
       <div class="radio-inline">
         <label>
-          <input type="radio" name="minor" id="minor_false" value="0" <?if(@$form->params["minor"] == 0){?>checked="checked"<? } ?>>
+          <?=radio_tag($form, "minor", 0) ?>
           Adults Only
         </label>
       </div>
       <div class="radio-inline">
         <label>
-          <input type="radio" name="minor" id="minor_true" value="1" <?if(@$form->params["minor"] == 1){?>checked="checked"<? } ?>>
+          <?=radio_tag($form, "minor", 1) ?>
           Minors Only
         </label>
       </div>

@@ -129,15 +129,17 @@ $payment_types = PaymentType::at_door();
       <h3>Payment Method</h3>
       <div class="row">
         <div class="form-group col-sm-12 <?=$form->error_on("payment_method") ? "has-error" : "" ?>">
-          <? foreach($payment_types as $type){ ?>
-            <div class="radio-inline">
-              <label>
-                <input type="radio" name="payment_method" id="payment_method_<?=$type->db_name?>" value="<?=$type->db_name?>" <?if(@$form->params["payment_method"] == $type->db_name){?>checked="checked"<? } ?>>
-                <?=$type->name?>
-              </label>
-            </div>
-          <? } ?>
-          <?=error_display($form, "payment_method") ?>
+          <div>
+            <? foreach($payment_types as $type){ ?>
+              <div class="radio-inline">
+                <label>
+                  <?=radio_tag($form, "payment_method", $type->db_name) ?>
+                  <?=$type->name?>
+                </label>
+              </div>
+            <? } ?>
+            <?=error_display($form, "payment_method") ?>
+          </div>
         </div>
 
       </div>

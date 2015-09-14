@@ -26,7 +26,6 @@ $payment_types = PaymentType::all();
 
 <h3>Badge Information</h3>
 
-
 <div class="row">
   <div class="form-group col-md-3 <?=$form->error_on("badge_number") ? "has-error" : "" ?>">
     <?=label_tag("badge_number", "Badge #") ?>
@@ -81,11 +80,11 @@ $payment_types = PaymentType::all();
     <?=error_display($form, "override_price") ?>
   </div> 
 
-  <div class="form-group col-md-2 <?=$form->error_on("payment_method") ? "has-error" : "" ?>">
+  <div class="form-group col-md-2 input-sm <?=$form->error_on("payment_method") ? "has-error" : "" ?>">
     <? foreach($payment_types as $type){ ?>
       <div class="radio">
         <label>
-          <input type="radio" name="payment_method" id="payment_method_<?=$type->db_name?>" value="<?=$type->db_name?>" <?if(@$form->params["payment_method"] == $type->db_name){?>checked="checked"<? } ?>>
+          <?=radio_tag($form, "payment_method", $type->db_name) ?>
           <?=$type->name?>
         </label>
       </div>
@@ -146,6 +145,7 @@ $payment_types = PaymentType::all();
     <?=error_display($form, "postal_code") ?>
   </div>
 </div>
+
 <div class="row">
   <div class="form-group col-md-4 <?=$form->error_on("phone_number") ? "has-error" : "" ?>">
     <?=label_tag("phone_number", "Phone Number") ?>

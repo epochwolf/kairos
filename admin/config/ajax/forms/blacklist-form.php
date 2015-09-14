@@ -57,7 +57,7 @@ $types = BlacklistType::all();
       <? foreach($types as $type){ ?>
         <div class="radio">
           <label>
-            <input type="radio" name="type" id="type_<?=$type->db_name ?>" value="<?=$type->db_name ?>" <?if(@$form->params["type"] == $type->db_name){?>checked="checked"<? } ?>>
+            <?=radio_tag($form, "type", $type->db_name) ?>
             <? if(true){ ?>
               <span class="label label-<?=$type->alert_color ?>"><?=$type->alert_title ?></span>
             <? }else{ ?>
