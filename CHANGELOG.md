@@ -1,13 +1,17 @@
 
 # Kairos 2.0 (Sep 5, 2015)
 
-Moving all configuration to the database and adding real users instead of relying on basic aut via htaccess files.  
+Moving all configuration to the database and adding real users instead of relying on basic aut via htaccess files. Adding ability to import pre-registered attendees via CSV.
 
 * All configuration has been moved into the database.
 * All configuration except database can be changed in the UI.
 * Database configuration is now in _includes/config.json
 * User login added instead of using basic auth in an htaccess file. 
 * Blacklist now supports wildcard character * in triggers. 
+* New Blacklist UI. 
+* Improved blacklist warnings on attendees.
+* Allow attendees to be manually blacklisted.
+* Attendees can be imported via CSV file.
 
 # Kairos 1.3 (Sep 1, 2015)
 
