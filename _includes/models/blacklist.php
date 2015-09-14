@@ -5,6 +5,10 @@ class Blacklist extends BaseModel{
   const DISPLAY_NAME = "Blacklist";
 
   ## QUERIES
+  static function all(){
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " ORDER BY badge_name ASC");
+  }
+
   # @return [Blacklist, "badge_name" or "legal_name", String] or null
   static function match($badge_name, $legal_name){
     $rows = self::cached_all();

@@ -32,7 +32,7 @@ class Attendee extends BaseModel {
   }
 
   static function blacklisted(){
-    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE blacklisted = 1 OR blacklist_id IS NOT NULL";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE blacklisted = 1 OR blacklist_id IS NOT NULL ORDER BY badge_name ASC";
     return self::query($sql);
   }
 
