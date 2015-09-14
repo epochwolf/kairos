@@ -88,6 +88,7 @@ class Attendee extends BaseModel {
     "badge_number",
     "badge_name",
     "legal_name",
+    "company_name",
     "birthdate",
     "address1",
     "address2",

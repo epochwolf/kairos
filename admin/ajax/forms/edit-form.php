@@ -19,6 +19,9 @@ $payment_types = PaymentType::all();
 
 <div class="text-center">
 <h2><?=$form->attendee->display_name() ?></h2>
+<? if($form->attendee->company_name){ ?>
+  <h4 class="text-muted"><?=$form->attendee->company_name ?></h4>
+<? } ?>
 </div>
 
 <? include "_partials/blacklist-alert.php" ?>
@@ -112,6 +115,16 @@ $payment_types = PaymentType::all();
     <input class="form-control" type="text" value="<?=age_from_birthdate(@$form->params["birthdate"]); ?>" readonly>
   </div>
 </div>
+
+<div class="row">
+  <div class="form-group col-md-6 <?=$form->error_on("company_name") ? "has-error" : "" ?>">
+    <?=label_tag("company_name", "Company Name") ?>
+    <?=input_tag($form, "company_name", ["placeholder" => ""]) ?>
+    <?=error_display($form, "company_name") ?>
+  </div>
+</div>
+
+<h3>Address</h3>
 
 <div class="row">
   <div class="form-group col-md-8 <?=$form->error_on("address1") ? "has-error" : "" ?>">

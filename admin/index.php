@@ -37,9 +37,15 @@ switch($tab){
           <th>Badge #</th>
           <th>Badge Name</th>
           <th>Legal Name</th>
-          <th>Birthdate</th>
+          <? if($tab != "dealers"){ ?>
+            <th>Birthdate</th>
+          <? }else{ ?>
+            <th>Company Name</th>
+          <? } ?>
           <th>Admission Level</th>
-          <th>Adult</th>
+          <? if($tab != "dealers"){ ?>
+            <th>Adult</th>
+          <? } ?>
           <th>Actions</th>
         </tr>
       </thead>
@@ -49,13 +55,19 @@ switch($tab){
             <td><?=$attendee->badge_number ?></td>
             <td><?=$attendee->badge_name ?></td>
             <td><?=$attendee->legal_name ?></td>
-            <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
+            <? if($tab != "dealers"){ ?>
+              <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
+            <? }else{ ?>
+              <td><?=$attendee->company_name ?></td>
+            <? } ?>
             <td><?=admission_display($attendee) ?></td>
-            <td>
-              <? if($attendee->minor()){ ?>
-                <?=$attendee->adult_display_name() ?>
-              <? } ?>
-            </td>
+            <? if($tab != "dealers"){ ?>
+              <td>
+                <? if($attendee->minor()){ ?>
+                  <?=$attendee->adult_display_name() ?>
+                <? } ?>
+              </td>
+            <? } ?>
             <td>
               <div class="btn-group" role="group">
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>

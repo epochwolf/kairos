@@ -46,6 +46,7 @@ CREATE TABLE `attendees` (
   `badge_number` int(11) DEFAULT NULL,
   `badge_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `legal_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `company_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `birthdate` date NOT NULL,
   `address1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `address2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,

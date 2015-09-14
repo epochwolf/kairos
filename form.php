@@ -42,6 +42,13 @@ $payment_types = PaymentType::at_door();
           <? } ?>
         </div>
       </div>
+      <div class="row">
+        <div class="form-group col-md-8 <?=$form->error_on("company_name") ? "has-error" : "" ?>">
+          <?=label_tag("company_name", "Company Name") ?>
+          <?=input_tag($form, "company_name", ["placeholder" => ""]) ?>
+          <?=error_display($form, "company_name") ?>
+        </div>
+      </div>
 
       <h3>Address</h3>
       <div class="row">

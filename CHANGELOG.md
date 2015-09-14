@@ -1,3 +1,10 @@
+# Kairos 2.1 (Sep 14, 2015)
+
+Adding Coupon Codes. 
+
+* 
+* Adding optional field Company Name to Attendee. 
+
 
 # Kairos 2.0 (Sep 5, 2015)
 

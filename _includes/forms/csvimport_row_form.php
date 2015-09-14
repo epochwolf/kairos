@@ -6,6 +6,7 @@ class CSVImportRowForm extends BaseForm{
     "badge_number",
     "badge_name",
     "legal_name",
+    "company_name",
     "birthdate",
     "address1",
     "address2",
