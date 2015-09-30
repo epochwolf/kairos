@@ -6,10 +6,11 @@ class BlacklistType extends BaseModel{
   const DISPLAY_NAME = "Badge Type";
 
   const TYPES = [
-    // 'dbname' =>   ["Name",         "Alert Title", "alert-color"]
-    "ban"         => ["Ban",          "BANNED",      "danger"], 
-    "restriction" => ["Restriction",  "RESTRICTION", "warning"], 
-    "watch"       => ["Watch",        "Watch",       "warning"]
+    // 'dbname' =>   ["Name",         "Alert Title", "alert-color", security_required]
+    "ban"         => ["Ban",          "BANNED",      "danger",  true], 
+    "restriction" => ["Restriction",  "RESTRICTION", "warning", false], 
+    "watch"       => ["Watch",        "Watch",       "warning", false],
+    "notice"      => ["Notice",       "Notice",      "success", false],
   ];
 
   static function all(){
@@ -44,7 +45,8 @@ class BlacklistType extends BaseModel{
           "db_name" => $db_name,
           "name" => $fields[0],
           "alert_title" => $fields[1],
-          "alert_color" => $fields[2]
+          "alert_color" => $fields[2],
+          "security_required" => $fields[3]
         ]);
   }
 
@@ -57,6 +59,7 @@ class BlacklistType extends BaseModel{
     "name",
     "alert_title",
     "alert_color",
+    "security_required",
   ];
 
   function is_new_record(){ return false; }

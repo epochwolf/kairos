@@ -27,5 +27,8 @@
   <? }else{ ?>
     <p>Added by administrator.</p>
   <? } ?>
+  <? if($blacklist_type->security_required){ ?>
+    <p><strong>RADIO: "Can any Manager come to Registration to deal with a registration issue.".</strong></p>
+  <? } ?>
 </div>
 <? } ?>
