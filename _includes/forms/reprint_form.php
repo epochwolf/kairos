@@ -14,11 +14,6 @@ class ReprintForm extends BaseForm{
 
   public function validate(){
     $this->error_if_empty("badge_name");
-    if(!$this->error_on("badge_name")){
-      if(!Attendee::is_unique_badge_name(@$this->params["badge_name"], $this->attendee)){
-        $this->add_error("badge_name", "Name is already taken.");
-      }
-    }
 
     $this->error_if_empty("badge_number");  
     if(!$this->error_on("badge_number")){

@@ -76,7 +76,6 @@ CREATE TABLE `attendees` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `notes` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_badge_name` (`badge_name`),
   KEY `badge_number` (`badge_number`) USING BTREE,
   KEY `blacklist_id` (`blacklist_id`),
   CONSTRAINT `attendees_ibfk_1` FOREIGN KEY (`blacklist_id`) REFERENCES `blacklist` (`id`)

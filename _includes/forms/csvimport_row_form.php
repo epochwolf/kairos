@@ -22,6 +22,7 @@ class CSVImportRowForm extends BaseForm{
     "price",
     "adult_badge_name",
     "adult_legal_name",
+    "notes",
   ];
 
 
@@ -47,11 +48,6 @@ class CSVImportRowForm extends BaseForm{
     $this->error_if_empty("legal_name");
 
     $this->error_if_empty("badge_name");
-    if(!$this->error_on("badge_name")){
-      if(!Attendee::is_unique_badge_name(@$this->params["badge_name"])){
-        $this->add_error("badge_name", "Name is already taken.");
-      }
-    }
 
     $this->error_if_empty("birthdate");
     if(!$this->error_on("birthdate")){

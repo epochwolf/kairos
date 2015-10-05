@@ -150,6 +150,12 @@ $payment_types = PaymentType::all();
         <td>VARCHAR(255)</td>
         <td>Any</td>
       </tr>
+      <tr>
+        <td>notes</td>
+        <td></td>
+        <td>TEXT</td>
+        <td>Any</td>
+      </tr>
     </table>
   </div>
 </div>
