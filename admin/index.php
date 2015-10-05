@@ -15,7 +15,10 @@ switch($tab){
     $query = Attendee::by_badge_type("dealer");
     break;
   case "minors":
-    $query = Attendee::by_badge_type("minor");
+    $query = Attendee::minors();
+    break;
+  case "blacklisted":
+    $query = Attendee::blacklisted();
     break;
   default:
     $query = Attendee::all();
@@ -30,6 +33,7 @@ switch($tab){
       <?= nav_link("Staff", "/admin/index.php?tab=staff", $tab == "staff") ?>
       <?= nav_link("Dealers", "/admin/index.php?tab=dealers", $tab == "dealers") ?>
       <?= nav_link("Minors", "/admin/index.php?tab=minors", $tab == "minors") ?>
+      <?= nav_link("Blacklisted", "/admin/index.php?tab=blacklisted", $tab == "blacklisted") ?>
     </ul>
     <table class="table table-striped table-condensed ">
       <thead>
@@ -37,15 +41,23 @@ switch($tab){
           <th>Badge #</th>
           <th>Badge Name</th>
           <th>Legal Name</th>
-          <? if($tab != "dealers"){ ?>
-            <th>Birthdate</th>
-          <? }else{ ?>
+
+          <? if($tab == "dealers"){ ?>
             <th>Company Name</th>
-          <? } ?>
-          <th>Admission Level</th>
-          <? if($tab != "dealers"){ ?>
+            <th>Admission Level</th>
+
+          <? }elseif($tab == "blacklisted"){ ?>
+            <th>Admission Level</th>
+            <th>Blacklisted</th>
+            <th>Trigger</th>
+            <th>Message</th>
+
+          <? }else{ ?>
+            <th>Birthdate</th>
+            <th>Admission Level</th>
             <th>Adult</th>
           <? } ?>
+
           <th>Actions</th>
         </tr>
       </thead>
@@ -55,19 +67,27 @@ switch($tab){
             <td><?=$attendee->badge_number ?></td>
             <td><?=$attendee->badge_name ?></td>
             <td><?=$attendee->legal_name ?></td>
-            <? if($tab != "dealers"){ ?>
-              <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
-            <? }else{ ?>
+
+            <? if($tab == "dealers"){ ?>
               <td><?=$attendee->company_name ?></td>
+              <td><?=admission_display($attendee) ?></td>
+
+            <? }elseif($tab == "blacklisted"){ ?>
+              <td><?=admission_display($attendee) ?></td>
+              <td><?=$attendee->blacklisted ? "&check;" : "" ?></td>
+              <td><?=$attendee->blacklist_trigger ?: "Manual" ?></td>
+              <td><?=$attendee->blacklist_message ?></td>
+
+            <? }else{ ?>
+                <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
+                <td><?=admission_display($attendee) ?></td>
+                <td>
+                  <? if($attendee->minor()){ ?>
+                    <?=$attendee->adult_display_name() ?>
+                  <? } ?>
+                </td>
             <? } ?>
-            <td><?=admission_display($attendee) ?></td>
-            <? if($tab != "dealers"){ ?>
-              <td>
-                <? if($attendee->minor()){ ?>
-                  <?=$attendee->adult_display_name() ?>
-                <? } ?>
-              </td>
-            <? } ?>
+
             <td>
               <div class="btn-group" role="group">
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>

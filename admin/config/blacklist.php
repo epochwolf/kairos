@@ -41,44 +41,6 @@ $blacklists = Blacklist::all();
       <? }?>
     </table>
     <?=new_config_button_for("Blacklist") ?>
-
-
-    <h1>
-      Blacklisted Attendees
-      <?=reapply_blacklist_button(["class" => ["btn-sm"]]) ?>
-    </h1>
-    <table class="table table-striped table-condensed ">
-      <thead>
-        <tr>
-          <th>Badge #</th>
-          <th>Badge Name</th>
-          <th>Legal Name</th>
-          <th>Admission Level</th>
-          <th>Blacklisted</th>
-          <th>Trigger</th>
-          <th>Message</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <? foreach(Attendee::blacklisted() as $attendee){ ?>
-          <tr class="<?=row_highlight($attendee) ?> attendee" data-id="<?=$attendee->id ?>">
-            <td><?=$attendee->badge_number ?></td>
-            <td><?=$attendee->badge_name ?></td>
-            <td><?=$attendee->legal_name ?></td>
-            <td><?=admission_display($attendee) ?></td>
-            <td><?=$attendee->blacklisted ? "&check;" : "" ?></td>
-            <td><?=$attendee->blacklist_trigger ?: "Manual" ?></td>
-            <td><?=$attendee->blacklist_message ?></td>
-            <td>
-              <div class="btn-group" role="group">
-                <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-              </div>
-            </td>
-          </tr>
-        <? } ?>
-      </tbody>
-    </table>
   </div>
 </div>
 <?php

@@ -36,6 +36,11 @@ class Attendee extends BaseModel {
     return self::query($sql);
   }
 
+  static function minors(){
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE FLOOR(DATEDIFF (NOW(), birthdate)/365) < 18 ORDER BY birthdate ASC";
+    return self::query($sql);
+  }
+
   static function search($name){
     $sql = "SELECT * FROM " . static::TABLE_NAME . " " .
     "WHERE (badge_number != '0' AND badge_number = :name_exact) " .

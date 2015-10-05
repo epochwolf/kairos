@@ -24,6 +24,12 @@ $badge_types = BadgeType::all();
 
 
 
+<div class="form-group <?=$form->error_on("birthdate") ? "has-error" : "" ?>">
+  <?=label_tag("birthdate", "Birthdate") ?>
+  <?=input_tag($form, "birthdate") ?>
+  <?=error_display($form, "birthdate") ?>
+</div>
+
 <div class="form-group <?=$form->error_on("badge_number") ? "has-error" : "" ?>">
   <?=label_tag("badge_number", "Badge Number") ?>
   <?=input_tag($form, "badge_number") ?>

@@ -78,4 +78,14 @@ class RegistrationUpgrade extends BaseModel {
       return floatval($override_price);
     }
   }
+
+  function price_for(Attendee $attendee){
+    if(is_null($attendee->override_price) || $attendee->override_price == 0){ // NULL or 0
+      return $this->price();
+    }else{
+      $lvl = RegistrationLevel::find_by_db_name($attendee->admission_level);
+      $price_diff = $lvl->price - $attendee->override_price;
+      return $this->price() + $price_diff;
+    }
+  }
 }

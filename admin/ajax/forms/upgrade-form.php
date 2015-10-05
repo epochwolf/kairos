@@ -35,7 +35,7 @@ $upgrades = RegistrationUpgrade::from_with_prices($form->attendee->admission_lev
     <div class="radio">
       <label>
         <input type="radio" name="admission_level" value="<?=$upgrade->to ?>">
-        <?=$upgrade->to_name ?> (<?=currency($upgrade->override_price ?: $upgrade->price) ?>)
+        <?=$upgrade->to_name ?> (<?=currency($upgrade->price_for($form->attendee)) ?>)
       </label>
     </div>
   <? } ?>
