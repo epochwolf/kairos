@@ -5,8 +5,12 @@ class Attendee extends BaseModel {
   const DISPLAY_NAME = "Attendee";
 
   ## QUERY METHODS
+  static function all(){
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " ORDER BY created_at DESC");
+  }
+
   static function by_badge_number($number){
-    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_number = ?", [$number]);
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_number = ? ", [$number]);
   }
 
   static function by_badge_name($name){
@@ -18,11 +22,11 @@ class Attendee extends BaseModel {
   }
 
   static function by_badge_type($type){
-    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_type = ?", [$type]);
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_type = ? ORDER BY created_at DESC", [$type]);
   }
 
   static function pre_reg_pending(){
-    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE at_door = 0 AND checked_in = 0 order by legal_name asc";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE at_door = 0 AND checked_in = 0 ORDER BY created_at DESC";
     return self::query($sql, [':at_door' => 0]);
   }
 

@@ -7,7 +7,7 @@ class PayForm extends BaseForm{
   function __construct($params=[]){
     $this->attendee = Attendee::find($params["id"]);
     $this->params["admission_level"] = $this->attendee->admission_level;
-    $this->params["override_price"] = $this->attendee->badge_number;
+    $this->params["override_price"] = $this->attendee->override_price;
     $this->params["payment_method"] = $this->attendee->payment_method;
     $this->params["badge_type"] = $this->attendee->badge_type;
     parent::__construct($params);

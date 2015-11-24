@@ -11,6 +11,9 @@ switch($tab){
   case "staff":
     $query = Attendee::by_badge_type("staff");
     break;
+  case "guests":
+    $query = Attendee::by_badge_type("guest");
+    break;
   case "dealers":
     $query = Attendee::by_badge_type("dealer");
     break;
@@ -31,6 +34,7 @@ switch($tab){
     <ul class="nav nav-tabs">
       <?= nav_link("All", "/admin/index.php", $tab == "all") ?>
       <?= nav_link("Staff", "/admin/index.php?tab=staff", $tab == "staff") ?>
+      <?= nav_link("Guests", "/admin/index.php?tab=guests", $tab == "guests") ?>
       <?= nav_link("Dealers", "/admin/index.php?tab=dealers", $tab == "dealers") ?>
       <?= nav_link("Minors", "/admin/index.php?tab=minors", $tab == "minors") ?>
       <?= nav_link("Blacklisted", "/admin/index.php?tab=blacklisted", $tab == "blacklisted") ?>
