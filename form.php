@@ -153,7 +153,7 @@ $payment_types = PaymentType::at_door();
 
       <div class="well">
         <h3> Adult Guardian (Minors Only) </h3>
-        <p>Any one under the age of 18 must have a registered adult with them.</p>
+        <p>Any one under the age of <?=MINOR_AGE ?> must have a registered adult with them.</p>
         <div class="row">
           <div class="form-group col-md-7 <?=$form->error_on("adult_legal_name") ? "has-error" : "" ?>">
             <?=label_tag("adult_legal_name", "Adult's Legal Name") ?>

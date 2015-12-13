@@ -1,8 +1,22 @@
+# Kairos 2.3 (Dec 13)
+
+Removing hardcoded minor age and badge type tabs.
+
+* Admin dashboard nows shows all badge types instead of hardcoded ones.
+* Minor age is now set in _includes/constants.php (18 by default).
+* Attendee import required fields now matches what the import page shows.
+* Editing a minor's information no longer requires adult's name be filled in.
+
+# Kairos 2.2 (Nov 24)
+
+Fixing bugs discovered at Fur Reality.
+
+* Override Price on Pay Form fixed. 
+* Pre-reg page now ordered by creation date. 
+* Badge type pages now ordered by creation date. 
+
 # Kairos 2.1 (Sep 14, 2015)
 
-Adding Coupon Codes. 
-
-* 
 * Adding optional field Company Name to Attendee. 
 
 

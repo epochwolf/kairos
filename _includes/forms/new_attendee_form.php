@@ -40,7 +40,7 @@ class NewAttendeeForm extends BaseForm{
     }
 
     $age = age_from_birthdate(@$this->params["birthdate"]);
-    if($age && $age < 18){
+    if($age && $age < MINOR_AGE){
       $this->error_if_empty("adult_legal_name");
       $this->error_if_empty("adult_badge_name");
     }
@@ -73,7 +73,7 @@ class NewAttendeeForm extends BaseForm{
 
   private function select_badge_type(){
     $age = age_from_birthdate(@$this->params["birthdate"]);
-    if($age && $age < 18){
+    if($age && $age < MINOR_AGE){
       $badge_type = BadgeType::default_minor();
     }else{
       $badge_type = BadgeType::default_adult();

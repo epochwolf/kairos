@@ -13,7 +13,7 @@ class EditForm extends BaseForm{
 
   public function validate(){
     $age = age_from_birthdate(@$this->params["birthdate"]);
-    $minor = $age && $age < 18;
+    $minor = $age && $age < MINOR_AGE;
 
     $this->error_if_empty("legal_name");
     $this->error_if_empty("birthdate");
@@ -21,10 +21,10 @@ class EditForm extends BaseForm{
       $this->error_if_invalid_date("birthdate");
     }
 
-    if($minor){
-      $this->error_if_empty("adult_legal_name");
-      $this->error_if_empty("adult_badge_name");
-    }
+    // if($minor){
+    //   $this->error_if_empty("adult_legal_name");
+    //   $this->error_if_empty("adult_badge_name");
+    // }
 
     if(@$this->params["checked_in"]){
       $this->error_if_empty("badge_number", "Already checked in, field required.");

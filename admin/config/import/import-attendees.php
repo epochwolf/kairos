@@ -45,7 +45,7 @@ $payment_types = PaymentType::all();
         <td>badge_name</td>
         <td>&check;</td>
         <td>VARCHAR(255)</td>
-        <td>No duplicates allowed with existing entries</td>
+        <td>Any</td>
       </tr>
       <tr>
         <td>legal_name</td>
@@ -103,7 +103,7 @@ $payment_types = PaymentType::all();
       </tr>
       <tr>
         <td>badge_type</td>
-        <td></td>
+        <td>&check;</td>
         <td>VARCHAR(255)</td>
         <td>
           <?= implode(", ", array_map(function($record){ return "{$record->db_name}"; }, $badge_types)) ?>

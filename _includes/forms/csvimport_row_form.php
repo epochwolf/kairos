@@ -55,30 +55,39 @@ class CSVImportRowForm extends BaseForm{
     }
 
     $this->error_if_empty("admission_level");
-    $this->error_if_empty("payment_method");
+    //$this->error_if_empty("payment_method");
 
     if(!$this->error_on("admission_level")){
       $this->error_unless_in_list("admission_level", static::valid_admission_levels());
     }
 
-    if(!$this->error_on("payment_method")){
+    if(!@$this->params["payment_method"]){
       $this->error_unless_in_list("payment_method", static::valid_payment_types());
     }
 
-    if(@$this->params["valid_tshirt_sizes"]){
-      $this->error_unless_in_list("valid_tshirt_sizes", static::valid_tshirt_sizes());
+    if(@$this->params["tshirt_size"]){
+      $this->error_unless_in_list("tshirt_size", static::valid_tshirt_sizes());
     }
 
-    if(@$this->params["valid_badge_types"]){
-      $this->error_unless_in_list("valid_badge_types", static::valid_badge_types());
+    if(@$this->params["badge_type"]){
+      $this->error_unless_in_list("badge_type", static::valid_badge_types());
+
+      if(!$this->error_on("badge_type")){
+        $badge_type = BadgeType::cached_find_by_db_name(@$this->params["badge_type"]);
+        if(!$badge_type->minor && $minor){
+          $this->add_error("badge_type", "Attendee is a minor.");
+        }elseif($badge_type->minor && !$minor){
+          $this->add_error("badge_type", "Attendee is not a minor.");
+        }
+      }
     }
 
-    $this->error_if_empty("address1");
-    $this->error_if_empty("city");
-    $this->error_if_empty("state_prov");
-    $this->error_if_empty("postal_code");
+    //$this->error_if_empty("address1");
+    //$this->error_if_empty("city");
+    //$this->error_if_empty("state_prov");
+    //$this->error_if_empty("postal_code");
 
-    $this->error_if_empty("phone_number");
+    //$this->error_if_empty("phone_number");
 
     // $this->error_if_empty("email");
     // if(!$this->error_on("email")){
@@ -90,7 +99,7 @@ class CSVImportRowForm extends BaseForm{
     // }
 
     // $age = age_from_birthdate(@$this->params["birthdate"]);
-    // if($age && $age < 18){
+    // if($age && $age < MINOR_AGE){
     //   $this->error_if_empty("adult_legal_name");
     //   $this->error_if_empty("adult_badge_name");
     // }
@@ -119,7 +128,7 @@ class CSVImportRowForm extends BaseForm{
 
   protected function select_badge_type(){
     $age = age_from_birthdate(@$this->params["birthdate"]);
-    if($age && $age < 18){
+    if($age && $age < MINOR_AGE){
       $badge_type = BadgeType::default_minor();
     }else{
       $badge_type = BadgeType::default_adult();

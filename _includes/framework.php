@@ -1,4 +1,5 @@
 <?php // This is the master file for the framework.
+include 'constants.php';
 include 'db_func.php';
 include 'util_func.php';
 include 'view_func.php';

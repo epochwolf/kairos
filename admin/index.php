@@ -7,9 +7,13 @@ include "_partials/admin-header.php";
 
 $tab = @$_GET["tab"] ?: "all";  
 
+$badge_types = BadgeType::cached_all();
+
 switch($tab){
-  case "staff":
-    $query = Attendee::by_badge_type("staff");
+
+  case "badge":
+    $type = BadgeType::cached_find_by_db_name($_GET["type"]);
+    $query = Attendee::by_badge_type($type->db_name);
     break;
   case "guests":
     $query = Attendee::by_badge_type("guest");
@@ -33,9 +37,9 @@ switch($tab){
     <h1>All Attendees</h1>
     <ul class="nav nav-tabs">
       <?= nav_link("All", "/admin/index.php", $tab == "all") ?>
-      <?= nav_link("Staff", "/admin/index.php?tab=staff", $tab == "staff") ?>
-      <?= nav_link("Guests", "/admin/index.php?tab=guests", $tab == "guests") ?>
-      <?= nav_link("Dealers", "/admin/index.php?tab=dealers", $tab == "dealers") ?>
+      <? foreach($badge_types as $bt){ ?>
+        <?= nav_link($bt->name, "/admin/index.php?tab=badge&type={$bt->db_name}", $tab == "staff") ?>
+      <? } ?>
       <?= nav_link("Minors", "/admin/index.php?tab=minors", $tab == "minors") ?>
       <?= nav_link("Blacklisted", "/admin/index.php?tab=blacklisted", $tab == "blacklisted") ?>
     </ul>

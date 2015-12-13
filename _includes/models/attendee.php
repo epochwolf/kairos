@@ -41,7 +41,7 @@ class Attendee extends BaseModel {
   }
 
   static function minors(){
-    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE FLOOR(DATEDIFF (NOW(), birthdate)/365) < 18 ORDER BY birthdate ASC";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE FLOOR(DATEDIFF (NOW(), birthdate)/365) < " . MINOR_AGE . " ORDER BY birthdate ASC";
     return self::query($sql);
   }
 
@@ -178,7 +178,7 @@ class Attendee extends BaseModel {
   }
 
   function minor(){
-    return $this->age() < 18;
+    return $this->age() < MINOR_AGE;
   }
 
   // function upgradeable(){
