@@ -1,5 +1,3 @@
-
-
 html {
   position: relative;
   min-height: 100%;
@@ -29,4 +27,18 @@ footer.footer p.text-muted.pull-right{
 
 .table.table-auto-width {
    width: auto;
+}
+
+.canceled{
+  text-decoration: line-through;
+}
+
+.modal-body .tab-content{
+  padding-top: 1em;
+}
+
+.alert-black {
+  color: white;
+  background-color: #444;
+  border-color: #333;
 }

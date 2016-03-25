@@ -1,12 +1,12 @@
 <?php 
 
-class CSVImportRowForm extends BaseForm{
+class CSVImportAttendeeForm extends BaseForm{
 
   const VALID_FIELDS = [
     "badge_number",
     "badge_name",
     "legal_name",
-    "company_name",
+    "vendor_id",
     "birthdate",
     "address1",
     "address2",
@@ -20,8 +20,8 @@ class CSVImportRowForm extends BaseForm{
     "tshirt_size",
     "payment_method",
     "price",
-    "adult_badge_name",
     "adult_legal_name",
+    "adult_phone_number",
     "notes",
   ];
 
@@ -35,6 +35,7 @@ class CSVImportRowForm extends BaseForm{
     $this->params["at_door"] = false;
     $this->params["paid"] = true;
     $this->params["checked_in"] = false;
+    $this->params["canceled"] = false;
     $this->params["badge_reprints"] = 0;
     $d = new DateTime();
     $this->params["created_at"] = $d->format("Y-m-d H:i:s");
@@ -45,9 +46,17 @@ class CSVImportRowForm extends BaseForm{
   }
 
   public function validate(){
-    $this->error_if_empty("legal_name");
+    $age = age_from_birthdate(@$this->params["birthdate"]);
+    $minor = $age && $age < MINOR_AGE;
 
+    $this->error_if_empty("legal_name");
     $this->error_if_empty("badge_name");
+
+    if(!empty(@$this->params["badge_number"])){
+      if(!Attendee::is_unique_badge_number(@$this->params["badge_number"])){
+        $this->add_error("badge_number", "Number is already assigned.");
+      }
+    }
 
     $this->error_if_empty("birthdate");
     if(!$this->error_on("birthdate")){
@@ -59,6 +68,10 @@ class CSVImportRowForm extends BaseForm{
 
     if(!$this->error_on("admission_level")){
       $this->error_unless_in_list("admission_level", static::valid_admission_levels());
+    }
+
+    if(!empty(@$this->params["vendor_id"])){
+      $this->error_unless_in_list("vendor_id", static::valid_vendor_ids());
     }
 
     if(!@$this->params["payment_method"]){
@@ -101,7 +114,7 @@ class CSVImportRowForm extends BaseForm{
     // $age = age_from_birthdate(@$this->params["birthdate"]);
     // if($age && $age < MINOR_AGE){
     //   $this->error_if_empty("adult_legal_name");
-    //   $this->error_if_empty("adult_badge_name");
+    //   $this->error_if_empty("adult_phone_number");
     // }
 
     // if(!$this->error_on("admission_level")){
@@ -150,5 +163,9 @@ class CSVImportRowForm extends BaseForm{
 
   protected static function valid_badge_types(){
     return array_map(function($lvl){ return $lvl->db_name; }, BadgeType::cached_all());
+  }
+
+  protected static function valid_vendor_ids(){
+    return array_map(function($lvl){ return $lvl->id; }, Vendor::cached_all());
   }
 }

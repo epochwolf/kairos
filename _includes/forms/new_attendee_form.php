@@ -5,13 +5,15 @@ class NewAttendeeForm extends BaseForm{
   function __construct($params=[]){
     parent::__construct($params);
     $this->params["original_admission_level"] = @$this->params["admission_level"];
-    $this->params["payment_method"] = @$this->params["payment_method"] ?: "cash";
+    $this->params["payment_method"] = @$this->params["payment_method"] ?: PaymentType::default_name();
     $this->params["override_price"] = null;
     $this->params["at_door"] = true;
     $this->params["notes"] = null;
     $this->params["paid"] = false;
     $this->params["checked_in"] = false;
+    $this->params["canceled"] = false;
     $this->params["badge_reprints"] = 0;
+    $this->params["vendor_id"] = null;
     $d = new DateTime();
     $this->params["created_at"] = $d->format("Y-m-d H:i:s");
     $this->select_badge_type();
@@ -42,7 +44,8 @@ class NewAttendeeForm extends BaseForm{
     $age = age_from_birthdate(@$this->params["birthdate"]);
     if($age && $age < MINOR_AGE){
       $this->error_if_empty("adult_legal_name");
-      $this->error_if_empty("adult_badge_name");
+      $this->error_if_empty("adult_relationship");
+      $this->error_if_empty("adult_phone_number");
     }
 
     $this->error_if_empty("badge_name");

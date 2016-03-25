@@ -1,10 +1,41 @@
 <?php
 
+function build_button_or_link($label, $attributes, $html_options){
+  $tag = "button";
+
+  if(@$html_options["type"] == "link"){
+    $tag = "a";
+    unset($html_options["type"]);
+    unset($attributes["type"]);
+    unset($attributes["class"]);
+    $attributes["href"] = "#";
+  }
+
+  $str = build_html_attributes($attributes, $html_options);
+  return "<$tag $str>$label</$tag>";
+}
+
 // ATTENDEE SCREENS
+
+
+function add_attendee_button($html_options=[]){
+  $attributes = [
+    "class"             => ["btn", "btn-success"],
+    "data-toggle"       => "modal",
+    "data-target"       => "#standard-modal",
+    "data-form"         => "/admin/ajax/forms/add-attendee-form.php", 
+    "data-post-form"    => "/admin/ajax/post-actions/post-add-attendee-form.php",
+    "data-title"        => "New Attendee",
+    "data-submit-label" => "Create",
+    "type"              => "button",
+  ];
+
+  return build_button_or_link("New Attendee", $attributes, $html_options);
+}
 
 function edit_button_for($attendee, $html_options=[]){
   $id = $attendee ? $attendee->id : "";
-  $attributes = build_html_attributes([
+  $attributes = [
     "class"             => ["btn", "btn-default"],
     "data-toggle"       => "modal",
     "data-target"       => "#standard-modal",
@@ -13,33 +44,16 @@ function edit_button_for($attendee, $html_options=[]){
     "data-title"        => "Edit Attendee",
     "data-submit-label" => "Update",
     "type"              => "button",
-  ], $html_options);
+  ];
 
-  return "<button $attributes>Edit</button>";
-}
-
-function upgrade_button_for($attendee, $html_options=[]){
-  if(!$attendee->paid){ return ""; }
-  if(!$attendee->upgradeable()){ return ""; }
-  $id = $attendee ? $attendee->id : "";
-  $attributes = build_html_attributes([
-    "class"             => ["btn", "btn-default"],
-    "data-toggle"       => "modal",
-    "data-target"       => "#standard-modal",
-    "data-form"         => "/admin/ajax/forms/upgrade-form.php?id={$id}", 
-    "data-post-form"    => "/admin/ajax/post-actions/post-upgrade-form.php",
-    "data-title"        => "Upgrade Attendee",
-    "data-submit-label" => "Pay",
-    "type"              => "button",
-  ], $html_options);
-
-  return "<button $attributes>Upgrade</button>";
+  return build_button_or_link("Edit", $attributes, $html_options);
 }
 
 function check_in_button_for($attendee, $html_options=[]){
   if($attendee->checked_in){ return ""; }
+  if($attendee->canceled){ return ""; }
   $id = $attendee ? $attendee->id : "";
-  $attributes = build_html_attributes([
+  $attributes = [
     "class"             => ["btn", "btn-default"],
     "data-toggle"       => "modal",
     "data-target"       => "#standard-modal",
@@ -48,33 +62,55 @@ function check_in_button_for($attendee, $html_options=[]){
     "data-title"        => "Check In",
     "data-submit-label" => "Check In",
     "type"              => "button",
-  ], $html_options);
+  ];
 
-  return "<button $attributes>Check In</button>";
+  return build_button_or_link("Check In", $attributes, $html_options);
 }
 
-function pay_button_for($attendee, $html_options=[]){
-  if($attendee->paid){ return ""; }
+function upgrade_button_for($attendee, $html_options=[]){
+  if(!$attendee->paid){ return ""; }
+  if($attendee->canceled){ return ""; }
+  if(!$attendee->upgradeable()){ return ""; }
+
   $id = $attendee ? $attendee->id : "";
-  $attributes = build_html_attributes([
+  $attributes = [
     "class"             => ["btn", "btn-default"],
     "data-toggle"       => "modal",
     "data-target"       => "#standard-modal",
-    "data-form"         => "/admin/ajax/forms/pay-form.php?id={$id}", 
-    "data-post-form"    => "/admin/ajax/post-actions/post-pay-form.php",
-    "data-title"        => "Payment",
+    "data-form"         => "/admin/ajax/forms/upgrade-form.php?id={$id}", 
+    "data-post-form"    => "/admin/ajax/post-actions/post-upgrade-form.php",
+    "data-title"        => "Upgrade Attendee",
     "data-submit-label" => "Pay",
     "type"              => "button",
-  ], $html_options);
+  ];
 
-  return "<button $attributes>Pay</button>";
+  return build_button_or_link("Upgrade", $attributes, $html_options);
+}
+
+function cancel_button_for($attendee, $html_options=[]){
+  if($attendee->canceled){ return ""; }
+  $id = $attendee ? $attendee->id : "";
+
+  $attributes = [
+    "class"             => ["btn", "btn-default"],
+    "data-toggle"       => "modal",
+    "data-target"       => "#standard-modal",
+    "data-form"         => "/admin/ajax/forms/cancel-form.php?id={$id}", 
+    "data-post-form"    => "/admin/ajax/post-actions/post-cancel-form.php",
+    "data-title"        => $attendee->paid ? "Revoke Badge" : "Delete Order",
+    "data-submit-label" => $attendee->paid ? "Revoke" : "Delete",
+    "type"              => "button",
+  ];
+
+  return build_button_or_link($attendee->paid ? "Revoke" : "Delete", $attributes, $html_options);
 }
 
 function reprint_button_for($attendee, $html_options=[]){
   if(!$attendee->paid){ return ""; }
   if(!$attendee->checked_in){ return ""; }
+  if($attendee->canceled){ return ""; }
   $id = $attendee ? $attendee->id : "";
-  $attributes = build_html_attributes([
+  $attributes = [
     "class"             => ["btn", "btn-default"],
     "data-toggle"       => "modal",
     "data-target"       => "#standard-modal",
@@ -83,9 +119,9 @@ function reprint_button_for($attendee, $html_options=[]){
     "data-title"        => "Reprint Badge",
     "data-submit-label" => "Reprint",
     "type"              => "button",
-  ], $html_options);
+  ];
 
-  return "<button $attributes>Reprint</button>";
+  return build_button_or_link("Reprint", $attributes, $html_options);
 }
 
 // CONFIGURATION SCREENS

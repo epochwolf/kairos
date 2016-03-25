@@ -29,7 +29,6 @@ class User extends BaseModel {
   public $password;
 
   function __construct($row=[]){
-     null;
     parent::__construct($row);
     $this->password = @$row["password"];
   }

@@ -9,23 +9,21 @@ $tab = @$_GET["tab"] ?: "all";
 
 $badge_types = BadgeType::cached_all();
 
-switch($tab){
+$type = null;
 
+switch($tab){
   case "badge":
     $type = BadgeType::cached_find_by_db_name($_GET["type"]);
     $query = Attendee::by_badge_type($type->db_name);
     break;
-  case "guests":
-    $query = Attendee::by_badge_type("guest");
-    break;
-  case "dealers":
-    $query = Attendee::by_badge_type("dealer");
-    break;
-  case "minors":
+  case "under_minor_age":
     $query = Attendee::minors();
     break;
   case "blacklisted":
     $query = Attendee::blacklisted();
+    break;
+  case "canceled":
+    $query = Attendee::canceled();
     break;
   default:
     $query = Attendee::all();
@@ -38,10 +36,11 @@ switch($tab){
     <ul class="nav nav-tabs">
       <?= nav_link("All", "/admin/index.php", $tab == "all") ?>
       <? foreach($badge_types as $bt){ ?>
-        <?= nav_link($bt->name, "/admin/index.php?tab=badge&type={$bt->db_name}", $tab == "staff") ?>
+        <?= nav_link($bt->name, "/admin/index.php?tab=badge&type={$bt->db_name}", $tab == "badge" && $bt->db_name == $type->db_name) ?>
       <? } ?>
-      <?= nav_link("Minors", "/admin/index.php?tab=minors", $tab == "minors") ?>
+      <?= nav_link("Under ".MINOR_AGE, "/admin/index.php?tab=under_minor_age", $tab == "under_minor_age") ?>
       <?= nav_link("Blacklisted", "/admin/index.php?tab=blacklisted", $tab == "blacklisted") ?>
+      <?= nav_link("Canceled/Revoked", "/admin/index.php?tab=canceled", $tab == "canceled") ?>
     </ul>
     <table class="table table-striped table-condensed ">
       <thead>
@@ -50,15 +49,15 @@ switch($tab){
           <th>Badge Name</th>
           <th>Legal Name</th>
 
-          <? if($tab == "dealers"){ ?>
-            <th>Company Name</th>
-            <th>Admission Level</th>
-
-          <? }elseif($tab == "blacklisted"){ ?>
+          <? if($tab == "blacklisted"){ ?>
             <th>Admission Level</th>
             <th>Blacklisted</th>
             <th>Trigger</th>
             <th>Message</th>
+
+          <? }elseif($type && $type->vendor){ ?>
+            <th>Vendor</th>
+            <th>Admission Level</th>
 
           <? }else{ ?>
             <th>Birthdate</th>
@@ -75,16 +74,16 @@ switch($tab){
             <td><?=$attendee->badge_number ?></td>
             <td><?=$attendee->badge_name ?></td>
             <td><?=$attendee->legal_name ?></td>
-
-            <? if($tab == "dealers"){ ?>
-              <td><?=$attendee->company_name ?></td>
-              <td><?=admission_display($attendee) ?></td>
-
-            <? }elseif($tab == "blacklisted"){ ?>
+            <? if($tab == "blacklisted"){ ?>
               <td><?=admission_display($attendee) ?></td>
               <td><?=$attendee->blacklisted ? "&check;" : "" ?></td>
               <td><?=$attendee->blacklist_trigger ?: "Manual" ?></td>
               <td><?=$attendee->blacklist_message ?></td>
+
+            <? }elseif($type && $type->vendor){ ?>
+              <? $vendor = $attendee->vendor() ?>
+              <td><?= $vendor ? $vendor->display_name() : "" ?></td>
+              <td><?=admission_display($attendee) ?></td>
 
             <? }else{ ?>
                 <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
@@ -97,13 +96,35 @@ switch($tab){
             <? } ?>
 
             <td>
-              <div class="btn-group" role="group">
+              <? if($attendee->canceled){?>
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-                <?=upgrade_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-                <?=reprint_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-                <?=pay_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-                <?=check_in_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-              </div>
+              <? }elseif($attendee->checked_in){ ?>
+                <div class="btn-group" role="group">
+                  <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><?=check_in_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=upgrade_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=reprint_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=cancel_button_for($attendee, ["type" => "link"]) ?></li>
+                  </ul>
+                </div>
+              <? }else{ ?>
+                <div class="btn-group" role="group">
+                  <?=check_in_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><?=edit_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=upgrade_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=reprint_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=cancel_button_for($attendee, ["type" => "link"]) ?></li>
+                  </ul>
+                </div>
+              <? } ?>
             </td>
           </tr>
         <? } ?>

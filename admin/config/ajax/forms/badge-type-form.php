@@ -62,7 +62,17 @@ if(!isset($form)){
     </div>
     <?=error_display($form, "minor") ?>
   </div>
-</div>
+
+  <div class="form-group <?=$form->error_on("vendor") ? "has-error" : "" ?>">
+    <label>Vendor Badge</label>
+    <div class="checkbox">
+      <input type="hidden" name="vendor"  value="0">
+      <label>
+        <input type="checkbox" name="vendor" value="1" <? if(@$form->params["vendor"]){ ?>checked="checked"<?}?>> <strong>Require Attendee to be Assigned to Vendor</strong>
+      </label>
+      <?=error_display($form, "vendor") ?>
+    </div>
+  </div>
 
 <div class="form-group <?=$form->error_on("sort_order") ? "has-error" : "" ?>">
   <?=label_tag("sort_order", "Sort Order") ?>

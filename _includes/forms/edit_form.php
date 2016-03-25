@@ -23,7 +23,7 @@ class EditForm extends BaseForm{
 
     // if($minor){
     //   $this->error_if_empty("adult_legal_name");
-    //   $this->error_if_empty("adult_badge_name");
+    //   $this->error_if_empty("adult_phone_number");
     // }
 
     if(@$this->params["checked_in"]){
@@ -39,7 +39,7 @@ class EditForm extends BaseForm{
     $this->error_if_empty("badge_name");
 
     $this->error_if_empty("admission_level");
-    $this->error_if_empty("payment_method", "Select a payment method.");
+    #$this->error_if_empty("payment_method", "Select a payment method.");
 
     $this->error_if_empty("badge_type");
     if(!$this->error_on("badge_type")){
@@ -48,6 +48,9 @@ class EditForm extends BaseForm{
         $this->add_error("badge_type", "Attendee is a minor.");
       }elseif($badge_type->minor && !$minor){
         $this->add_error("badge_type", "Attendee is not a minor.");
+      }
+      if($badge_type->vendor && !$this->params["vendor_id"]){
+        $this->add_error("vendor_id", "Vendor Required.");
       }
     }
 

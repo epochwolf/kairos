@@ -13,8 +13,18 @@ select
   sum(IF(at_door=0 AND checked_in=0, 1, 0)) as pre_reg_not_in,
   sum(IF(badge_reprints > 0, 1, 0)) as attendees_reprinted, 
   sum(badge_reprints) as total_reprints,
-  sum(IF(override_price = 0, 1, 0)) as comped_badges
+  sum(IF(override_price = 0, 1, 0)) as comped_badges,
+  sum(IF(canceled=1, 1, 0)) as revoked_badges
 from attendees
+where NOT (attendees.canceled = 1 AND attendees.paid = 0)
+SQL
+)[0];
+
+$cancelled = db_query(<<<SQL
+select 
+  count(id) as total
+from attendees
+where (attendees.canceled = 1 AND attendees.paid = 0)
 SQL
 )[0];
 
@@ -27,6 +37,7 @@ select
   sum(IF(at_door=0 AND checked_in=0, 1, 0)) as pre_reg_not_in
 from attendees 
 join badge_types on badge_types.db_name = attendees.badge_type
+where NOT (attendees.canceled = 1 AND attendees.paid = 0)
 group by attendees.badge_type
 order by badge_types.sort_order ASC
 SQL
@@ -41,6 +52,7 @@ select
   sum(IF(at_door=0 AND checked_in=0, 1, 0)) as pre_reg_not_in
 from attendees 
 join registration_levels rl on rl.db_name = admission_level
+where NOT (attendees.canceled = 1 AND attendees.paid = 0)
 group by rl.name 
 order by rl.sort_order ASC
 SQL
@@ -54,7 +66,7 @@ select
 from attendees
 join registration_levels rl on rl.db_name = admission_level
 join registration_levels old_rl on old_rl.db_name = original_admission_level
-where original_admission_level != admission_level
+where original_admission_level != admission_level AND NOT (attendees.canceled = 1 AND attendees.checked_in = 0)
 group by rl.name, old_rl.name
 order by rl.sort_order, old_rl.sort_order
 SQL
@@ -149,9 +161,23 @@ SQL
             <td>Total Badge Reprints</td>
             <td><?=$totals["total_reprints"] ?></td>
           </tr>
+          <tr>
+            <td>Revoked Badges<sup>1</sup></td>
+            <td><?=$totals["revoked_badges"] ?></td>
+          </tr>
+          <tr>
+            <td>Canceled Orders<sup>2</sup></td>
+            <td><?=$cancelled["total"] ?></td>
+          </tr>
         </table>
       </div>
 
+    </div>
+    <div class="row">
+      <ol>
+        <li>Revoked badges (Canceled & Paid) are included in all numbers.</li>
+        <li>Canceled orders (Canceled & Not Paid) do not count towards other numbers listed.</li>
+      </ol>
     </div>
   </div>
 </div>

@@ -1,3 +1,16 @@
+# Kairos 3.0
+
+New features. 
+
+* Improved check in process.
+* Improved edit screens.
+* Ability to revoke badges and cancel unfinished registrations.
+* New vendor list. 
+
+
+* Payment and Check In moved into a single Check In form. 
+* Editing birthdate dynamically updates age display and shows/hides adult information fields (were applicable). 
+
 # Kairos 2.3 (Dec 13)
 
 Removing hardcoded minor age and badge type tabs.
@@ -17,8 +30,9 @@ Fixing bugs discovered at Fur Reality.
 
 # Kairos 2.1 (Sep 14, 2015)
 
-* Adding optional field Company Name to Attendee. 
+Minor Fixes
 
+* Adding optional field Company Name to Attendee. 
 
 # Kairos 2.0 (Sep 5, 2015)
 

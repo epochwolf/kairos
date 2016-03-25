@@ -1,9 +1,5 @@
 <?php // This file includes functions for database access. 
 
-function db_all_attendees(){
-  global $db;
-  return $db->query("SELECT * FROM attendees");
-}
 
 function db_query($query, $params=null){
   global $db;
@@ -15,6 +11,21 @@ function db_query($query, $params=null){
     $stmt->execute($params);
     return $stmt->fetchAll();
   }
+}
+
+function db_start_transaction(){
+  global $db;
+  $db->beginTransaction();
+}
+
+function db_rollback_transaction(){
+  global $db;
+  $db->rollBack();
+}
+
+function db_commit_transaction(){
+  global $db;
+  $db->commit();
 }
 
 

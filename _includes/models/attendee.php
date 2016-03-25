@@ -13,6 +13,10 @@ class Attendee extends BaseModel {
     return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_number = ? ", [$number]);
   }
 
+  static function by_adult_badge_number($number){
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE adult_badge_number = ? ", [$number]);
+  }
+
   static function by_badge_name($name){
     return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_name = ?", [$name]);
   }
@@ -25,13 +29,17 @@ class Attendee extends BaseModel {
     return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_type = ? ORDER BY created_at DESC", [$type]);
   }
 
+  static function by_vendor_id($id){
+    return self::query("SELECT * FROM " . static::TABLE_NAME . " WHERE vendor_id = ?", [$id]);
+  }
+
   static function pre_reg_pending(){
-    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE at_door = 0 AND checked_in = 0 ORDER BY created_at DESC";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled = 0 AND at_door = 0 AND checked_in = 0 ORDER BY created_at DESC";
     return self::query($sql, [':at_door' => 0]);
   }
 
   static function at_door_pending(){
-    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE at_door = 1 AND (checked_in = 0 || paid = 0) order by created_at asc";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled = 0 AND at_door = 1 AND (checked_in = 0 || paid = 0) order by created_at asc";
     return self::query($sql, [':at_door' => 1]);
   }
 
@@ -45,6 +53,12 @@ class Attendee extends BaseModel {
     return self::query($sql);
   }
 
+  static function canceled(){
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled = 1 ORDER BY created_at DESC";
+    return self::query($sql, [':at_door' => 0]);
+  }
+
+
   static function search($name){
     $sql = "SELECT * FROM " . static::TABLE_NAME . " " .
     "WHERE (badge_number != '0' AND badge_number = :name_exact) " .
@@ -52,9 +66,14 @@ class Attendee extends BaseModel {
     "OR legal_name LIKE :name_like " .
     "OR phone_number = :name_exact " .
     "OR email LIKE :name_like " .
-    "OR adult_badge_name LIKE :name_like " .
-    "OR adult_legal_name LIKE :name_like ";
+    "OR (adult_badge_number != '0' AND adult_badge_number = :name_exact) " . 
+    "OR adult_legal_name LIKE :name_like " . 
+    "OR adult_phone_number = :name_exact";
     return self::query($sql, [":name_exact" => $name, ":name_like" => "%$name%"]);
+  }
+
+  static function find_by_badge_number($number){
+    return self::query_first("SELECT * FROM " . static::TABLE_NAME . " WHERE badge_number = ? ORDER BY id ASC LIMIT 1", [$number]);
   }
 
   static function is_unique_badge_name($name, $attendee = null){
@@ -97,7 +116,6 @@ class Attendee extends BaseModel {
     "badge_number",
     "badge_name",
     "legal_name",
-    "company_name",
     "birthdate",
     "address1",
     "address2",
@@ -115,15 +133,19 @@ class Attendee extends BaseModel {
     "payment_method",
     "override_price",
     "at_door",
+    "vendor_id",
     "blacklisted",
     "blacklist_id",
     "blacklist_type",
     "blacklist_message",
     "blacklist_trigger",
     "adult_legal_name",
-    "adult_badge_name",
+    "adult_relationship",
+    "adult_phone_number",
+    "adult_badge_number",
     "checked_in",
     "paid",
+    "canceled",
     "created_at",
     "notes",
   ];
@@ -133,6 +155,7 @@ class Attendee extends BaseModel {
   ];
 
   private $blacklist_record;
+  private $vendor_record;
 
   function __construct($row=[]){
     parent::__construct($row);
@@ -153,9 +176,12 @@ class Attendee extends BaseModel {
     $array["blacklist_type"]     = self::nullable_string_to_db($this->blacklist_type);
     $array["blacklist_message"]  = self::nullable_string_to_db($this->blacklist_message);
     $array["adult_legal_name"]   = self::nullable_string_to_db($this->adult_legal_name);
-    $array["adult_badge_name"]   = self::nullable_string_to_db($this->adult_badge_name);
+    $array["adult_relationship"] = self::nullable_string_to_db($this->adult_relationship);
+    $array["adult_phone_number"] = self::nullable_string_to_db($this->adult_phone_number);
+    $array["adult_badge_number"] = self::nullable_string_to_db($this->adult_badge_number);
     $array["checked_in"]         = self::bool_to_db($this->checked_in);
     $array["paid"]               = self::bool_to_db($this->paid);
+    $array["canceled"]           = self::bool_to_db($this->canceled);
     $array["created_at"]         = $this->created_at;
     $array["notes"]              = self::nullable_string_to_db($this->notes);
     return $array;
@@ -167,7 +193,13 @@ class Attendee extends BaseModel {
 
   function adult_display_name(){
     if($this->minor()){
-      return "{$this->adult_badge_name} / {$this->adult_legal_name}";
+      if($this->adult_relationship == AdultRelationship::EMANCIPATED){
+        return "Emancipated (No Adult)";
+      }elseif(!empty($this->adult_badge_number)){
+        return "{$this->adult_legal_name} ({$this->adult_badge_number})";
+      }else{
+        return "{$this->adult_legal_name}";
+      }
     }else{
       return "";
     }
@@ -196,6 +228,16 @@ class Attendee extends BaseModel {
     if($this->blacklist_id){
       $this->blacklist_record = Blacklist::find($this->blacklist_id);
       return $this->blacklist_record;
+    }else{
+      return null;
+    }
+  }
+
+  function vendor(){
+    if(isset($this->vendor_record)){ return $this->vendor_record;}
+    if($this->vendor_id){
+      $this->vendor_record = Vendor::find($this->vendor_id);
+      return $this->vendor_record;
     }else{
       return null;
     }

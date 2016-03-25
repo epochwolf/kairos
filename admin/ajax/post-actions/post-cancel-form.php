@@ -11,7 +11,7 @@ $attendee or die("<p>No attendee with (ID=$id)");
 $return_url = @$_POST['return_url'] ?: "/admin/index.php";
 
 
-$form = new PayForm($_POST);
+$form = new CancelForm($_POST);
 if($form->valid()){
   $form->save();
   # Kind of a bad hack but it works. 
@@ -21,6 +21,6 @@ if($form->valid()){
 </script>
 <?php
 }else{
-  include "../forms/pay-form.php";
+  include "../forms/cancel-form.php";
 }
 ?>

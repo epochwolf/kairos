@@ -28,7 +28,17 @@
     <p>Added by administrator.</p>
   <? } ?>
   <? if($blacklist_type->security_required){ ?>
-    <p><strong>RADIO: "Can any Manager come to Registration to deal with a registration issue.".</strong></p>
+    <p><strong><?=BlacklistType::SECURITY_NOTICE ?></strong></p>
   <? } ?>
+</div>
+<? }elseif($form->attendee->canceled){ ?>
+<div class="alert alert-black" role="alert">
+  <p class="lead">
+    <? if($form->attendee->paid){ ?>
+      Badge Revoked
+    <? }else{ ?>
+      Order Canceled
+    <? } ?>
+  </p>
 </div>
 <? } ?>

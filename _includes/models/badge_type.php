@@ -20,6 +20,10 @@ class BadgeType extends BaseModel {
     return self::query_first("SELECT * FROM " . static::TABLE_NAME . " WHERE minor=1 ORDER BY sort_order ASC LIMIT 1");
   }
 
+  static function default_vendor(){
+    return self::query_first("SELECT * FROM " . static::TABLE_NAME . " WHERE vendor=1 ORDER BY sort_order ASC LIMIT 1");
+  }
+
   static function cached_find_by_db_name($db_name){
     $cache = static::get_cache();
 
@@ -33,6 +37,7 @@ class BadgeType extends BaseModel {
     "name",
     "label_color",
     "minor",
+    "vendor",
     "sort_order",
   ];
   const PROTECTED_FIELDS = [
@@ -43,6 +48,7 @@ class BadgeType extends BaseModel {
     $array = parent::export_to_db();
     $array["label_color"] = self::nullable_string_to_db($this->label_color);
     $array["minor"]       = self::bool_to_db($this->minor);
+    $array["vendor"]      = self::bool_to_db($this->vendor);
     return $array;
   }
 }

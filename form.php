@@ -42,13 +42,6 @@ $payment_types = PaymentType::at_door();
           <? } ?>
         </div>
       </div>
-      <div class="row">
-        <div class="form-group col-md-8 <?=$form->error_on("company_name") ? "has-error" : "" ?>">
-          <?=label_tag("company_name", "Company Name") ?>
-          <?=input_tag($form, "company_name", ["placeholder" => ""]) ?>
-          <?=error_display($form, "company_name") ?>
-        </div>
-      </div>
 
       <h3>Address</h3>
       <div class="row">
@@ -99,9 +92,8 @@ $payment_types = PaymentType::at_door();
       <div class="checkbox">
         <input type="hidden" name="newsletter"  value="0">
         <label>
-          <input type="checkbox" name="newsletter" value="1"> Keep me informed about local Fur Reality events.
+          <input type="checkbox" name="newsletter" value="1"> Keep me informed about similar local events.
         </label>
-        <span class="help-block">Like a party at a castle. We don't do bowling.</span>
       </div>
     </div>
 
@@ -132,6 +124,7 @@ $payment_types = PaymentType::at_door();
           <?=error_display($form, "tshirt_size") ?>
         </div>
       </div>
+      <p>If you need a vendor badge, please inform the person checking you in.</p>
 
       <h3>Payment Method</h3>
       <div class="row">
@@ -152,32 +145,43 @@ $payment_types = PaymentType::at_door();
       </div>
 
       <div class="well">
-        <h3> Adult Guardian (Minors Only) </h3>
-        <p>Any one under the age of <?=MINOR_AGE ?> must have a registered adult with them.</p>
+        <h3> Responsible Adult (Minors Only) </h3>
+        <p>Any one under the age of <?=MINOR_AGE ?> must have a responsible adult on file.</p>
         <div class="row">
           <div class="form-group col-md-7 <?=$form->error_on("adult_legal_name") ? "has-error" : "" ?>">
-            <?=label_tag("adult_legal_name", "Adult's Legal Name") ?>
+            <?=label_tag("adult_legal_name", "Legal Name") ?>
             <?=input_tag($form, "adult_legal_name", ["placeholder" => "John Doe"]) ?>
             <?=error_display($form, "adult_legal_name") ?>
           </div>
-          <div class="form-group col-md-5 <?=$form->error_on("adult_badge_name") ? "has-error" : "" ?>">
-            <?=label_tag("adult_badge_name", "Adult's Badge Name") ?>
-            <?=input_tag($form, "adult_badge_name", ["placeholder" => "mrfox"]) ?>
-            <?=error_display($form, "adult_badge_name") ?>
+
+          <div class="form-group col-md-5 <?=$form->error_on("adult_relationship") ? "has-error" : "" ?>">
+            <?=label_tag("adult_relationship", "Relationship") ?>
+            <select class="form-control" id="adult_relationship" name="adult_relationship">
+              <option></option>
+              <? foreach(AdultRelationship::all() as $relationship){ ?>
+                <?=option_tag($relationship->name, @$form->params["adult_relationship"], $relationship->db_name) ?>
+              <? } ?>
+            </select>
+            <?=error_display($form, "adult_relationship") ?>
+          </div>
+
+          <div class="form-group col-md-5 <?=$form->error_on("adult_phone_number") ? "has-error" : "" ?>">
+            <?=label_tag("adult_phone_number", "Phone Number") ?>
+            <?=input_tag($form, "adult_phone_number", ["placeholder" => "555-555-5555"]) ?>
+            <?=error_display($form, "adult_phone_number") ?>
           </div>
         </div>
       </div>
-
       <div>
         <h3> Privacy Notice </h3>
         <p>Information collected on this form is only used for identification.</p>
       </div>
     </div>
-    <div class="col-sm-12 text-center">
-      <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-    </div>
     <div class="col-sm-12 text-left">
       <p>* Required Field.</p>
+    </div>
+    <div class="col-sm-12 text-center">
+      <button type="submit" class="btn btn-primary btn-lg">Submit</button>
     </div>
   </form>
 </div>

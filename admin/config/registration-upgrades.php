@@ -13,9 +13,7 @@ $upgrades = RegistrationUpgrade::all_with_prices();
     <table class="table">
       <tr>
         <th>From</th>
-        <th>From Name</th>
         <th>To</th>
-        <th>To Name</th>
         <th>Calculated Price</th>
         <th>Override Price</th>
         <th>Sort Order</th>
@@ -23,10 +21,8 @@ $upgrades = RegistrationUpgrade::all_with_prices();
       </tr>
       <? foreach($upgrades as $upgrade){ ?>
         <tr>
-          <td><?= $upgrade->from ?></td>
-          <td><?= $upgrade->from_name ?></td>
-          <td><?= $upgrade->to ?></td>
-          <td><?= $upgrade->to_name ?></td>
+          <td><?= $upgrade->from_name ?: $upgrade->from ?></td>
+          <td><?= $upgrade->to_name ?: $upgrade->to ?></td>
           <td><?=currency($upgrade->price) ?></td>
           <td><?=!is_null($upgrade->override_price) ? currency($upgrade->override_price) : "" ?></td>
           <td><?= $upgrade->sort_order ?></td>

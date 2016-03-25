@@ -16,6 +16,7 @@ $badge_types = BadgeType::all();
         <th>Name</th>
         <th>Label</th>
         <th>Minor Only</th>
+        <th>Vendor Badge</th>
         <th>Sort Order</th>
         <th>Actions</th>
       </tr>
@@ -25,6 +26,7 @@ $badge_types = BadgeType::all();
           <td><?= $badge_type->name ?></td>
           <td><?= $badge_type->label_color ? "<span class=\"label label-{$badge_type->label_color}\">{$badge_type->name}</span>" : "" ?></td>
           <td><?= $badge_type->minor ? "&check;" : "" ?></td>
+          <td><?= $badge_type->vendor ? "&check;" : "" ?></td>
           <td><?= $badge_type->sort_order ?></td>
           <td>
             <?=edit_config_button_for($badge_type, ["class" => "btn-sm"]) ?>

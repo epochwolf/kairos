@@ -42,18 +42,39 @@ if($search_string == ""){
             <td><?=admission_display($attendee) ?></td>
             <td>
               <? if($attendee->minor()){ ?>
-                <?=hilight_search($search_string, $attendee->adult_badge_name) ?> / 
-                <?=hilight_search($search_string, $attendee->adult_legal_name) ?>
+                <?=hilight_search($search_string, $attendee->adult_display_name()) ?>
               <? } ?>
             </td>
             <td>
-              <div class="btn-group" role="group">
+              <? if($attendee->canceled){?>
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-                <?=upgrade_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-                <?=reprint_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-                <?=pay_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-                <?=check_in_button_for($attendee, ["class" => ["btn-sm"]]) ?>
-              </div>
+              <? }elseif($attendee->checked_in){ ?>
+                <div class="btn-group" role="group">
+                  <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><?=check_in_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=upgrade_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=reprint_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=cancel_button_for($attendee, ["type" => "link"]) ?></li>
+                  </ul>
+                </div>
+              <? }else{ ?>
+                <div class="btn-group" role="group">
+                  <?=check_in_button_for($attendee, ["class" => ["btn-sm"]]) ?>
+                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><?=edit_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=upgrade_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=reprint_button_for($attendee, ["type" => "link"]) ?></li>
+                    <li><?=cancel_button_for($attendee, ["type" => "link"]) ?></li>
+                  </ul>
+                </div>
+              <? } ?>
             </td>
           </tr>
         <? } ?>

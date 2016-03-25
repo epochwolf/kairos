@@ -32,8 +32,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <?= nav_link("Attendees", "/admin/index.php") ?>
-        <?= nav_link("Pre Reg Check In", "/admin/pre-reg.php") ?>
+        <? nav_link("Pre Reg Check In", "/admin/pre-reg.php") ?>
         <?= nav_link("At Door Check In", "/admin/at-door.php") ?>
+        <?= nav_link("Vendors", "/admin/vendors.php") ?>
         <?= nav_link("Prices", "/admin/prices.php") ?>
         <?= nav_link("Numbers", "/admin/numbers.php") ?>
         <? if(current_user()->admin){ ?>
@@ -50,8 +51,10 @@
               <?= nav_link("Payment Types", "/admin/config/payment-types.php") ?>
               <?= nav_link("TShirt Sizes", "/admin/config/tshirt-sizes.php") ?>
               <?= nav_link("Users", "/admin/config/users.php") ?>
+              <?= nav_link("Vendors", "/admin/config/vendors.php") ?>
               <li class="divider"></li>
               <?= nav_link("Import Attendees", "/admin/config/import/import-attendees.php") ?>
+              <?= nav_link("Import Vendors", "/admin/config/import/import-vendors.php") ?>
             </ul>
           </li>
         <? } ?>

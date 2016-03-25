@@ -1,34 +1,35 @@
 <?php
 
 // Acts like a database model but isn't backed by a database. 
-class BlacklistType extends BaseModel{
+class AdultRelationship extends BaseModel{
   const TABLE_NAME = null;
-  const DISPLAY_NAME = "Badge Type";
+  const DISPLAY_NAME = "Adult Relationship";
 
-  const SECURITY_NOTICE = "RADIO: \"Can any Manager come to Registration to deal with a registration issue.\".";
-  const TYPES = [
-    // 'dbname' =>   ["Name",         "Alert Title", "alert-color", security_required]
-    "ban"         => ["Ban",          "BANNED",      "danger",  true], 
-    "restriction" => ["Restriction",  "RESTRICTION", "warning", false], 
-    "watch"       => ["Watch",        "Watch",       "warning", false],
-    "notice"      => ["Notice",       "Notice",      "success", false],
+  const EMANCIPATED = "emancipated";
+
+  const RELATIONSHIPS = [
+    // 'dbname' =>   ["Name"]
+    "parent"       => ["Parent"], 
+    "guardian"     => ["Legal Guardian"], 
+    "consent-form" => ["By Consent Form"],
+    "emancipated"  => ["Emancipated (No Adult)"],
   ];
 
   static function all(){
     $array = [];
-    foreach(self::TYPES as $db_name => $fields){
+    foreach(self::RELATIONSHIPS as $db_name => $fields){
       $array[] = self::fields_to_object($db_name, $fields);
     }
     return $array;
   }
 
-  static function count(){ return count(self::TYPES); }
+  static function count(){ return count(self::RELATIONSHIPS); }
   static function find($id){}
   static function query($query, $params=null){ return []; }
   static function query_first($query, $params=null){}
 
   static function find_by_db_name($db_name){
-    $fields = self::TYPES[$db_name];
+    $fields = self::RELATIONSHIPS[$db_name];
     if($fields){
       return self::fields_to_object($db_name, $fields);
     }else{
@@ -42,12 +43,9 @@ class BlacklistType extends BaseModel{
   }
 
   private static function fields_to_object($db_name, $fields){
-    return new BlacklistType([
+    return new AdultRelationship([
           "db_name" => $db_name,
-          "name" => $fields[0],
-          "alert_title" => $fields[1],
-          "alert_color" => $fields[2],
-          "security_required" => $fields[3]
+          "name" => $fields[0]
         ]);
   }
 
@@ -58,9 +56,6 @@ class BlacklistType extends BaseModel{
     "id",
     "db_name",
     "name",
-    "alert_title",
-    "alert_color",
-    "security_required",
   ];
 
   function is_new_record(){ return false; }

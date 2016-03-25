@@ -14,8 +14,8 @@ $badge_types = BadgeType::all();
 <input type="hidden" name="id" value="<?=$id ?>">
 <div class="text-center">
 <h2><?=$form->attendee->display_name() ?></h2>
-<? if($form->attendee->company_name){ ?>
-  <h4 class="text-muted"><?=$form->attendee->company_name ?></h4>
+<? if($form->attendee->vendor()){ ?>
+  <h4 class="text-muted"><?=$form->attendee->vendor()->display_name() ?></h4>
 <? } ?>
 </div>
 

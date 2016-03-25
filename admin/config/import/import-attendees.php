@@ -14,7 +14,7 @@ $payment_types = PaymentType::all();
 <div class="container">
   <div class="col-md-12">
     <h1>
-      Import from CSV
+      Import Attendees from CSV
     </h1>
     <div class="well">
       <form action="post-attendees.php" method="post" enctype="multipart/form-data" class="form">
@@ -52,6 +52,12 @@ $payment_types = PaymentType::all();
         <td>&check;</td>
         <td>VARCHAR(255)</td>
         <td>Any</td>
+      </tr>
+      <tr>
+        <td>vendor_id</td>
+        <td></td>
+        <td>INT</td>
+        <td>Must be a valid ID from the Vendors list.</td>
       </tr>
       <tr>
         <td>birthdate</td>
@@ -139,13 +145,13 @@ $payment_types = PaymentType::all();
         <td>Can't be negative.</td>
       </tr>
       <tr>
-        <td>adult_badge_name</td>
+        <td>adult_legal_name</td>
         <td></td>
         <td>VARCHAR(255)</td>
         <td>Any</td>
       </tr>
       <tr>
-        <td>adult_legal_name</td>
+        <td>adult_phone_number</td>
         <td></td>
         <td>VARCHAR(255)</td>
         <td>Any</td>

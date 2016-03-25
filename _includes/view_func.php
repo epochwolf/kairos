@@ -71,13 +71,19 @@ function currency($number){
 
 function row_highlight($attendee, $prefix=""){
   $age = $attendee->age() ?: 0;
+  $class = "";
+
+
   if($attendee->blacklisted){
     $type = BlacklistType::find_by_db_name($attendee->blacklist_type);
     $class = $type->alert_color;
-    return $prefix ? "$prefix-$class" : "$class";
-  }else{
-    return "";
   }
+
+  if($attendee->canceled){
+    $class .=  " canceled";
+  }
+
+  return $prefix ? "$prefix-$class" : $class;
 }
 
 function admission_display($row){

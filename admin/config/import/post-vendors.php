@@ -3,19 +3,18 @@ include_once '../../../_includes/framework.php';
 require_once '_includes/vendor/parsecsv.lib.php';
 require_admin();
 
-
-
 $csv = new parseCSV();
 $csv->auto($_FILES['file']['tmp_name']);
 
 $forms = [];
 $errors = [];
+
 try {  
   db_start_transaction();
 
   foreach($csv->data as $line_number => $row){
     $line_number++;
-    $form = new CSVImportAttendeeForm($row);
+    $form = new CSVImportVendorForm($row);
     $forms[] = $form;
 
     if(!$form->valid()){
@@ -39,7 +38,7 @@ try {
 
 
 if(empty($errors)){
-  header("Location: /admin/index.php");
+  header("Location: /admin/vendors.php");
   die();
 }else{
   $page_title = "Admin";

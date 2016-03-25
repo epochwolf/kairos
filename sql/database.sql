@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Pro SQL dump
-# Version 4096
+# Version 4499
 #
 # http://www.sequelpro.com/
-# http://code.google.com/p/sequel-pro/
+# https://github.com/sequelpro/sequelpro
 #
-# Host: localhost (MySQL 5.6.24)
+# Host: localhost (MySQL 10.1.9-MariaDB)
 # Database: kairos
-# Generation Time: 2015-09-07 20:29:42 +0000
+# Generation Time: 2016-03-25 22:18:14 +0000
 # ************************************************************
 
 
@@ -48,11 +48,11 @@ CREATE TABLE `attendees` (
   `legal_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `company_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `birthdate` date NOT NULL,
-  `address1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `address2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `state_prov` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `postal_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `address1` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
+  `address2` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
+  `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
+  `state_prov` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
+  `postal_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
   `phone_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `newsletter` tinyint(1) NOT NULL DEFAULT '0',
@@ -61,13 +61,17 @@ CREATE TABLE `attendees` (
   `original_admission_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'standard',
   `admission_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'standard',
   `tshirt_size` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `payment_method` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'cash',
+  `payment_method` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'cash',
   `override_price` int(11) DEFAULT NULL,
-  `adult_badge_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `adult_legal_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `adult_relationship` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `adult_phone_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `adult_badge_number` int(11) DEFAULT NULL,
   `at_door` tinyint(1) NOT NULL DEFAULT '1',
   `paid` tinyint(1) NOT NULL DEFAULT '0',
   `checked_in` tinyint(1) NOT NULL DEFAULT '0',
+  `canceled` tinyint(1) NOT NULL DEFAULT '0',
+  `vendor_id` int(11) DEFAULT NULL,
   `blacklisted` tinyint(1) NOT NULL DEFAULT '0',
   `blacklist_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `blacklist_message` text COLLATE utf8_unicode_ci,
@@ -95,6 +99,7 @@ CREATE TABLE `badge_types` (
   `label_color` varchar(255) DEFAULT '',
   `minor` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `sort_order` int(10) unsigned NOT NULL DEFAULT '0',
+  `vendor` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -196,6 +201,22 @@ CREATE TABLE `users` (
   `admin` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table vendors
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `vendors`;
+
+CREATE TABLE `vendors` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `assigned_tables` varchar(255) DEFAULT '',
+  `vendor_license_number` varchar(255) DEFAULT '',
+  `notes` text,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
