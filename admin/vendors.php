@@ -30,7 +30,7 @@ $count = count($query);
             <td>
               <ol class="">
                 <? foreach(Attendee::by_vendor_id($vendor->id) as $attendee){ ?>
-                  <li>
+                  <li class="<?=row_highlight($attendee)?>" >
                     <?=$attendee->display_name() ?> 
                     <?=badge_label($attendee->badge_type) ?> 
                     <?=edit_button_for($attendee, ["class" => ["btn-xs"]]) ?>

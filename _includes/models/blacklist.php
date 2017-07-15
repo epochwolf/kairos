@@ -74,7 +74,7 @@ class Blacklist extends BaseModel{
     $value = trim(strtolower($value));
 
     foreach(explode("\n", $triggers) as $trigger){
-      $regex = $this->trigger_to_regex($trigger);
+      $regex = $this->trigger_to_regex(trim($trigger));
 
       if($regex && preg_match($regex, $value)){
         return trim($trigger);

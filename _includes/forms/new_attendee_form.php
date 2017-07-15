@@ -26,11 +26,6 @@ class NewAttendeeForm extends BaseForm{
       $this->error_if_invalid_date("birthdate");
     }
 
-    $this->error_if_empty("address1");
-    $this->error_if_empty("city");
-    $this->error_if_empty("state_prov");
-    $this->error_if_empty("postal_code");
-
     $this->error_if_empty("phone_number");
     // $this->error_if_empty("email");
     // if(!$this->error_on("email")){

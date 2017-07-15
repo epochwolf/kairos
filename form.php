@@ -25,7 +25,7 @@ $payment_types = PaymentType::at_door();
       <? } ?>
     </div>
     <div class="col-sm-6">
-      <h3 class="title"> Identification </h3>
+      <h3 class="title"> Identification and Contact Information </h3>
       <p>To register you must have a government issued photo ID.</p>
       <div class="row">
         <div class="form-group col-md-8 <?=$form->error_on("legal_name") ? "has-error" : "" ?>">
@@ -41,41 +41,7 @@ $payment_types = PaymentType::at_door();
             <span class="help-block">Age: <?=age_from_birthdate(@$form->params["birthdate"]); ?></span>
           <? } ?>
         </div>
-      </div>
 
-      <h3>Address</h3>
-      <div class="row">
-        <div class="form-group col-md-7 <?=$form->error_on("address1") ? "has-error" : "" ?>">
-          <?=label_tag("address1", "Address 1 *") ?>
-          <?=input_tag($form, "address1", ["placeholder" => "123 Fake St"]) ?>
-          <?=error_display($form, "address1") ?>
-        </div>
-        <div class="form-group col-md-5 <?=$form->error_on("address2") ? "has-error" : "" ?>">
-          <?=label_tag("address2", "Address 2") ?>
-          <?=input_tag($form, "address2", ["placeholder" => "Unit 3"]) ?>
-          <?=error_display($form, "address2") ?>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-4 <?=$form->error_on("city") ? "has-error" : "" ?>">
-          <?=label_tag("city", "City *") ?>
-          <?=input_tag($form, "city", ["placeholder" => "Cincinnati"]) ?>
-          <?=error_display($form, "city") ?>
-        </div>
-        <div class="form-group col-md-4 col-sm-6 <?=$form->error_on("state_prov") ? "has-error" : "" ?>">
-          <?=label_tag("state_prov", "State/Providence *") ?>
-          <?=input_tag($form, "state_prov", ["placeholder" => "Ohio"]) ?>
-          <?=error_display($form, "state_prov") ?>
-        </div>
-        <div class="form-group col-md-4 col-sm-6 <?=$form->error_on("postal_code") ? "has-error" : "" ?>">
-          <?=label_tag("postal_code", "Postal Code *") ?>
-          <?=input_tag($form, "postal_code", ["placeholder" => "45231"]) ?>
-          <?=error_display($form, "postal_code") ?>
-        </div>
-      </div>
-
-      <h3>Contact Information</h3>
-      <div class="row">
         <div class="form-group col-md-6 <?=$form->error_on("phone_number") ? "has-error" : "" ?>">
           <?=label_tag("phone_number", "Phone Number *") ?>
           <?=input_tag($form, "phone_number", ["placeholder" => "555-555-5555"]) ?>
@@ -89,12 +55,35 @@ $payment_types = PaymentType::at_door();
         </div>
       </div>
 
-      <div class="checkbox">
-        <input type="hidden" name="newsletter"  value="0">
-        <label>
-          <input type="checkbox" name="newsletter" value="1"> Keep me informed about similar local events.
-        </label>
+      <h3> Responsible Adult (Minors Only) </h3>
+      <div class="well">
+        <p>Any one under the age of <?=MINOR_AGE ?> must have a responsible adult on file.</p>
+        <div class="row">
+          <div class="form-group col-md-7 <?=$form->error_on("adult_legal_name") ? "has-error" : "" ?>">
+            <?=label_tag("adult_legal_name", "Legal Name") ?>
+            <?=input_tag($form, "adult_legal_name", ["placeholder" => "John Doe"]) ?>
+            <?=error_display($form, "adult_legal_name") ?>
+          </div>
+
+          <div class="form-group col-md-5 <?=$form->error_on("adult_relationship") ? "has-error" : "" ?>">
+            <?=label_tag("adult_relationship", "Relationship") ?>
+            <select class="form-control" id="adult_relationship" name="adult_relationship">
+              <option></option>
+              <? foreach(AdultRelationship::all() as $relationship){ ?>
+                <?=option_tag($relationship->name, @$form->params["adult_relationship"], $relationship->db_name) ?>
+              <? } ?>
+            </select>
+            <?=error_display($form, "adult_relationship") ?>
+          </div>
+
+          <div class="form-group col-md-5 <?=$form->error_on("adult_phone_number") ? "has-error" : "" ?>">
+            <?=label_tag("adult_phone_number", "Phone Number") ?>
+            <?=input_tag($form, "adult_phone_number", ["placeholder" => "555-555-5555"]) ?>
+            <?=error_display($form, "adult_phone_number") ?>
+          </div>
+        </div>
       </div>
+
     </div>
 
     <div class="col-sm-6">
@@ -124,7 +113,7 @@ $payment_types = PaymentType::at_door();
           <?=error_display($form, "tshirt_size") ?>
         </div>
       </div>
-      <p>If you need a vendor badge, please inform the person checking you in.</p>
+      <p>Family Packs and Minor Discounts are not reflected in the price. Please inform the person checking you in.</p>
 
       <h3>Payment Method</h3>
       <div class="row">
@@ -144,34 +133,6 @@ $payment_types = PaymentType::at_door();
 
       </div>
 
-      <div class="well">
-        <h3> Responsible Adult (Minors Only) </h3>
-        <p>Any one under the age of <?=MINOR_AGE ?> must have a responsible adult on file.</p>
-        <div class="row">
-          <div class="form-group col-md-7 <?=$form->error_on("adult_legal_name") ? "has-error" : "" ?>">
-            <?=label_tag("adult_legal_name", "Legal Name") ?>
-            <?=input_tag($form, "adult_legal_name", ["placeholder" => "John Doe"]) ?>
-            <?=error_display($form, "adult_legal_name") ?>
-          </div>
-
-          <div class="form-group col-md-5 <?=$form->error_on("adult_relationship") ? "has-error" : "" ?>">
-            <?=label_tag("adult_relationship", "Relationship") ?>
-            <select class="form-control" id="adult_relationship" name="adult_relationship">
-              <option></option>
-              <? foreach(AdultRelationship::all() as $relationship){ ?>
-                <?=option_tag($relationship->name, @$form->params["adult_relationship"], $relationship->db_name) ?>
-              <? } ?>
-            </select>
-            <?=error_display($form, "adult_relationship") ?>
-          </div>
-
-          <div class="form-group col-md-5 <?=$form->error_on("adult_phone_number") ? "has-error" : "" ?>">
-            <?=label_tag("adult_phone_number", "Phone Number") ?>
-            <?=input_tag($form, "adult_phone_number", ["placeholder" => "555-555-5555"]) ?>
-            <?=error_display($form, "adult_phone_number") ?>
-          </div>
-        </div>
-      </div>
       <div>
         <h3> Privacy Notice </h3>
         <p>Information collected on this form is only used for identification.</p>

@@ -54,7 +54,7 @@ class Attendee extends BaseModel {
   }
 
   static function canceled(){
-    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled = 1 ORDER BY created_at DESC";
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled IS NOT NULL ORDER BY created_at DESC";
     return self::query($sql, [':at_door' => 0]);
   }
 
@@ -117,11 +117,11 @@ class Attendee extends BaseModel {
     "badge_name",
     "legal_name",
     "birthdate",
-    "address1",
-    "address2",
-    "city",
-    "state_prov",
-    "postal_code",
+    // "address1",
+    // "address2",
+    // "city",
+    // "state_prov",
+    // "postal_code",
     "phone_number",
     "email",
     "newsletter",
@@ -143,9 +143,11 @@ class Attendee extends BaseModel {
     "adult_relationship",
     "adult_phone_number",
     "adult_badge_number",
-    "checked_in",
     "paid",
+    "checked_in",
+    "checked_in_at",
     "canceled",
+    "canceled_at",
     "created_at",
     "notes",
   ];
@@ -184,6 +186,19 @@ class Attendee extends BaseModel {
     $array["canceled"]           = self::bool_to_db($this->canceled);
     $array["created_at"]         = $this->created_at;
     $array["notes"]              = self::nullable_string_to_db($this->notes);
+    # If checked_in has changed, add or remove checked_in_at timestamp.
+    if($array["checked_in"] && !$array["checked_in_at"]){
+      $array["checked_in_at"] = self::datetime_to_db("now");
+    }elseif(!$array["checked_in"] && $array["checked_in_at"]){
+      $array["checked_in_at"] = null;
+    }
+    # If canceled has changed, add or remove canceled_at timestamp.
+    if($array["canceled"] && !$array["canceled_at"]){
+      $array["canceled_at"] = self::datetime_to_db("now");
+    }elseif(!$array["canceled"] && $array["canceled_at"]){
+      $array["canceled_at"] = null;
+    }
+
     return $array;
   }
 

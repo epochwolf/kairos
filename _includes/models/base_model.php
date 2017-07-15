@@ -143,6 +143,15 @@ class BaseModel{
       return $date;
     }
   }
+  
+  protected static function datetime_to_db($date){
+    try{
+      $d = new DateTime($date);
+      return $d->format("Y-m-d H:i:s");
+    } catch(Exception $e){
+      return $date;
+    }
+  }
 
   protected static function bool_to_db($bool){
     if($bool){

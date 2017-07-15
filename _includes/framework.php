@@ -29,6 +29,9 @@ $db_conn_str = "mysql:host=localhost;dbname={$db_config->database_name};host={$d
 $db = new PDO($db_conn_str, $db_config->database_user, $db_config->database_password);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+// Set the default timezone
+date_default_timezone_set("America/New_York");
+
 // Set include path to the root of the application. 
 $APP_ROOT = realpath(__DIR__ . '/' . "..");
 set_include_path(get_include_path() . PATH_SEPARATOR . $APP_ROOT);

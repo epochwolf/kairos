@@ -66,36 +66,6 @@ $payment_types = PaymentType::all();
         <td>Format must be MM/DD/YYYY</td>
       </tr>
       <tr>
-        <td>address1</td>
-        <td></td>
-        <td>VARCHAR(255)</td>
-        <td>Any</td>
-      </tr>
-      <tr>
-        <td>address2</td>
-        <td></td>
-        <td>VARCHAR(255)</td>
-        <td>Any</td>
-      </tr>
-      <tr>
-        <td>city</td>
-        <td></td>
-        <td>VARCHAR(255)</td>
-        <td>Any</td>
-      </tr>
-      <tr>
-        <td>state_prov</td>
-        <td></td>
-        <td>VARCHAR(255)</td>
-        <td>Any</td>
-      </tr>
-      <tr>
-        <td>postal_code</td>
-        <td></td>
-        <td>VARCHAR(255)</td>
-        <td>Any</td>
-      </tr>
-      <tr>
         <td>phone_number</td>
         <td></td>
         <td>VARCHAR(255)</td>
