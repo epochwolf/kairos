@@ -2,7 +2,7 @@
 include_once '../../_includes/framework.php'; 
 require_login();
 
-$page_title = "Admin";
+$page_title = "Config - T-Shirt Sizes";
 include "_partials/admin-header.php"; 
 
 $tshirt_sizes = TShirtSize::all();

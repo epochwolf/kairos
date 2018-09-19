@@ -1,70 +1,26 @@
 <?php
-include_once '../_includes/framework.php'; 
+include_once '../../_includes/framework.php'; 
 require_login();
 
-$page_title = "Attendees";
+$page_title = "Checked In";
 include "_partials/admin-header.php"; 
 
-$tab = @$_GET["tab"] ?: "all";  
+$query = Attendee::checked_in_report();
 
-$badge_types = BadgeType::cached_all();
 
-$type = null;
-
-switch($tab){
-  case "badge":
-    $type = BadgeType::cached_find_by_db_name($_GET["type"]);
-    $query = Attendee::by_badge_type($type->db_name);
-    break;
-  case "under_minor_age":
-    $query = Attendee::minors();
-    break;
-  case "blacklisted":
-    $query = Attendee::blacklisted();
-    break;
-  case "canceled":
-    $query = Attendee::canceled();
-    break;
-  default:
-    $query = Attendee::all();
-}
 ?>
 
 <div class="container">
   <div class="col-md-12">
-    <h1>All Attendees</h1>
-    <ul class="nav nav-tabs">
-      <?= nav_link("All", "/admin/index.php", $tab == "all") ?>
-      <? foreach($badge_types as $bt){ ?>
-        <?= nav_link($bt->name, "/admin/index.php?tab=badge&type={$bt->db_name}", $tab == "badge" && $bt->db_name == $type->db_name) ?>
-      <? } ?>
-      <?= nav_link("Under ".MINOR_AGE, "/admin/index.php?tab=under_minor_age", $tab == "under_minor_age") ?>
-      <?= nav_link("Alerts", "/admin/index.php?tab=blacklisted", $tab == "blacklisted") ?>
-      <?= nav_link("Canceled/Revoked", "/admin/index.php?tab=canceled", $tab == "canceled") ?>
-    </ul>
+    <h1>Checked In</h1>
     <table class="table table-striped table-condensed ">
       <thead>
         <tr>
           <th>Badge #</th>
           <th>Badge Name</th>
           <th>Legal Name</th>
-
-          <? if($tab == "blacklisted"){ ?>
-            <th>Admission Level</th>
-            <th>Blacklisted</th>
-            <th>Trigger</th>
-            <th>Message</th>
-
-          <? }elseif($type && $type->vendor){ ?>
-            <th>Vendor</th>
-            <th>Admission Level</th>
-
-          <? }else{ ?>
-            <th>Birthdate</th>
-            <th>Admission Level</th>
-            <th>Adult</th>
-          <? } ?>
-
+          <th>Admission Level</th>
+          <th>Check In Time</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -74,27 +30,8 @@ switch($tab){
             <td><?=$attendee->badge_number ?></td>
             <td><?=$attendee->badge_name ?></td>
             <td><?=$attendee->legal_name ?></td>
-            <? if($tab == "blacklisted"){ ?>
-              <td><?=admission_display($attendee) ?></td>
-              <td><?=$attendee->blacklisted ? "&check;" : "" ?></td>
-              <td><?=$attendee->blacklist_trigger ?: "Manual" ?></td>
-              <td><?=$attendee->blacklist_message ?></td>
-
-            <? }elseif($type && $type->vendor){ ?>
-              <? $vendor = $attendee->vendor() ?>
-              <td><?= $vendor ? $vendor->display_name() : "" ?></td>
-              <td><?=admission_display($attendee) ?></td>
-
-            <? }else{ ?>
-                <td><?=$attendee->birthdate ?> (<?=$attendee->age() ?>)</td>
-                <td><?=admission_display($attendee) ?></td>
-                <td>
-                  <? if($attendee->minor()){ ?>
-                    <?=$attendee->adult_display_name() ?>
-                  <? } ?>
-                </td>
-            <? } ?>
-
+            <td><?=admission_display($attendee) ?></td>
+            <td><?=$attendee->checked_in_at ?></td>
             <td>
               <? if($attendee->canceled){?>
                 <?=edit_button_for($attendee, ["class" => ["btn-sm"]]) ?>
@@ -132,7 +69,6 @@ switch($tab){
     </table>
   </div>
 </div>
-
 <?php
 include "_partials/admin-footer.php";  
 ?>

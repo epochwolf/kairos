@@ -2,7 +2,7 @@
 include_once '../../_includes/framework.php'; 
 require_admin();
 
-$page_title = "Admin";
+$page_title = "Config - Alerts";
 include "_partials/admin-header.php"; 
 
 $blacklists = Blacklist::all();
@@ -11,7 +11,7 @@ $blacklists = Blacklist::all();
 
 <div class="container">
   <div class="col-md-12">
-    <h1>Blacklist Entries</h1>
+    <h1>Alerts</h1>
     <table class="table table-striped">
       <tr>
         <th>Badge Name</th>

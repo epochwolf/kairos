@@ -2,7 +2,7 @@
 include_once '../../_includes/framework.php'; 
 require_login();
 
-$page_title = "Admin";
+$page_title = "Config - Registration Levels";
 include "_partials/admin-header.php"; 
 
 $levels = RegistrationLevel::all();

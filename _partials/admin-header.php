@@ -32,10 +32,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <?= nav_link("Attendees", "/admin/index.php") ?>
-        <? nav_link("Pre Reg Check In", "/admin/pre-reg.php") ?>
-        <?= nav_link("At Door Check In", "/admin/at-door.php") ?>
+        <?= nav_link("At Door", "/admin/at-door.php") ?>
+        <?= nav_link("Checked In", "/admin/reports/check-in.php") ?>
         <?= nav_link("Vendors", "/admin/vendors.php") ?>
-        <?= nav_link("Prices", "/admin/prices.php") ?>
         <?= nav_link("Numbers", "/admin/numbers.php") ?>
         <? if(current_user()->admin){ ?>
 

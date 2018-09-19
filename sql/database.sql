@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Pro SQL dump
-# Version 4499
+# Version 4541
 #
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: localhost (MySQL 10.1.9-MariaDB)
-# Database: kairos
-# Generation Time: 2016-03-25 22:18:14 +0000
+# Host: localhost (MySQL 5.6.24)
+# Database: fur_reality_2017
+# Generation Time: 2017-09-29 00:09:03 +0000
 # ************************************************************
 
 
@@ -23,8 +23,6 @@
 # Dump of table attendee_logs
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `attendee_logs`;
-
 CREATE TABLE `attendee_logs` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `attendee_id` int(10) unsigned NOT NULL,
@@ -39,15 +37,13 @@ CREATE TABLE `attendee_logs` (
 # Dump of table attendees
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `attendees`;
-
 CREATE TABLE `attendees` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `badge_number` int(11) DEFAULT NULL,
   `badge_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `legal_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `company_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `birthdate` date NOT NULL,
+  `birthdate` date DEFAULT NULL,
   `address1` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
   `address2` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
   `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
@@ -61,7 +57,7 @@ CREATE TABLE `attendees` (
   `original_admission_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'standard',
   `admission_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'standard',
   `tshirt_size` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `payment_method` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'cash',
+  `payment_method` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'cash',
   `override_price` int(11) DEFAULT NULL,
   `adult_legal_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `adult_relationship` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -69,8 +65,10 @@ CREATE TABLE `attendees` (
   `adult_badge_number` int(11) DEFAULT NULL,
   `at_door` tinyint(1) NOT NULL DEFAULT '1',
   `paid` tinyint(1) NOT NULL DEFAULT '0',
-  `checked_in` tinyint(1) NOT NULL DEFAULT '0',
-  `canceled` tinyint(1) NOT NULL DEFAULT '0',
+  `checked_in` tinyint(4) NOT NULL DEFAULT '0',
+  `checked_in_at` datetime DEFAULT NULL,
+  `canceled` tinyint(4) NOT NULL DEFAULT '0',
+  `canceled_at` datetime DEFAULT NULL,
   `vendor_id` int(11) DEFAULT NULL,
   `blacklisted` tinyint(1) NOT NULL DEFAULT '0',
   `blacklist_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -90,16 +88,14 @@ CREATE TABLE `attendees` (
 # Dump of table badge_types
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `badge_types`;
-
 CREATE TABLE `badge_types` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `db_name` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
   `label_color` varchar(255) DEFAULT '',
   `minor` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `sort_order` int(10) unsigned NOT NULL DEFAULT '0',
   `vendor` tinyint(1) NOT NULL DEFAULT '0',
+  `sort_order` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -107,8 +103,6 @@ CREATE TABLE `badge_types` (
 
 # Dump of table blacklist
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `blacklist`;
 
 CREATE TABLE `blacklist` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -126,8 +120,6 @@ CREATE TABLE `blacklist` (
 # Dump of table payment_types
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `payment_types`;
-
 CREATE TABLE `payment_types` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `db_name` varchar(255) NOT NULL DEFAULT '',
@@ -141,8 +133,6 @@ CREATE TABLE `payment_types` (
 
 # Dump of table registration_levels
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `registration_levels`;
 
 CREATE TABLE `registration_levels` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -161,8 +151,6 @@ CREATE TABLE `registration_levels` (
 # Dump of table registration_upgrades
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `registration_upgrades`;
-
 CREATE TABLE `registration_upgrades` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `from` varchar(255) NOT NULL DEFAULT '',
@@ -177,8 +165,6 @@ CREATE TABLE `registration_upgrades` (
 # Dump of table tshirt_sizes
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `tshirt_sizes`;
-
 CREATE TABLE `tshirt_sizes` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `db_name` varchar(255) NOT NULL,
@@ -191,8 +177,6 @@ CREATE TABLE `tshirt_sizes` (
 
 # Dump of table users
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -207,8 +191,6 @@ CREATE TABLE `users` (
 
 # Dump of table vendors
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `vendors`;
 
 CREATE TABLE `vendors` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

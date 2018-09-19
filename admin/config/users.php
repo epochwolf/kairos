@@ -2,7 +2,7 @@
 include_once '../../_includes/framework.php'; 
 require_admin();
 
-$page_title = "Admin";
+$page_title = "Config - Users";
 include "_partials/admin-header.php"; 
 
 $users = User::all();

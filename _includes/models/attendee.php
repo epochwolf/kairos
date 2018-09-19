@@ -35,12 +35,12 @@ class Attendee extends BaseModel {
 
   static function pre_reg_pending(){
     $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled = 0 AND at_door = 0 AND checked_in = 0 ORDER BY created_at DESC";
-    return self::query($sql, [':at_door' => 0]);
+    return self::query($sql);
   }
 
   static function at_door_pending(){
     $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled = 0 AND at_door = 1 AND (checked_in = 0 || paid = 0) order by created_at asc";
-    return self::query($sql, [':at_door' => 1]);
+    return self::query($sql);
   }
 
   static function blacklisted(){
@@ -54,8 +54,13 @@ class Attendee extends BaseModel {
   }
 
   static function canceled(){
-    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled IS NOT NULL ORDER BY created_at DESC";
-    return self::query($sql, [':at_door' => 0]);
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE canceled = 1 ORDER BY created_at DESC";
+    return self::query($sql);
+  }
+
+  static function checked_in_report(){
+    $sql = "SELECT * FROM " . static::TABLE_NAME . " WHERE checked_in = 1 ORDER BY checked_in_at DESC";
+    return self::query($sql);
   }
 
 

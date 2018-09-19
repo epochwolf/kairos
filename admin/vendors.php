@@ -2,7 +2,7 @@
 include_once '../_includes/framework.php'; 
 require_login();
 
-$page_title = "Admin";
+$page_title = "Vendors";
 include "_partials/admin-header.php"; 
 
 $query = Vendor::all();

@@ -2,7 +2,7 @@
 include_once '../_includes/framework.php'; 
 require_login();
 
-$page_title = "Admin";
+$page_title = "Check Blacklist";
 include "_partials/admin-header.php"; 
 
 $badge_name = trim(@$_POST['badge'] ?: "");

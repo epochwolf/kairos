@@ -2,7 +2,7 @@
 include_once '../../_includes/framework.php'; 
 require_admin();
 
-$page_title = "Admin";
+$page_title = "Config - Vendors";
 include "_partials/admin-header.php"; 
 
 $vendors = Vendor::order_by_id();

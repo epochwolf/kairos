@@ -217,17 +217,27 @@ if(!empty(@$form->params["adult_badge_number"])){
             <label>
               <input type="checkbox" name="checked_in" value="1" <? if(@$form->params["checked_in"]){ ?>checked="checked"<?}?>> Checked In
             </label>
+            <? if(@$form->params["checked_in"]){ ?>
+              <p class="help-block">
+                <small><?=$form->attendee->checked_in_at ?></small>
+              </p>
+            <? } ?>
           </div>
           <div class="checkbox">
             <input type="hidden" name="canceled"  value="0">
             <label>
               <input type="checkbox" name="canceled" value="1" <? if(@$form->params["canceled"]){ ?>checked="checked"<?}?>> Canceled / Revoked
             </label>
+            <? if(@$form->params["canceled"]){ ?>
+              <p class="help-block">
+                <small><?=$form->attendee->canceled_at ?></small>
+              </p>
+            <? } ?>
           </div>
           <div class="checkbox">
             <input type="hidden" name="blacklisted"  value="0">
             <label>
-              <input type="checkbox" name="blacklisted" value="1" <? if(@$form->params["blacklisted"]){ ?>checked="checked"<?}?>> Blacklisted
+              <input type="checkbox" name="blacklisted" value="1" <? if(@$form->params["blacklisted"]){ ?>checked="checked"<?}?>> Alert
             </label>
           </div>
         </div>
@@ -236,7 +246,7 @@ if(!empty(@$form->params["adult_badge_number"])){
 
     <div class="" id="blacklist-controls">
       <div class="form-group col-sm-3 <?=$form->error_on("blacklist_type") ? "has-error" : "" ?>">
-        <?=label_tag("blacklist_type", "Blacklist Type") ?>
+        <?=label_tag("blacklist_type", "Alert Type") ?>
         <div class="col-sm-12">
           <div class="radio">
             <label>
@@ -252,11 +262,12 @@ if(!empty(@$form->params["adult_badge_number"])){
               </label>
             </div>
           <? } ?>
+          <?=error_display($form, "blacklist_type") ?>
         </div>
       </div>
 
       <div class="form-group col-sm-6 <?=$form->error_on("blacklist_message") ? "has-error" : "" ?>">
-        <?=label_tag("blacklist_message", "Blacklist Message") ?>
+        <?=label_tag("blacklist_message", "Alert Message") ?>
         <textarea class="form-control" rows="4" name="blacklist_message" id="blacklist_message"><?=htmlentities(@$form->params["blacklist_message"]) ?></textarea>
         <?=error_display($form, "blacklist_message") ?>
       </div>

@@ -2,7 +2,7 @@
 include_once '../../_includes/framework.php'; 
 require_login();
 
-$page_title = "Admin";
+$page_title = "Config - Registration Upgrades";
 include "_partials/admin-header.php"; 
 
 $upgrades = RegistrationUpgrade::all_with_prices();

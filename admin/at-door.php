@@ -2,7 +2,7 @@
 include_once '../_includes/framework.php'; 
 require_login();
 
-$page_title = "Admin";
+$page_title = "At Door Check In";
 include "_partials/admin-header.php"; 
 
 $query = Attendee::at_door_pending();

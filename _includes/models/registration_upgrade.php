@@ -80,7 +80,7 @@ class RegistrationUpgrade extends BaseModel {
   }
 
   function price_for(Attendee $attendee){
-    if(is_null($attendee->override_price) || $attendee->override_price == 0){ // NULL or 0
+    if(!$attendee->minor() && is_null($attendee->override_price) || $attendee->override_price == 0){ // NULL or 0
       return $this->price();
     }else{
       $lvl = RegistrationLevel::find_by_db_name($attendee->admission_level);
