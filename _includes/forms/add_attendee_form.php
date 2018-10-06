@@ -18,6 +18,7 @@ class AddAttendeeForm extends NewAttendeeForm{
 
   function save(){
     if($this->valid()){
+      $this->params["badge_number"] = Attendee::next_badge_number();
       $attendee = new Attendee($this->params);
       $attendee->apply_blacklist();
       return $attendee->save();

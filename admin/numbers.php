@@ -72,6 +72,24 @@ order by rl.sort_order, old_rl.sort_order
 SQL
 );
 
+
+$payment_report = db_query(<<<SQL
+SELECT 
+  SUM(COALESCE(attendees.override_price, registration_levels.price)) as total, 
+  attendees.payment_method as payment_method, 
+  DATE_FORMAT(attendees.created_at, "%Y-%m-%d %W") as day 
+FROM `attendees` 
+JOIN registration_levels 
+  ON attendees.admission_level = registration_levels.db_name
+GROUP BY 
+  attendees.payment_method, 
+  DATE_FORMAT(attendees.created_at, "%Y-%m-%d %W")
+ORDER BY
+  DATE_FORMAT(attendees.created_at, "%Y-%m-%d %W"),
+  attendees.payment_method
+SQL
+);
+
 ?>
 
 <div class="container">
@@ -179,8 +197,29 @@ SQL
         <li>Canceled orders (Canceled & Not Paid) do not count towards other numbers listed.</li>
       </ol>
     </div>
+    <div class="row">
+      <h2>Payment Records</h2>
+      <table class="table table-bordered lead">
+        <tr>
+          <th>Day</th>
+          <th>Payment Method</th>
+          <th>Amount</th>
+        </tr>
+
+        <? foreach($payment_report as $row){?>
+          <tr>
+            <td><?=$row["day"] ?></td>
+            <td><?=$row["payment_method"] ?></td>
+            <td class="text-right">$<?=number_format($row["total"]) ?></td>
+          </tr>
+        <? } ?>
+      </table>
+      
+    </div>
   </div>
 </div>
+
+
 <?php
 include "_partials/admin-footer.php";  
 ?>

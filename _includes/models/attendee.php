@@ -63,6 +63,16 @@ class Attendee extends BaseModel {
     return self::query($sql);
   }
 
+  static function next_badge_number(){
+    $record = db_query("SELECT MAX(badge_number) FROM " . static::TABLE_NAME);
+    $max_badge_number = $record[0][0];
+    if($max_badge_number){
+      return $max_badge_number + 1;
+    }else{
+      return null;
+    }
+  }
+
 
   static function search($name){
     $sql = "SELECT * FROM " . static::TABLE_NAME . " " .
@@ -186,6 +196,7 @@ class Attendee extends BaseModel {
     $array["adult_relationship"] = self::nullable_string_to_db($this->adult_relationship);
     $array["adult_phone_number"] = self::nullable_string_to_db($this->adult_phone_number);
     $array["adult_badge_number"] = self::nullable_string_to_db($this->adult_badge_number);
+    $array["vendor_id"]          = self::nullable_string_to_db($this->vendor_id);
     $array["checked_in"]         = self::bool_to_db($this->checked_in);
     $array["paid"]               = self::bool_to_db($this->paid);
     $array["canceled"]           = self::bool_to_db($this->canceled);
